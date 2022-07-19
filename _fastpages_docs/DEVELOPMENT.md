@@ -11,6 +11,16 @@
 You can run your fastpages blog on your local machine, and view any changes you make to your posts, including Jupyter Notebooks and Word documents, live.
 The live preview requires that you have Docker installed on your machine. [Follow the instructions on this page if you need to install Docker.](https://www.docker.com/products/docker-desktop)
 
+## Windows development
+Use the [Jekyll Windows installer](https://jekyllrb.com/docs/installation/windows/) There are a number of packages that are not included which you will need to add separately
+
+- gem install wdm
+- gem install webrick
+- bundle update jekyll
+- bundle install
+- bundle add webrick
+- bundle exec jekyll serve
+
 ## Seeing All Commands In The Terminal
 
 There are many different `docker-compose` commands that are necessary to manage the lifecycle of the fastpages Docker containers.  To make this easier, we aliased common commands in a [Makefile](https://www.gnu.org/software/make/manual/html_node/Introduction.html).  
