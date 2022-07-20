@@ -30,6 +30,275 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py</a></p>
+<p><a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/admin-tooling/data-store/import_db.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/admin-tooling/data-store/import_db.py</a>
+Construct Json directly</p>
+<p>APIs:
+<a href="https://data-api.testing.rrap-is.com/docs">https://data-api.testing.rrap-is.com/docs</a>
+<a href="https://registry-api.testing.rrap-is.com/docs">https://registry-api.testing.rrap-is.com/docs</a>
+<a href="https://prov-api.testing.rrap-is.com/docs">https://prov-api.testing.rrap-is.com/docs</a></p>
+<p>Auth:
+'Authorization' : 'Bearer <JWT token>'
+<a href="https://data-api.testing.rrap-is.com/check-access/check-general-access">https://data-api.testing.rrap-is.com/check-access/check-general-access</a>
+<a href="https://data-api.testing.rrap-is.com/">https://data-api.testing.rrap-is.com/</a></p>
+<p>token:
+<a href="https://data.testing.rrap-is.com/">https://data.testing.rrap-is.com/</a></p>
+<p>Maintain session
+<a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Establish-endpoints">Establish endpoints<a class="anchor-link" href="#Establish-endpoints"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_api</span> <span class="o">=</span> <span class="s2">&quot;https://data-api.testing.rrap-is.com&quot;</span>
+<span class="n">registry_api</span> <span class="o">=</span> <span class="s2">&quot;https://registry-api.testing.rrap-is.com&quot;</span>
+<span class="n">prov_api</span> <span class="o">=</span> <span class="s2">&quot;https://prov-api.testing.rrap-is.com&quot;</span>
+<span class="n">auth_server</span> <span class="o">=</span> <span class="s2">&quot;https://auth.dev.rrap-is.com/auth/realms/rrap&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Import-general-dependencies">Import general dependencies<a class="anchor-link" href="#Import-general-dependencies"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Import-the-token-manager-package">Import the token manager package<a class="anchor-link" href="#Import-the-token-manager-package"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">module_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">&#39;..&#39;</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">module_path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module_path</span><span class="p">)</span>
+    
+<span class="kn">from</span> <span class="nn">python_packages.token_manager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Setup-tokens-using-device-authorisation-flow-against-keycloak-server">Setup tokens using device authorisation flow against keycloak server<a class="anchor-link" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server"> </a></h3><p>This could result in a browser window being opened if you don't have valid tokens cached in local storage.</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">local_token_storage</span> <span class="o">=</span> <span class="s2">&quot;.tokens.json&quot;</span>
+
+<span class="n">token_manager</span> <span class="o">=</span> <span class="n">DeviceFlowManager</span><span class="p">(</span>
+    <span class="n">stage</span><span class="o">=</span><span class="s2">&quot;TEST&quot;</span><span class="p">,</span>
+    <span class="n">keycloak_endpoint</span><span class="o">=</span><span class="n">auth_server</span><span class="p">,</span>
+    <span class="n">local_storage_location</span><span class="o">=</span><span class="n">local_token_storage</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Attempting to generate authorisation tokens.
+
+Looking for existing tokens in local storage.
+
+Validating found tokens
+
+Found tokens valid, using.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Helper-function-to-display-responses">Helper function to display responses<a class="anchor-link" href="#Helper-function-to-display-responses"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display_length_limit</span> <span class="o">=</span> <span class="mi">250</span>
+<span class="k">def</span> <span class="nf">cap_display</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">display_length_limit</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">[:</span><span class="n">display_length_limit</span><span class="p">])</span> <span class="o">+</span> <span class="s2">&quot;.....&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">input</span>
+    
+<span class="k">def</span> <span class="nf">display_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">cap_display</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Response - status_code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">, json content: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Example-unauthenticated-API-call">Example unauthenticated API call<a class="anchor-link" href="#Example-unauthenticated-API-call"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display_response</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">data_api</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>&#34;Response - status_code: 200, json content: {&#39;message&#39;: &#39;Health check successful.&#39;}.&#34;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Example-authenticated-call">Example authenticated call<a class="anchor-link" href="#Example-authenticated-call"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/items/list-all-datasets&quot;</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">display_response</span><span class="p">(</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">()))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>&#34;Response - status_code: 200, json content: {&#39;status&#39;: {&#39;success&#39;: True, &#39;details&#39;: &#39;Successfully retrieved all (85) registry entries.&#39;}, &#39;num_items&#39;: 85, &#39;registry_items&#39;: [{&#39;handle&#39;: &#39;10378.1/1687269&#39;, &#39;collection_format&#39;: {&#39;author&#39;: {&#39;name&#39;: &#39;Ross .....&#34;</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Demos">Demos<a class="anchor-link" href="#Demos"> </a></h2><p><a href="https://confluence.csiro.au/display/RRAPIS/Provenance+use+cases">Use cases</a></p>
 <ol>
 <li>Simple result lineage</li>
@@ -51,6 +320,7 @@ layout: notebook
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_query</span><span class="p">():</span>
     <span class="c1">#todo: Build url query for provenance api endpoint</span>
+    
 </pre></div>
 
     </div>
