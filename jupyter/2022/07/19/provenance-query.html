@@ -156,6 +156,102 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py</a></p>
+<p><a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/admin-tooling/data-store/import_db.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/admin-tooling/data-store/import_db.py</a>
+Construct Json directly</p>
+<p>APIs:
+<a href="https://data-api.testing.rrap-is.com/docs">https://data-api.testing.rrap-is.com/docs</a>
+<a href="https://registry-api.testing.rrap-is.com/docs">https://registry-api.testing.rrap-is.com/docs</a>
+<a href="https://prov-api.testing.rrap-is.com/docs">https://prov-api.testing.rrap-is.com/docs</a></p>
+<p>Auth:
+'Authorization' : 'Bearer <jwt token="">'
+<a href="https://data-api.testing.rrap-is.com/check-access/check-general-access">https://data-api.testing.rrap-is.com/check-access/check-general-access</a>
+<a href="https://data-api.testing.rrap-is.com/">https://data-api.testing.rrap-is.com/</a>&lt;/p&gt;
+<p>token:
+<a href="https://data.testing.rrap-is.com/">https://data.testing.rrap-is.com/</a></p>
+<p>Maintain session
+<a href="https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py">https://github.com/gbrrestoration/rrap-is-proto/blob/main/utilities/packages/python/keycloak-utils/KeycloakRestUtilities/TokenManager.py</a></p>
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">x</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://data-api.testing.rrap-is.com/check-access/check-general-access"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"https://data-api.testing.rrap-is.com/"</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+
+<span class="n">myToken</span> <span class="o">=</span> <span class="s1">'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIzMVBQVkZZdE53a2JEcVZnNjFqX08xNXdiN2FRZU1BaExCbWdpY2VvY2dBIn0.eyJleHAiOjE2NTgyODY3OTgsImlhdCI6MTY1ODI3OTU5OCwiYXV0aF90aW1lIjoxNjU4Mjc5NTk2LCJqdGkiOiI2YjI2YmVjOC1iYWRiLTQyMjgtYmFjNi1lYmYxMjYxZDk0NmYiLCJpc3MiOiJodHRwczovL2F1dGguZGV2LnJyYXAtaXMuY29tL2F1dGgvcmVhbG1zL3JyYXAiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiZWFiZDg2YjAtNWM1NC00NzNiLWI1MWUtMzZiZTMxMzdkNGRiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZGF0YS1zdG9yZS11aSIsIm5vbmNlIjoiOTZmMjcyMzYtN2M3OC00NTlmLThhNGQtZmRjMmJhZGVlN2QwIiwic2Vzc2lvbl9zdGF0ZSI6ImU4YmQxYmZjLTliMGQtNDFkMy1hNDIxLWFiZWFhNGIzYzI5MiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1ycmFwIiwiZGF0YS1zdG9yZS13cml0ZSIsIm9mZmxpbmVfYWNjZXNzIiwiaGFuZGxlLXdyaXRlIiwiZGF0YS1zdG9yZS1hZG1pbiIsImRhdGEtc3RvcmUtcmVhZCIsImhhbmRsZS1yZWFkIiwidW1hX2F1dGhvcml6YXRpb24iLCJoYW5kbGUtYWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsImRlbGV0ZS1hY2NvdW50Iiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSByb2xlcyIsInNpZCI6ImU4YmQxYmZjLTliMGQtNDFkMy1hNDIxLWFiZWFhNGIzYzI5MiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkZhcmVlZCBNaXJ6YSIsInByZWZlcnJlZF91c2VybmFtZSI6ImZhcmVlZCIsImdpdmVuX25hbWUiOiJGYXJlZWQiLCJmYW1pbHlfbmFtZSI6Ik1pcnphIiwiZW1haWwiOiJmYXJlZWQubWlyemFAY3Npcm8uYXUifQ.oqLZTiS5fJGm0Gf1DMJGA5r0hUxvOPV3KuDZbp7ksg2PLYKeFCC2mNndUOubcR-m_SphQrzN0ZXm7WxnQ4Krv3EEW1iB1NUJwQL8ZIeESCNZmX-mAACLilWW99m1k9SJovki-eACn_q-YiQehUA0YR7JMSEQ-3X7tp6VipHBSYqHOqcMTWeZgeH35sfXwINYqU3pJbtDRpBZBPBLaE6mlUD_IarJnPMKx9ImKqHxNmPEImrP2zI2z2I_PSe4rHay0_UXybiBDb46tv3kmK7ox1wsh6hdP7XRK_y8gyFaSUtvrJeN9xzukz1igDnbyN29MWAmuHDfyosBhE2seTOO0Q'</span>
+<span class="n">myUrl</span> <span class="o">=</span> <span class="s1">'https://data-api.testing.rrap-is.com/check-access/check-general-access'</span>
+<span class="n">head</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'Authorization'</span><span class="p">:</span> <span class="s1">'Bearer </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">myToken</span><span class="p">)}</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">myUrl</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">head</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>401</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>200</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>{'username': 'fareed',
+ 'email': 'fareed.mirza@csiro.au',
+ 'roles': ['default-roles-rrap',
+  'data-store-write',
+  'offline_access',
+  'handle-write',
+  'data-store-admin',
+  'data-store-read',
+  'handle-read',
+  'uma_authorization',
+  'handle-admin'],
+ 'access_token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICIzMVBQVkZZdE53a2JEcVZnNjFqX08xNXdiN2FRZU1BaExCbWdpY2VvY2dBIn0.eyJleHAiOjE2NTgyODY3OTgsImlhdCI6MTY1ODI3OTU5OCwiYXV0aF90aW1lIjoxNjU4Mjc5NTk2LCJqdGkiOiI2YjI2YmVjOC1iYWRiLTQyMjgtYmFjNi1lYmYxMjYxZDk0NmYiLCJpc3MiOiJodHRwczovL2F1dGguZGV2LnJyYXAtaXMuY29tL2F1dGgvcmVhbG1zL3JyYXAiLCJhdWQiOlsicmVhbG0tbWFuYWdlbWVudCIsImFjY291bnQiXSwic3ViIjoiZWFiZDg2YjAtNWM1NC00NzNiLWI1MWUtMzZiZTMxMzdkNGRiIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiZGF0YS1zdG9yZS11aSIsIm5vbmNlIjoiOTZmMjcyMzYtN2M3OC00NTlmLThhNGQtZmRjMmJhZGVlN2QwIiwic2Vzc2lvbl9zdGF0ZSI6ImU4YmQxYmZjLTliMGQtNDFkMy1hNDIxLWFiZWFhNGIzYzI5MiIsImFjciI6IjEiLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1ycmFwIiwiZGF0YS1zdG9yZS13cml0ZSIsIm9mZmxpbmVfYWNjZXNzIiwiaGFuZGxlLXdyaXRlIiwiZGF0YS1zdG9yZS1hZG1pbiIsImRhdGEtc3RvcmUtcmVhZCIsImhhbmRsZS1yZWFkIiwidW1hX2F1dGhvcml6YXRpb24iLCJoYW5kbGUtYWRtaW4iXX0sInJlc291cmNlX2FjY2VzcyI6eyJyZWFsbS1tYW5hZ2VtZW50Ijp7InJvbGVzIjpbInZpZXctcmVhbG0iLCJ2aWV3LWlkZW50aXR5LXByb3ZpZGVycyIsIm1hbmFnZS1pZGVudGl0eS1wcm92aWRlcnMiLCJpbXBlcnNvbmF0aW9uIiwicmVhbG0tYWRtaW4iLCJjcmVhdGUtY2xpZW50IiwibWFuYWdlLXVzZXJzIiwicXVlcnktcmVhbG1zIiwidmlldy1hdXRob3JpemF0aW9uIiwicXVlcnktY2xpZW50cyIsInF1ZXJ5LXVzZXJzIiwibWFuYWdlLWV2ZW50cyIsIm1hbmFnZS1yZWFsbSIsInZpZXctZXZlbnRzIiwidmlldy11c2VycyIsInZpZXctY2xpZW50cyIsIm1hbmFnZS1hdXRob3JpemF0aW9uIiwibWFuYWdlLWNsaWVudHMiLCJxdWVyeS1ncm91cHMiXX0sImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsImRlbGV0ZS1hY2NvdW50Iiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSByb2xlcyIsInNpZCI6ImU4YmQxYmZjLTliMGQtNDFkMy1hNDIxLWFiZWFhNGIzYzI5MiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwibmFtZSI6IkZhcmVlZCBNaXJ6YSIsInByZWZlcnJlZF91c2VybmFtZSI6ImZhcmVlZCIsImdpdmVuX25hbWUiOiJGYXJlZWQiLCJmYW1pbHlfbmFtZSI6Ik1pcnphIiwiZW1haWwiOiJmYXJlZWQubWlyemFAY3Npcm8uYXUifQ.oqLZTiS5fJGm0Gf1DMJGA5r0hUxvOPV3KuDZbp7ksg2PLYKeFCC2mNndUOubcR-m_SphQrzN0ZXm7WxnQ4Krv3EEW1iB1NUJwQL8ZIeESCNZmX-mAACLilWW99m1k9SJovki-eACn_q-YiQehUA0YR7JMSEQ-3X7tp6VipHBSYqHOqcMTWeZgeH35sfXwINYqU3pJbtDRpBZBPBLaE6mlUD_IarJnPMKx9ImKqHxNmPEImrP2zI2z2I_PSe4rHay0_UXybiBDb46tv3kmK7ox1wsh6hdP7XRK_y8gyFaSUtvrJeN9xzukz1igDnbyN29MWAmuHDfyosBhE2seTOO0Q'}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -183,6 +279,7 @@ window.onload = wrap_img;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">build_query</span><span class="p">():</span>
     <span class="c1">#todo: Build url query for provenance api endpoint</span>
+    
 </pre></div>
 
     </div>
@@ -254,8 +351,13 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
-</div>
+&lt;/div&gt;
+ 
 
+</jwt></p>
+</div>
+</div></div>
+</div>
 
 
   </div><!-- from https://github.com/utterance/utterances -->
