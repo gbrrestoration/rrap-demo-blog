@@ -127,10 +127,10 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#About">About </a></li>
 <li class="toc-entry toc-h2"><a href="#Run-all-imports">Run all imports </a></li>
 <li class="toc-entry toc-h2"><a href="#Define-global-variables">Define global variables </a></li>
-<li class="toc-entry toc-h2"><a href="#Authentication-breakdown-steps">Authentication breakdown steps </a>
+<li class="toc-entry toc-h2"><a href="#Authentication-steps">Authentication steps </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server">Setup tokens using device authorisation flow against keycloak server </a></li>
-<li class="toc-entry toc-h3"><a href="#Example-authenticated-call">Example authenticated call </a></li>
+<li class="toc-entry toc-h3"><a href="#Authenticated-call">Authenticated call </a></li>
 </ul>
 </li>
 </ul><!--
@@ -148,7 +148,7 @@ window.onload = wrap_img;
 <h2 id="About">
 <a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
 </h2>
-<p>This notebook is a demonstration of authenticating with the RRAP-IS system.  It breaks down the process into steps. Later Notebook cell will demonstrate putting these all together using a python module</p>
+<p>This notebook is a demonstration of authenticating with the RRAP-IS system.</p>
 
 </div>
 </div>
@@ -174,7 +174,7 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">JSON</span>
+<span class="kn">import</span> <span class="nn">json</span>
    
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"python_packages/rrap_packages"</span><span class="p">)</span>
     
@@ -222,8 +222,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Authentication-breakdown-steps">
-<a class="anchor" href="#Authentication-breakdown-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication breakdown steps<a class="anchor-link" href="#Authentication-breakdown-steps"> </a>
+<h2 id="Authentication-steps">
+<a class="anchor" href="#Authentication-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication steps<a class="anchor-link" href="#Authentication-steps"> </a>
 </h2>
 <h3 id="Setup-tokens-using-device-authorisation-flow-against-keycloak-server">
 <a class="anchor" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup tokens using device authorisation flow against keycloak server<a class="anchor-link" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server"> </a>
@@ -259,41 +259,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Helper function to display responses</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">display_length_limit</span> <span class="o">=</span> <span class="mi">250</span>
-<span class="k">def</span> <span class="nf">cap_display</span><span class="p">(</span><span class="nb">input</span><span class="p">):</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">input</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">display_length_limit</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="nb">input</span><span class="p">[:</span><span class="n">display_length_limit</span><span class="p">])</span> <span class="o">+</span> <span class="s2">"....."</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">input</span>
-    
-<span class="k">def</span> <span class="nf">display_response</span><span class="p">(</span><span class="n">response</span><span class="p">):</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">cap_display</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Response - status_code: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">, json content: </span><span class="si">{</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span><span class="si">}</span><span class="s2">."</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Example-authenticated-call">
-<a class="anchor" href="#Example-authenticated-call" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example authenticated call<a class="anchor-link" href="#Example-authenticated-call"> </a>
+<h3 id="Authenticated-call">
+<a class="anchor" href="#Authenticated-call" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticated call<a class="anchor-link" href="#Authenticated-call"> </a>
 </h3>
 </div>
 </div>
@@ -315,24 +282,7 @@ window.onload = wrap_img;
 <span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
 
-<span class="n">display_response</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">JSON</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 
     </div>
