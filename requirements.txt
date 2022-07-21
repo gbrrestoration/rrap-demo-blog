@@ -2,5 +2,5 @@
 requests
 pydantic
 python-jose[cryptography]
--e /python_packages/
+-e ./python_packages/
 #ipykernel
