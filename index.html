@@ -4,9 +4,19 @@ search_exclude: true
 image: images/logo.png
 ---
 
-<table style="border:1px solid;padding:2px; width:310px;margin-left:auto;margin-right:auto;" ><tr><td><a href="https://www.scienceimage.csiro.au/image/2517/">
-    <img src="https://www.scienceimage.csiro.au/images/embed/300_0_AS0939.jpg" width="300" alt="Gorgonians and a Sponge" style="margin-left:auto;margin-right:auto; border: 0px;"></a>
-    <br/><a href="https://www.scienceimage.csiro.au/image/2517/">Gorgonians and a Sponge</a><br />by CSIRO</td></tr></table>
+{% assign image_href = "https://www.scienceimage.csiro.au/image/11386/" %}
+{% assign image_desc = "Coral" %}
+{% assign image_src = "https://www.scienceimage.csiro.au/images/embed/300_0_AS12053.jpg" %}
+
+<table style="border:1px solid;padding:2px; width:310px;margin-left:auto;margin-right:auto;">
+    <tr>
+        <td><a href="{{image_href}}">
+                <img src="{{image_src}}" width="300" alt="{{image_desc}}"
+                    style="margin-left:auto;margin-right:auto; border: 0px;"></a>
+            <br /><a href="{{image_href}}">{{image_desc}}</a><br />by CSIRO
+        </td>
+    </tr>
+</table>
 
 <h1 style="text-align: center;">This blog is for demonstrating MVP functionality to facilitate development of our systems</h1>
 
