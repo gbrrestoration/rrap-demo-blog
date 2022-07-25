@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Registery Query MVP Demo Notebook | RRAP M&amp;DS Information System</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Registery Query MVP Demo Notebook" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A tutorial of RRAP Registry Query using Jupyter notebooks." />
+<meta property="og:description" content="A tutorial of RRAP Registry Query using Jupyter notebooks." />
+<link rel="canonical" href="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html" />
+<meta property="og:url" content="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html" />
+<meta property="og:site_name" content="RRAP M&amp;DS Information System" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-07-19T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Registery Query MVP Demo Notebook" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-07-19T00:00:00-05:00","datePublished":"2022-07-19T00:00:00-05:00","description":"A tutorial of RRAP Registry Query using Jupyter notebooks.","headline":"Registery Query MVP Demo Notebook","mainEntityOfPage":{"@type":"WebPage","@id":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html"},"url":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/rrap-demo-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gbrrestoration.github.io/rrap-demo-blog/feed.xml" title="RRAP M&amp;DS Information System" /><link rel="shortcut icon" type="image/x-icon" href="/rrap-demo-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/rrap-demo-blog/">RRAP M&amp;DS Information System</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/rrap-demo-blog/about/">About Me</a><a class="page-link" href="/rrap-demo-blog/search/">Search</a><a class="page-link" href="/rrap-demo-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Registery Query MVP Demo Notebook</h1><p class="page-description">A tutorial of RRAP Registry Query using Jupyter notebooks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-07-19T00:00:00-05:00" itemprop="datePublished">
+        Jul 19, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/rrap-demo-blog/categories/#jupyter">jupyter</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/rrap-demo-blog/categories/#registry">registry</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gbrrestoration/rrap-demo-blog/tree/master/_notebooks/2022-07-19-registry-query.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+<div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?urlpath=lab/tree/_notebooks%2F2022-07-19-registry-query.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+<!-- <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?filepath=_notebooks%2F2022-07-19-registry-query.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div> -->
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#About">About </a></li>
+<li class="toc-entry toc-h2"><a href="#Import-general-dependencies">Import general dependencies </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Define-global-variables,-base-urls">Define global variables, base urls </a></li>
+<li class="toc-entry toc-h3"><a href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server">Setup tokens using device authorisation flow against keycloak server </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#Demonstrations">Demonstrations </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Dataset-Registry-APIs">Dataset Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#List-all-datasets">List all datasets </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Model-Registry-APIs">Model Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#List-all-registered-models">List all registered models </a></li>
+<li class="toc-entry toc-h3"><a href="#Fetch-registered-model">Fetch registered model </a></li>
+<li class="toc-entry toc-h3"><a href="#Register-a-model">Register a model </a></li>
+<li class="toc-entry toc-h3"><a href="#Delete-a-registered-model">Delete a registered model </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Configuration-File-Registry-APIs">Configuration File Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Create-a-Configuration-File-registry">Create a Configuration File registry </a></li>
+<li class="toc-entry toc-h3"><a href="#Fetch-Configuration-File">Fetch Configuration File </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Parameter-File-Registry-APIs">Parameter File Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Create-Parameter-File">Create Parameter File </a></li>
+<li class="toc-entry toc-h3"><a href="#Fetch-Parameter-File">Fetch Parameter File </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Agent-Registry-APIs">Agent Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Create-a-Agent">Create a Agent </a></li>
+<li class="toc-entry toc-h3"><a href="#List-all-Agents">List all Agents </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Organistation-Registry-APIs">Organistation Registry APIs </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Create-a-Organisation">Create a Organisation </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-07-19-registry-query.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="About">
+<a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
+</h2>
+<p>This page captures simple demonstrations of some of capabilities of RRAP to Registry Activities, Entities and Actors.  If you select the 'Binder' button above, a Jupyter Notebook will be lauched that you can use to further explore these examples.  You can change parameters and see results to further expand your understand of RRAP Registry.</p>
+<p>With <code>RRAP-IS Registry</code> system can be queried to find all 'Activities', 'Entities' and 'Actors' associated with particular 'Outputs', 'Inputs', or 'Reef Interventions'</p>
+<p>Please read documenation ### to understand terms used in this notebook and the future systems</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Import-general-dependencies">
+<a class="anchor" href="#Import-general-dependencies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Import general dependencies<a class="anchor-link" href="#Import-general-dependencies"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"python_packages/rrap_packages"</span><span class="p">)</span>
+    
+<span class="kn">from</span> <span class="nn">python_packages.rrap_packages.token_manager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Define-global-variables,-base-urls">
+<a class="anchor" href="#Define-global-variables,-base-urls" aria-hidden="true"><span class="octicon octicon-link"></span></a>Define global variables, base urls<a class="anchor-link" href="#Define-global-variables,-base-urls"> </a>
+</h3>
+<p>Note the use structure of the base url, pointing to test servers.  If you wish to test your code first, please use the test servers (listed below).  Note that these may not retain data and could be down at the time of testing.</p>
+<p>Remove <code>testing</code> from the url to use the production urls.  Please be careful using production urls, filling the system with test data will require considerable effort to cleanup.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_api</span> <span class="o">=</span> <span class="s2">"https://data-api.testing.rrap-is.com"</span>
+<span class="n">registry_api</span> <span class="o">=</span> <span class="s2">"https://registry-api.testing.rrap-is.com"</span>
+<span class="n">prov_api</span> <span class="o">=</span> <span class="s2">"https://prov-api.testing.rrap-is.com"</span>
+<span class="n">auth_server</span> <span class="o">=</span> <span class="s2">"https://auth.dev.rrap-is.com/auth/realms/rrap"</span>
+<span class="c1"># garbage = "https://frogs.are.green"</span>
+<span class="n">base_urls</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data_api'</span><span class="p">:</span> <span class="n">data_api</span><span class="p">,</span> <span class="s1">'registry_api'</span><span class="p">:</span> <span class="n">registry_api</span><span class="p">,</span> <span class="s1">'prov_api'</span><span class="p">:</span> <span class="n">prov_api</span><span class="p">,</span> <span class="s1">'auth_server'</span><span class="p">:</span> <span class="n">auth_server</span><span class="p">}</span><span class="c1">#, 'garbage': garbage}</span>
+<span class="n">display</span><span class="p">(</span><span class="s1">'Checking base urls'</span><span class="p">)</span>
+<span class="c1"># [display(Testing':',value) for key, value in base_urls.items()]</span>
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">base_urls</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Testing - </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Passed'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Fail'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># catastrophic error. bail.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Fail'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Setup-tokens-using-device-authorisation-flow-against-keycloak-server">
+<a class="anchor" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup tokens using device authorisation flow against keycloak server<a class="anchor-link" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server"> </a>
+</h3>
+<p>This could result in a browser window being opened if you don't have valid tokens cached in local storage.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">local_token_storage</span> <span class="o">=</span> <span class="s2">".tokens.json"</span>
+
+<span class="n">token_manager</span> <span class="o">=</span> <span class="n">DeviceFlowManager</span><span class="p">(</span>
+    <span class="n">stage</span><span class="o">=</span><span class="s2">"TEST"</span><span class="p">,</span>
+    <span class="n">keycloak_endpoint</span><span class="o">=</span><span class="n">auth_server</span><span class="p">,</span>
+    <span class="n">local_storage_location</span><span class="o">=</span><span class="n">local_token_storage</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Demonstrations">
+<a class="anchor" href="#Demonstrations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demonstrations<a class="anchor-link" href="#Demonstrations"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Dataset-Registry-APIs">
+<a class="anchor" href="#Dataset-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataset Registry APIs<a class="anchor-link" href="#Dataset-Registry-APIs"> </a>
+</h2>
+<h3 id="List-all-datasets">
+<a class="anchor" href="#List-all-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>List all datasets<a class="anchor-link" href="#List-all-datasets"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/items/list-all-datasets"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Model-Registry-APIs">
+<a class="anchor" href="#Model-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Registry APIs<a class="anchor-link" href="#Model-Registry-APIs"> </a>
+</h2>
+<h3 id="List-all-registered-models">
+<a class="anchor" href="#List-all-registered-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>List all registered models<a class="anchor-link" href="#List-all-registered-models"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/model/list"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fetch-registered-model">
+<a class="anchor" href="#Fetch-registered-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetch registered model<a class="anchor-link" href="#Fetch-registered-model"> </a>
+</h3>
+<p>From the above output copy the handle id and use it to fetch</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/model/fetch"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="s2">"?id=10378.1/1687611"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> <span class="o">+</span> <span class="n">params</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Register-a-model">
+<a class="anchor" href="#Register-a-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Register a model<a class="anchor-link" href="#Register-a-model"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/model/create"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"display_name"</span> <span class="p">:</span> <span class="s2">"RRAP-model (repo commit id - 1234)"</span><span class="p">,</span>
+    <span class="s2">"name"</span> <span class="p">:</span> <span class="s2">"RRAP-model-commit-1234"</span><span class="p">,</span>
+    <span class="s2">"url"</span> <span class="p">:</span> <span class="s2">"https://bitbucket.csiro.au/projects/MAE/repos/pybrat/commits/824fc954c7e85c8b4b94044fc22cdbf83e365735"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Delete-a-registered-model">
+<a class="anchor" href="#Delete-a-registered-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Delete a registered model<a class="anchor-link" href="#Delete-a-registered-model"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/model/delete"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'id'</span><span class="p">:</span> <span class="s1">'10378.1/1687609'</span> <span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Configuration-File-Registry-APIs">
+<a class="anchor" href="#Configuration-File-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration File Registry APIs<a class="anchor-link" href="#Configuration-File-Registry-APIs"> </a>
+</h2>
+<h3 id="Create-a-Configuration-File-registry">
+<a class="anchor" href="#Create-a-Configuration-File-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a Configuration File registry<a class="anchor-link" href="#Create-a-Configuration-File-registry"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/config_file/create"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> 
+    <span class="s2">"display_name"</span> <span class="p">:</span> <span class="s2">"Demo Notebook Configuration File"</span><span class="p">,</span>
+    <span class="s2">"url"</span> <span class="p">:</span> <span class="s2">"https://www.fake.model.com/demo_config_file"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fetch-Configuration-File">
+<a class="anchor" href="#Fetch-Configuration-File" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetch Configuration File<a class="anchor-link" href="#Fetch-Configuration-File"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/config_file/fetch"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="s2">"?id=10378.1/1687612"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> <span class="o">+</span> <span class="n">params</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Parameter-File-Registry-APIs">
+<a class="anchor" href="#Parameter-File-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameter File Registry APIs<a class="anchor-link" href="#Parameter-File-Registry-APIs"> </a>
+</h2>
+<h3 id="Create-Parameter-File">
+<a class="anchor" href="#Create-Parameter-File" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create Parameter File<a class="anchor-link" href="#Create-Parameter-File"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/parameter_file/create"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> 
+    <span class="s2">"display_name"</span> <span class="p">:</span> <span class="s2">"Demo Notebook Parameter File"</span><span class="p">,</span>
+    <span class="s2">"url"</span> <span class="p">:</span> <span class="s2">"https://www.fake.model.com/demo_pramater_file"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fetch-Parameter-File">
+<a class="anchor" href="#Fetch-Parameter-File" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fetch Parameter File<a class="anchor-link" href="#Fetch-Parameter-File"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/parameter_file/fetch"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span> <span class="s1">'id'</span><span class="p">:</span> <span class="s1">'10378.1/1687613'</span> <span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Agent-Registry-APIs">
+<a class="anchor" href="#Agent-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Agent Registry APIs<a class="anchor-link" href="#Agent-Registry-APIs"> </a>
+</h2>
+<h3 id="Create-a-Agent">
+<a class="anchor" href="#Create-a-Agent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a Agent<a class="anchor-link" href="#Create-a-Agent"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/agent/person/create"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> 
+    <span class="s2">"display_name"</span> <span class="p">:</span> <span class="s2">"Reef Modeller for eReef"</span><span class="p">,</span>
+    <span class="s2">"first_name"</span> <span class="p">:</span> <span class="s2">"John"</span><span class="p">,</span>
+    <span class="s2">"last_name"</span> <span class="p">:</span> <span class="s2">"Doe"</span><span class="p">,</span>
+    <span class="s2">"email"</span> <span class="p">:</span> <span class="s2">"John.Doe@uni-of.au"</span><span class="p">,</span>
+    <span class="s2">"orcid"</span> <span class="p">:</span> <span class="s2">"https://orcid.org/0000-0000-000-0000"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="List-all-Agents">
+<a class="anchor" href="#List-all-Agents" aria-hidden="true"><span class="octicon octicon-link"></span></a>List all Agents<a class="anchor-link" href="#List-all-Agents"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Pull out the BearerAuth function (don't call it yet)</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/agent/person/list"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Organistation-Registry-APIs">
+<a class="anchor" href="#Organistation-Registry-APIs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organistation Registry APIs<a class="anchor-link" href="#Organistation-Registry-APIs"> </a>
+</h2>
+<h3 id="Create-a-Organisation">
+<a class="anchor" href="#Create-a-Organisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Create a Organisation<a class="anchor-link" href="#Create-a-Organisation"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="c1"># Setup postfix and endpoint</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/agent/organisation/create"</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span> 
+    <span class="s2">"display_name"</span> <span class="p">:</span> <span class="s2">"Reef Research"</span><span class="p">,</span>
+    <span class="s2">"name"</span> <span class="p">:</span> <span class="s2">"Reef Research"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
+<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="gbrrestoration/rrap-demo-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+    <data class="u-url" href="/rrap-demo-blog/"></data>
+
+    <div class="wrapper">
+
+        <div class="footer-col-wrapper">
+            <div class="footer-col">
+                <p class="feed-subscribe">
+                    <a href="/rrap-demo-blog/feed.xml">
+                        <svg class="svg-icon orange">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#rss"></use>
+                        </svg><span>Subscribe</span>
+                    </a>
+                </p>
+            </div>
+            <div class="footer-col">
+                <p>© Reef Restoration and Adaptation Program. All rights reserved.</p>
+            </div>
+        </div>
+        <div>
+            <h3 style="text-align: center;">Acknowledgement of Country</h3>
+            <p style="text-align: center;">The Reef Restoration and Adaptation Program respects and recognises all Traditional Owners of the Great Barrier Reef as First Nations Peoples holding the hopes, dreams, traditions and cultures of the Reef.</p>
+        </div>
+        <div class="social-links">
+            <ul class="social-media-list">
+                <li><a rel="me" href="https://github.com/gbrrestoration" target="_blank" title="gbrrestoration"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#github"></use>
+                        </svg></a></li>
+                <li><a rel="me" href="https://twitter.com/GBRFoundation" target="_blank" title="GBRFoundation"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#twitter"></use>
+                        </svg></a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</footer></body>
+
+</html>
