@@ -18,3 +18,5 @@ Gemfile.lock
 .venv 
 .tokens.json
 python_packages/rrap_packages.egg-info/
+
+.ipynb_checkpoints/
