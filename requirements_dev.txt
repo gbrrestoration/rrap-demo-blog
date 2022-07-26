@@ -3,3 +3,7 @@ requests
 pydantic
 python-jose[cryptography]
 ipython
+jupyter
+jupyterlab
+ipywidgets
+mdsisclienttoolsj
