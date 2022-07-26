@@ -6,4 +6,5 @@ ipython
 jupyter
 jupyterlab
 ipywidgets
-mdsisclienttoolsj
+mdsisclienttools
+json2tree
