@@ -3,3 +3,4 @@ requests
 pydantic
 python-jose[cryptography]
 mdsisclienttools
+json2tree
