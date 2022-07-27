@@ -8,3 +8,4 @@ jupyterlab
 ipywidgets
 mdsisclienttools
 json2tree
+beautifulsoup4
