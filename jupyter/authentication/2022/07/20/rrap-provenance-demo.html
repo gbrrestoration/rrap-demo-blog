@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      5 min read
     
 </span></p>
 
@@ -141,6 +141,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Explore-lineage">Explore lineage </a></li>
 </ul>
 </li>
+<li class="toc-entry toc-h2"><a href="#Explore-Children">Explore Children </a></li>
 </ul><body>
 <!--
 #################################################
@@ -188,6 +189,10 @@ window.onload = wrap_img;
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
+
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">nx_altair</span> <span class="k">as</span> <span class="nn">nxa</span>
+<span class="kn">from</span> <span class="nn">networkx.readwrite</span> <span class="kn">import</span> <span class="n">json_graph</span>
 
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'once'</span><span class="p">)</span>
@@ -322,23 +327,7 @@ Looking for existing tokens in local storage.
 
 Validating found tokens
 
-Trying to use found tokens to refresh the access token.
-
-Tokens found in storage but they are not valid.
-
-Initiating device auth flow to setup offline access token.
-
-Decoding response
-
-Please authorise using the following endpoint.
-
-Verification URL: https://auth.dev.rrap-is.com/auth/realms/rrap/device?user_code=JCSV-WOMS
-User Code: JCSV-WOMS
-
-Awaiting completion
-
-
-Token generation complete. Authorisation successful.
+Found tokens valid, using.
 
 </pre>
 </div>
@@ -568,7 +557,7 @@ Token generation complete. Authorisation successful.
           id :
          </span>
          <span>
-          10378.1/1687703
+          10378.1/1687723
          </span>
         </li>
         <li>
@@ -576,7 +565,7 @@ Token generation complete. Authorisation successful.
           prov_json :
          </span>
          <span>
-          {"prefix": {"default": "http://hdl.handle.net/"}, "activity": {"10378.1/1687703": {"model_run/10378.1/1687703": true, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN"}}, "entity": {"10378.1/1687286": {"model_run/10378.1/1687703": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1687280": {"model_run/10378.1/1687703": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1687695": {"model_run/10378.1/1687703": true, "item_category": "ENTITY", "item_subtype": "PARAMETER_FILE"}, "10378.1/1687612": {"model_run/10378.1/1687703": true, "item_category": "ENTITY", "item_subtype": "CONFIG_FILE"}, "10378.1/1687693": {"model_run/10378.1/1687703": true, "item_category": "ENTITY", "item_subtype": "MODEL"}}, "agent": {"10378.1/1687696": {"model_run/10378.1/1687703": true, "item_category": "AGENT", "item_subtype": "PERSON"}, "10378.1/1687697": {"model_run/10378.1/1687703": true, "item_category": "AGENT", "item_subtype": "ORGANISATION"}}, "used": {"_:id1": {"prov:activity": "10378.1/1687703", "prov:entity": "10378.1/1687286"}, "_:id3": {"prov:activity": "10378.1/1687703", "prov:entity": "10378.1/1687695"}, "_:id4": {"prov:activity": "10378.1/1687703", "prov:entity": "10378.1/1687612"}, "_:id5": {"prov:activity": "10378.1/1687703", "prov:entity": "10378.1/1687693"}}, "wasGeneratedBy": {"_:id2": {"prov:entity": "10378.1/1687280", "prov:activity": "10378.1/1687703"}}, "wasAssociatedWith": {"_:id6": {"prov:activity": "10378.1/1687703", "prov:agent": "10378.1/1687696"}, "_:id7": {"prov:activity": "10378.1/1687703", "prov:agent": "10378.1/1687697"}}, "wasAttributedTo": {"_:id8": {"prov:entity": "10378.1/1687280", "prov:agent": "10378.1/1687696"}}}
+          {"prefix": {"default": "http://hdl.handle.net/"}, "activity": {"10378.1/1687723": {"model_run/10378.1/1687723": true, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN"}}, "entity": {"10378.1/1687286": {"model_run/10378.1/1687723": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1687280": {"model_run/10378.1/1687723": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1687695": {"model_run/10378.1/1687723": true, "item_category": "ENTITY", "item_subtype": "PARAMETER_FILE"}, "10378.1/1687612": {"model_run/10378.1/1687723": true, "item_category": "ENTITY", "item_subtype": "CONFIG_FILE"}, "10378.1/1687693": {"model_run/10378.1/1687723": true, "item_category": "ENTITY", "item_subtype": "MODEL"}}, "agent": {"10378.1/1687696": {"model_run/10378.1/1687723": true, "item_category": "AGENT", "item_subtype": "PERSON"}, "10378.1/1687697": {"model_run/10378.1/1687723": true, "item_category": "AGENT", "item_subtype": "ORGANISATION"}}, "used": {"_:id1": {"prov:activity": "10378.1/1687723", "prov:entity": "10378.1/1687286"}, "_:id3": {"prov:activity": "10378.1/1687723", "prov:entity": "10378.1/1687695"}, "_:id4": {"prov:activity": "10378.1/1687723", "prov:entity": "10378.1/1687612"}, "_:id5": {"prov:activity": "10378.1/1687723", "prov:entity": "10378.1/1687693"}}, "wasGeneratedBy": {"_:id2": {"prov:entity": "10378.1/1687280", "prov:activity": "10378.1/1687723"}}, "wasAssociatedWith": {"_:id6": {"prov:activity": "10378.1/1687723", "prov:agent": "10378.1/1687696"}, "_:id7": {"prov:activity": "10378.1/1687723", "prov:agent": "10378.1/1687697"}}, "wasAttributedTo": {"_:id8": {"prov:entity": "10378.1/1687280", "prov:agent": "10378.1/1687696"}}}
          </span>
         </li>
         <li>
@@ -789,16 +778,30 @@ for (i = 0; i < toggler.length; i++) {
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">url_query_string</span> <span class="o">=</span> <span class="s2">"/explore/lineage"</span>
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"id"</span><span class="p">:</span> <span class="s2">"10378.1/1687702"</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/explore/lineage"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"starting_id"</span><span class="p">:</span> <span class="s2">"10378.1/1687588"</span><span class="p">,</span>
+    <span class="s2">"depth"</span><span class="p">:</span> <span class="mi">10</span>
 <span class="p">}</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
 
 <span class="n">convert_json_to_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
 <span class="n">HTML</span><span class="p">(</span><span class="s1">'clean.html'</span><span class="p">)</span>
+
+<span class="n">result_graph</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">"graph"</span><span class="p">]</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">json_graph</span><span class="o">.</span><span class="n">node_link_graph</span><span class="p">(</span><span class="n">result_graph</span><span class="p">)</span>
+
+<span class="c1"># Compute positions for viz.</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="c1"># Draw the graph using Altair</span>
+<span class="n">viz</span> <span class="o">=</span> <span class="n">nxa</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">)</span>
+
+<span class="c1"># Show it as an interactive plot!</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -810,161 +813,207 @@ for (i = 0; i < toggler.length; i++) {
 
 <div class="output_area">
 
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Token validation failed due to error: Signature has expired.
+Refreshing using refresh token
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
- <details>
-  <div style="width: 800px; height: 400px; overflow-y: auto; background-color: #F1F3F4">
-   <ul>
-    <li>
-     <ul>
-      <li>
-       <span>
-        detail : [3]
-       </span>
-       <ul>
-        <li>
-         <span>
-          0 :
-         </span>
-         <ul>
-          <li>
-           <span>
-            loc : [2]
-           </span>
-           <ul>
-            <li>
-             <span>
-              body
-             </span>
-            </li>
-            <li>
-             <span>
-              inputs
-             </span>
-            </li>
-           </ul>
-          </li>
-          <li>
-           <span>
-            msg :
-           </span>
-           <span>
-            field required
-           </span>
-          </li>
-          <li>
-           <span>
-            type :
-           </span>
-           <span>
-            value_error.missing
-           </span>
-          </li>
-         </ul>
-        </li>
-        <li>
-         <span>
-          1 :
-         </span>
-         <ul>
-          <li>
-           <span>
-            loc : [2]
-           </span>
-           <ul>
-            <li>
-             <span>
-              body
-             </span>
-            </li>
-            <li>
-             <span>
-              outputs
-             </span>
-            </li>
-           </ul>
-          </li>
-          <li>
-           <span>
-            msg :
-           </span>
-           <span>
-            field required
-           </span>
-          </li>
-          <li>
-           <span>
-            type :
-           </span>
-           <span>
-            value_error.missing
-           </span>
-          </li>
-         </ul>
-        </li>
-        <li>
-         <span>
-          2 :
-         </span>
-         <ul>
-          <li>
-           <span>
-            loc : [2]
-           </span>
-           <ul>
-            <li>
-             <span>
-              body
-             </span>
-            </li>
-            <li>
-             <span>
-              associations
-             </span>
-            </li>
-           </ul>
-          </li>
-          <li>
-           <span>
-            msg :
-           </span>
-           <span>
-            field required
-           </span>
-          </li>
-          <li>
-           <span>
-            type :
-           </span>
-           <span>
-            value_error.missing
-           </span>
-          </li>
-         </ul>
-        </li>
-       </ul>
-      </li>
-     </ul>
-    </li>
-   </ul>
-  </div>
-  <summary>
-   Results
-  </summary>
- </details>
- <script>
-  var toggler = document.getElementsByClassName("caret");
-var i;
-for (i = 0; i < toggler.length; i++) {
-    toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-}
-)}
- </script>
+<div id="altair-viz-678191a8d8444127959959a4cee66567"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-678191a8d8444127959959a4cee66567") {
+      outputDiv = document.getElementById("altair-viz-678191a8d8444127959959a4cee66567");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-db8ef7cc21f9f0fb48e7df0f920ce112"}, "mark": {"type": "line", "color": "black", "opacity": 1, "strokeWidth": 1}, "encoding": {"detail": {"field": "edge", "type": "quantitative"}, "x": {"axis": {"grid": false, "labels": false, "ticks": false, "title": ""}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false, "title": ""}, "field": "y", "type": "quantitative"}}, "selection": {"selector009": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}}, {"data": {"name": "data-8c5114e9785195d6f2962158d83c7dc2"}, "mark": {"type": "line", "color": "black", "opacity": 1, "strokeWidth": 2}, "encoding": {"detail": {"field": "edge", "type": "quantitative"}, "x": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "y", "type": "quantitative"}}}, {"data": {"name": "data-cb7539ac86c1ce3945939c182f8d6843"}, "mark": {"type": "point", "fill": "red", "opacity": 1, "size": 300, "strokeWidth": 1.0}, "encoding": {"x": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "y", "type": "quantitative"}}}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-db8ef7cc21f9f0fb48e7df0f920ce112": [{"x": -0.43933785091070005, "pair": ["10378.1/1687588", "10378.1/1687590"], "source": "10378.1/1687588", "edge": 0, "y": -0.07219006565607945, "type": "wasGeneratedBy", "target": "10378.1/1687590"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687588", "10378.1/1687590"], "source": "10378.1/1687588", "edge": 0, "y": 0.14057114338773816, "type": "wasGeneratedBy", "target": "10378.1/1687590"}, {"x": -0.43933785091070005, "pair": ["10378.1/1687588", "10378.1/1687585"], "source": "10378.1/1687588", "edge": 1, "y": -0.07219006565607945, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687588", "10378.1/1687585"], "source": "10378.1/1687588", "edge": 1, "y": -0.29234427963321447, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687590", "10378.1/1687235"], "source": "10378.1/1687590", "edge": 2, "y": 0.14057114338773816, "type": "used", "target": "10378.1/1687235"}, {"x": -0.27880554929918766, "pair": ["10378.1/1687590", "10378.1/1687235"], "source": "10378.1/1687590", "edge": 2, "y": -0.13185747534777004, "type": "used", "target": "10378.1/1687235"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687590", "10378.1/1687584"], "source": "10378.1/1687590", "edge": 3, "y": 0.14057114338773816, "type": "used", "target": "10378.1/1687584"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687590", "10378.1/1687584"], "source": "10378.1/1687590", "edge": 3, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687590", "10378.1/1687583"], "source": "10378.1/1687590", "edge": 4, "y": 0.14057114338773816, "type": "used", "target": "10378.1/1687583"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687590", "10378.1/1687583"], "source": "10378.1/1687590", "edge": 4, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687590", "10378.1/1687582"], "source": "10378.1/1687590", "edge": 5, "y": 0.14057114338773816, "type": "used", "target": "10378.1/1687582"}, {"x": -0.5442476674764801, "pair": ["10378.1/1687590", "10378.1/1687582"], "source": "10378.1/1687590", "edge": 5, "y": 0.48340854921656184, "type": "used", "target": "10378.1/1687582"}, {"x": -0.06702968265358086, "pair": ["10378.1/1687590", "10378.1/1687585"], "source": "10378.1/1687590", "edge": 6, "y": 0.14057114338773816, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687590", "10378.1/1687585"], "source": "10378.1/1687590", "edge": 6, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.27880554929918766, "pair": ["10378.1/1687235", "10378.1/1687587"], "source": "10378.1/1687235", "edge": 7, "y": -0.13185747534777004, "type": "wasGeneratedBy", "target": "10378.1/1687587"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687235", "10378.1/1687587"], "source": "10378.1/1687235", "edge": 7, "y": 0.014660933026760602, "type": "wasGeneratedBy", "target": "10378.1/1687587"}, {"x": -0.27880554929918766, "pair": ["10378.1/1687235", "10378.1/1687585"], "source": "10378.1/1687235", "edge": 8, "y": -0.13185747534777004, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687235", "10378.1/1687585"], "source": "10378.1/1687235", "edge": 8, "y": -0.29234427963321447, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.27880554929918766, "pair": ["10378.1/1687235", "10378.1/1687607"], "source": "10378.1/1687235", "edge": 9, "y": -0.13185747534777004, "type": "wasGeneratedBy", "target": "10378.1/1687607"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687235", "10378.1/1687607"], "source": "10378.1/1687235", "edge": 9, "y": -0.023460966038324493, "type": "wasGeneratedBy", "target": "10378.1/1687607"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687587", "10378.1/1687363"], "source": "10378.1/1687587", "edge": 10, "y": 0.014660933026760602, "type": "used", "target": "10378.1/1687363"}, {"x": 0.1516580550113274, "pair": ["10378.1/1687587", "10378.1/1687363"], "source": "10378.1/1687587", "edge": 10, "y": -0.8145380734651009, "type": "used", "target": "10378.1/1687363"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687587", "10378.1/1687584"], "source": "10378.1/1687587", "edge": 11, "y": 0.014660933026760602, "type": "used", "target": "10378.1/1687584"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687587", "10378.1/1687584"], "source": "10378.1/1687587", "edge": 11, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687587", "10378.1/1687583"], "source": "10378.1/1687587", "edge": 12, "y": 0.014660933026760602, "type": "used", "target": "10378.1/1687583"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687587", "10378.1/1687583"], "source": "10378.1/1687587", "edge": 12, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687587", "10378.1/1687582"], "source": "10378.1/1687587", "edge": 13, "y": 0.014660933026760602, "type": "used", "target": "10378.1/1687582"}, {"x": -0.5442476674764801, "pair": ["10378.1/1687587", "10378.1/1687582"], "source": "10378.1/1687587", "edge": 13, "y": 0.48340854921656184, "type": "used", "target": "10378.1/1687582"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687587", "10378.1/1687585"], "source": "10378.1/1687587", "edge": 14, "y": 0.014660933026760602, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687587", "10378.1/1687585"], "source": "10378.1/1687587", "edge": 14, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687607", "10378.1/1687363"], "source": "10378.1/1687607", "edge": 15, "y": -0.023460966038324493, "type": "used", "target": "10378.1/1687363"}, {"x": 0.1516580550113274, "pair": ["10378.1/1687607", "10378.1/1687363"], "source": "10378.1/1687607", "edge": 15, "y": -0.8145380734651009, "type": "used", "target": "10378.1/1687363"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687607", "10378.1/1687584"], "source": "10378.1/1687607", "edge": 16, "y": -0.023460966038324493, "type": "used", "target": "10378.1/1687584"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687607", "10378.1/1687584"], "source": "10378.1/1687607", "edge": 16, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687607", "10378.1/1687583"], "source": "10378.1/1687607", "edge": 17, "y": -0.023460966038324493, "type": "used", "target": "10378.1/1687583"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687607", "10378.1/1687583"], "source": "10378.1/1687607", "edge": 17, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687607", "10378.1/1687602"], "source": "10378.1/1687607", "edge": 18, "y": -0.023460966038324493, "type": "used", "target": "10378.1/1687602"}, {"x": 0.9273159872171927, "pair": ["10378.1/1687607", "10378.1/1687602"], "source": "10378.1/1687607", "edge": 18, "y": 0.11122482552827205, "type": "used", "target": "10378.1/1687602"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687607", "10378.1/1687585"], "source": "10378.1/1687607", "edge": 19, "y": -0.023460966038324493, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687607", "10378.1/1687585"], "source": "10378.1/1687607", "edge": 19, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}], "data-8c5114e9785195d6f2962158d83c7dc2": [{"x": -0.06702968265358086, "pair": ["10378.1/1687588", "10378.1/1687590"], "source": "10378.1/1687588", "edge": 0, "y": 0.14057114338773816, "type": "wasGeneratedBy", "target": "10378.1/1687590"}, {"x": -0.10426049947929278, "pair": ["10378.1/1687588", "10378.1/1687590"], "source": "10378.1/1687588", "edge": 0, "y": 0.1192950224833564, "type": "wasGeneratedBy", "target": "10378.1/1687590"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687588", "10378.1/1687585"], "source": "10378.1/1687588", "edge": 1, "y": -0.29234427963321447, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.7576062423652469, "pair": ["10378.1/1687588", "10378.1/1687585"], "source": "10378.1/1687588", "edge": 1, "y": -0.27032885823550096, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.27880554929918766, "pair": ["10378.1/1687590", "10378.1/1687235"], "source": "10378.1/1687590", "edge": 2, "y": -0.13185747534777004, "type": "used", "target": "10378.1/1687235"}, {"x": -0.25762796263462695, "pair": ["10378.1/1687590", "10378.1/1687235"], "source": "10378.1/1687590", "edge": 2, "y": -0.10461461347421921, "type": "used", "target": "10378.1/1687235"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687590", "10378.1/1687584"], "source": "10378.1/1687590", "edge": 3, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": 0.6235118824053558, "pair": ["10378.1/1687590", "10378.1/1687584"], "source": "10378.1/1687590", "edge": 3, "y": -0.35987001757818515, "type": "used", "target": "10378.1/1687584"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687590", "10378.1/1687583"], "source": "10378.1/1687590", "edge": 4, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": 0.17361593143563708, "pair": ["10378.1/1687590", "10378.1/1687583"], "source": "10378.1/1687590", "edge": 4, "y": 0.9140571143387738, "type": "used", "target": "10378.1/1687583"}, {"x": -0.5442476674764801, "pair": ["10378.1/1687590", "10378.1/1687582"], "source": "10378.1/1687590", "edge": 5, "y": 0.48340854921656184, "type": "used", "target": "10378.1/1687582"}, {"x": -0.4965258689941902, "pair": ["10378.1/1687590", "10378.1/1687582"], "source": "10378.1/1687590", "edge": 5, "y": 0.4491248086336795, "type": "used", "target": "10378.1/1687582"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687590", "10378.1/1687585"], "source": "10378.1/1687590", "edge": 6, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.7203754255395349, "pair": ["10378.1/1687590", "10378.1/1687585"], "source": "10378.1/1687590", "edge": 6, "y": -0.2490527373311192, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.02574694679728662, "pair": ["10378.1/1687235", "10378.1/1687587"], "source": "10378.1/1687235", "edge": 7, "y": 0.014660933026760602, "type": "wasGeneratedBy", "target": "10378.1/1687587"}, {"x": -0.05105280704747672, "pair": ["10378.1/1687235", "10378.1/1687587"], "source": "10378.1/1687235", "edge": 7, "y": 9.092189307537135e-06, "type": "wasGeneratedBy", "target": "10378.1/1687587"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687235", "10378.1/1687585"], "source": "10378.1/1687235", "edge": 8, "y": -0.29234427963321447, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": -0.7415530122040956, "pair": ["10378.1/1687235", "10378.1/1687585"], "source": "10378.1/1687235", "edge": 8, "y": -0.27629559920467, "type": "wasAttributedTo", "target": "10378.1/1687585"}, {"x": 0.16856999591145683, "pair": ["10378.1/1687235", "10378.1/1687607"], "source": "10378.1/1687235", "edge": 9, "y": -0.023460966038324493, "type": "wasGeneratedBy", "target": "10378.1/1687607"}, {"x": 0.12383244139039237, "pair": ["10378.1/1687235", "10378.1/1687607"], "source": "10378.1/1687235", "edge": 9, "y": -0.034300616969269046, "type": "wasGeneratedBy", "target": "10378.1/1687607"}, {"x": 0.1516580550113274, "pair": ["10378.1/1687587", "10378.1/1687363"], "source": "10378.1/1687587", "edge": 10, "y": -0.8145380734651009, "type": "used", "target": "10378.1/1687363"}, {"x": 0.133917554830466, "pair": ["10378.1/1687587", "10378.1/1687363"], "source": "10378.1/1687587", "edge": 10, "y": -0.7316181728159147, "type": "used", "target": "10378.1/1687363"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687587", "10378.1/1687584"], "source": "10378.1/1687587", "edge": 11, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": 0.6276401559909852, "pair": ["10378.1/1687587", "10378.1/1687584"], "source": "10378.1/1687587", "edge": 11, "y": -0.3724610386142829, "type": "used", "target": "10378.1/1687584"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687587", "10378.1/1687583"], "source": "10378.1/1687587", "edge": 12, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": 0.1777442050212665, "pair": ["10378.1/1687587", "10378.1/1687583"], "source": "10378.1/1687587", "edge": 12, "y": 0.901466093302676, "type": "used", "target": "10378.1/1687583"}, {"x": -0.5442476674764801, "pair": ["10378.1/1687587", "10378.1/1687582"], "source": "10378.1/1687587", "edge": 13, "y": 0.48340854921656184, "type": "used", "target": "10378.1/1687582"}, {"x": -0.49239759540856076, "pair": ["10378.1/1687587", "10378.1/1687582"], "source": "10378.1/1687587", "edge": 13, "y": 0.4365337875975817, "type": "used", "target": "10378.1/1687582"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687587", "10378.1/1687585"], "source": "10378.1/1687587", "edge": 14, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.7162471519539055, "pair": ["10378.1/1687587", "10378.1/1687585"], "source": "10378.1/1687587", "edge": 14, "y": -0.261643758367217, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": 0.1516580550113274, "pair": ["10378.1/1687607", "10378.1/1687363"], "source": "10378.1/1687607", "edge": 15, "y": -0.8145380734651009, "type": "used", "target": "10378.1/1687363"}, {"x": 0.15334924910134035, "pair": ["10378.1/1687607", "10378.1/1687363"], "source": "10378.1/1687607", "edge": 15, "y": -0.7354303627224232, "type": "used", "target": "10378.1/1687363"}, {"x": 0.7002387229674599, "pair": ["10378.1/1687607", "10378.1/1687584"], "source": "10378.1/1687607", "edge": 16, "y": -0.4154745910188433, "type": "used", "target": "10378.1/1687584"}, {"x": 0.6470718502618596, "pair": ["10378.1/1687607", "10378.1/1687584"], "source": "10378.1/1687607", "edge": 16, "y": -0.3762732285207914, "type": "used", "target": "10378.1/1687584"}, {"x": 0.20035433300110575, "pair": ["10378.1/1687607", "10378.1/1687583"], "source": "10378.1/1687607", "edge": 17, "y": 1.0, "type": "used", "target": "10378.1/1687583"}, {"x": 0.19717589929214085, "pair": ["10378.1/1687607", "10378.1/1687583"], "source": "10378.1/1687607", "edge": 17, "y": 0.8976539033961676, "type": "used", "target": "10378.1/1687583"}, {"x": 0.9273159872171927, "pair": ["10378.1/1687607", "10378.1/1687602"], "source": "10378.1/1687607", "edge": 18, "y": 0.11122482552827205, "type": "used", "target": "10378.1/1687602"}, {"x": 0.8514413880866191, "pair": ["10378.1/1687607", "10378.1/1687602"], "source": "10378.1/1687607", "edge": 18, "y": 0.0977562463716124, "type": "used", "target": "10378.1/1687602"}, {"x": -0.7929693969713076, "pair": ["10378.1/1687607", "10378.1/1687585"], "source": "10378.1/1687607", "edge": 19, "y": -0.29234427963321447, "type": "wasAssociatedWith", "target": "10378.1/1687585"}, {"x": -0.6968154576830312, "pair": ["10378.1/1687607", "10378.1/1687585"], "source": "10378.1/1687607", "edge": 19, "y": -0.2654559482737255, "type": "wasAssociatedWith", "target": "10378.1/1687585"}], "data-cb7539ac86c1ce3945939c182f8d6843": [{"x": -0.43933785091070005, "item_category": "ENTITY", "item_subtype": "DATASET", "y": -0.07219006565607945}, {"x": -0.06702968265358086, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN", "y": 0.14057114338773816}, {"x": -0.27880554929918766, "item_category": "ENTITY", "item_subtype": "DATASET", "y": -0.13185747534777004}, {"x": -0.02574694679728662, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN", "y": 0.014660933026760602}, {"x": 0.1516580550113274, "item_category": "ENTITY", "item_subtype": "DATASET", "y": -0.8145380734651009}, {"x": 0.7002387229674599, "item_category": "ENTITY", "item_subtype": "PARAMETER_FILE", "y": -0.4154745910188433}, {"x": 0.20035433300110575, "item_category": "ENTITY", "item_subtype": "CONFIG_FILE", "y": 1.0}, {"x": -0.5442476674764801, "item_category": "ENTITY", "item_subtype": "MODEL", "y": 0.48340854921656184}, {"x": -0.7929693969713076, "item_category": "AGENT", "item_subtype": "PERSON", "y": -0.29234427963321447}, {"x": 0.16856999591145683, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN", "y": -0.023460966038324493}, {"x": 0.9273159872171927, "item_category": "ENTITY", "item_subtype": "MODEL", "y": 0.11122482552827205}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Explore-Children">
+<a class="anchor" href="#Explore-Children" aria-hidden="true"><span class="octicon octicon-link"></span></a>Explore Children<a class="anchor-link" href="#Explore-Children"> </a>
+</h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/explore/children"</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"starting_id"</span><span class="p">:</span> <span class="s2">"10378.1/1687588"</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="n">convert_json_to_html</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">())</span>
+<span class="n">HTML</span><span class="p">(</span><span class="s1">'clean.html'</span><span class="p">)</span>
+
+<span class="n">result_graph</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">"graph"</span><span class="p">]</span>
+
+<span class="n">G</span> <span class="o">=</span> <span class="n">json_graph</span><span class="o">.</span><span class="n">node_link_graph</span><span class="p">(</span><span class="n">result_graph</span><span class="p">)</span>
+
+<span class="c1"># Compute positions for viz.</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+<span class="c1"># Draw the graph using Altair</span>
+<span class="n">viz</span> <span class="o">=</span> <span class="n">nxa</span><span class="o">.</span><span class="n">draw_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span>  <span class="n">arrow_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="n">arrow_length</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">arrow_color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">)</span>
+
+<span class="c1"># Show it as an interactive plot!</span>
+<span class="n">viz</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>C:\office12\rrap-demo-blog\.mvp_demo_venv\lib\site-packages\IPython\utils\_process_win32.py:124: ResourceWarning: unclosed file &lt;_io.BufferedWriter name=4&gt;
+  return process_handler(cmd, _system_body)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\office12\rrap-demo-blog\.mvp_demo_venv\lib\site-packages\IPython\utils\_process_win32.py:124: ResourceWarning: unclosed file &lt;_io.BufferedReader name=5&gt;
+  return process_handler(cmd, _system_body)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+C:\office12\rrap-demo-blog\.mvp_demo_venv\lib\site-packages\IPython\utils\_process_win32.py:124: ResourceWarning: unclosed file &lt;_io.BufferedReader name=6&gt;
+  return process_handler(cmd, _system_body)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+</pre>
+</div>
+</div>
+
+<div class="output_area">
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<div id="altair-viz-dda7a606a83a45d6ba1c91e57a3c2f5e"></div>
+<script type="text/javascript">
+  var VEGA_DEBUG = (typeof VEGA_DEBUG == "undefined") ? {} : VEGA_DEBUG;
+  (function(spec, embedOpt){
+    let outputDiv = document.currentScript.previousElementSibling;
+    if (outputDiv.id !== "altair-viz-dda7a606a83a45d6ba1c91e57a3c2f5e") {
+      outputDiv = document.getElementById("altair-viz-dda7a606a83a45d6ba1c91e57a3c2f5e");
+    }
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.17.0?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function maybeLoadScript(lib, version) {
+      var key = `${lib.replace("-", "")}_version`;
+      return (VEGA_DEBUG[key] == version) ?
+        Promise.resolve(paths[lib]) :
+        new Promise(function(resolve, reject) {
+          var s = document.createElement('script');
+          document.getElementsByTagName("head")[0].appendChild(s);
+          s.async = true;
+          s.onload = () => {
+            VEGA_DEBUG[key] = version;
+            return resolve(paths[lib]);
+          };
+          s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+          s.src = paths[lib];
+        });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else {
+      maybeLoadScript("vega", "5")
+        .then(() => maybeLoadScript("vega-lite", "4.17.0"))
+        .then(() => maybeLoadScript("vega-embed", "6"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "layer": [{"data": {"name": "data-a8ebe7a822e10f69b6d00c0b565645c1"}, "mark": {"type": "line", "color": "black", "opacity": 1, "strokeWidth": 1}, "encoding": {"detail": {"field": "edge", "type": "quantitative"}, "x": {"axis": {"grid": false, "labels": false, "ticks": false, "title": ""}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false, "title": ""}, "field": "y", "type": "quantitative"}}, "selection": {"selector010": {"type": "interval", "bind": "scales", "encodings": ["x", "y"]}}}, {"data": {"name": "data-45d9f6f9bdefbed50c96fe34d97e5575"}, "mark": {"type": "line", "color": "green", "opacity": 1, "strokeWidth": 5}, "encoding": {"detail": {"field": "edge", "type": "quantitative"}, "x": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "y", "type": "quantitative"}}}, {"data": {"name": "data-86e87af44c5771e23ab37dd85490ad29"}, "mark": {"type": "point", "fill": "red", "opacity": 1, "size": 300, "strokeWidth": 1.0}, "encoding": {"x": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "x", "type": "quantitative"}, "y": {"axis": {"grid": false, "labels": false, "ticks": false}, "field": "y", "type": "quantitative"}}}], "$schema": "https://vega.github.io/schema/vega-lite/v4.17.0.json", "datasets": {"data-a8ebe7a822e10f69b6d00c0b565645c1": [{"x": -0.010460755127874373, "pair": ["10378.1/1687591", "10378.1/1687588"], "source": "10378.1/1687591", "edge": 0, "y": -0.10959754712662925, "type": "used", "target": "10378.1/1687588"}, {"x": 1.0, "pair": ["10378.1/1687591", "10378.1/1687588"], "source": "10378.1/1687591", "edge": 0, "y": 0.4464292942641875, "type": "used", "target": "10378.1/1687588"}, {"x": -0.9895392448721254, "pair": ["10378.1/1687589", "10378.1/1687591"], "source": "10378.1/1687589", "edge": 1, "y": -0.3368317471375583, "type": "wasGeneratedBy", "target": "10378.1/1687591"}, {"x": -0.010460755127874373, "pair": ["10378.1/1687589", "10378.1/1687591"], "source": "10378.1/1687589", "edge": 1, "y": -0.10959754712662925, "type": "wasGeneratedBy", "target": "10378.1/1687591"}], "data-45d9f6f9bdefbed50c96fe34d97e5575": [{"x": 1.0, "pair": ["10378.1/1687591", "10378.1/1687588"], "source": "10378.1/1687591", "edge": 0, "y": 0.4464292942641875, "type": "used", "target": "10378.1/1687588"}, {"x": 0.8989539244872126, "pair": ["10378.1/1687591", "10378.1/1687588"], "source": "10378.1/1687591", "edge": 0, "y": 0.3908266101251058, "type": "used", "target": "10378.1/1687588"}, {"x": -0.010460755127874373, "pair": ["10378.1/1687589", "10378.1/1687591"], "source": "10378.1/1687589", "edge": 1, "y": -0.10959754712662925, "type": "wasGeneratedBy", "target": "10378.1/1687591"}, {"x": -0.10836860410229948, "pair": ["10378.1/1687589", "10378.1/1687591"], "source": "10378.1/1687589", "edge": 1, "y": -0.13232096712772215, "type": "wasGeneratedBy", "target": "10378.1/1687591"}], "data-86e87af44c5771e23ab37dd85490ad29": [{"x": -0.010460755127874373, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN", "y": -0.10959754712662925}, {"x": 1.0, "item_category": "ENTITY", "item_subtype": "DATASET", "y": 0.4464292942641875}, {"x": -0.9895392448721254, "item_category": "ENTITY", "item_subtype": "DATASET", "y": -0.3368317471375583}]}}, {"mode": "vega-lite"});
+</script>
 </div>
 
 </div>
