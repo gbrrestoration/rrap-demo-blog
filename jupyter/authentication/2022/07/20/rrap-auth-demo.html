@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      1 min read
     
 </span></p>
 
@@ -132,7 +132,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Authentication">Authentication </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server">Setup tokens using device authorisation flow against keycloak server </a></li>
-<li class="toc-entry toc-h3"><a href="#Authenticated-call">Authenticated call </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Endpoint-Documentation">Endpoint Documentation </a></li>
@@ -275,42 +274,6 @@ window.onload = wrap_img;
     <span class="n">keycloak_endpoint</span><span class="o">=</span><span class="n">auth_server</span><span class="p">,</span>
     <span class="n">local_storage_location</span><span class="o">=</span><span class="n">local_token_storage</span>
 <span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Authenticated-call">
-<a class="anchor" href="#Authenticated-call" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authenticated call<a class="anchor-link" href="#Authenticated-call"> </a>
-</h3>
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-
-<span class="c1"># Setup postfix and endpoint</span>
-<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/items/list-all-datasets"</span>
-<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span>
-
-<span class="c1"># When making the request, use auth=auth() - this will ensure tokens are valid</span>
-<span class="c1"># right at the point of using them, including potentially auto refreshing!</span>
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
 </pre></div>
 
     </div>
