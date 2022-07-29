@@ -9,3 +9,5 @@ ipywidgets
 mdsisclienttools
 json2tree
 beautifulsoup4
+networkx
+nx_altair
