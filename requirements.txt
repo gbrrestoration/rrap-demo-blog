@@ -7,3 +7,7 @@ json2tree
 beautifulsoup4
 networkx
 nx_altair
+holoviews
+pandas
+numpy
+matplotlib
