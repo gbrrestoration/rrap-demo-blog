@@ -1,3 +1,4 @@
+
 help:
 	cat Makefile
 
@@ -13,7 +14,7 @@ server-detached: .FORCE
 
 # build or rebuild the services WITHOUT cache
 build: .FORCE
-	chmod 777 Gemfile.lock
+	# chmod 777 Gemfile.lock
 	docker-compose stop || true; docker-compose rm || true;
 	docker build --no-cache -t fastai/fastpages-jekyll -f _action_files/fastpages-jekyll.Dockerfile .
 	docker-compose build --force-rm --no-cache
@@ -50,4 +51,4 @@ restart-jekyll: .FORCE
 	docker-compose restart jekyll
 
 .FORCE:
-	chmod -R u+rw .
+	chmod -R a+rw .
