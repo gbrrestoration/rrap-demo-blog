@@ -47,10 +47,12 @@ layout: notebook
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
-
+<span class="kn">import</span> <span class="nn">mdsisclienttools.datastore.ReadWriteHelper</span> <span class="k">as</span> <span class="nn">IOHelper</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">from</span> <span class="nn">cloudpathlib</span> <span class="kn">import</span> <span class="n">S3Client</span>
+<span class="kn">import</span> <span class="nn">cloudpathlib</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
 <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;once&#39;</span><span class="p">)</span>
 </pre></div>
@@ -163,6 +165,27 @@ Testing - https://data.testing.rrap-is.com - Passed
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Attempting to generate authorisation tokens.
+
+Looking for existing tokens in local storage.
+
+Validating found tokens
+
+Found tokens valid, using.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -187,6 +210,137 @@ Testing - https://data.testing.rrap-is.com - Passed
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Register-a-dataset">Register a dataset<a class="anchor-link" href="#Register-a-dataset"> </a></h3><p>see <a href="https://gbrrestoration.github.io/rrap-mds-knowledge-hub/information-system/data-store/registering-and-uploading-a-dataset.html">Rigistering and uploading a dataset</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/register/mint-dataset&quot;</span>
+<span class="n">payload</span> <span class="o">=</span>  <span class="p">{</span>
+  <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew Freebairn&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;andrew.freebairn@csiro.au&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orcid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://orcid.org/0000-0001-9429-6559&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;organisation&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CSIRO&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/03qn8fb07&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;dataset_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MVP Demo Dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;For demonstration purposes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/057xz1h85&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;created_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;published_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creativecommons.org/licenses/by/4.0/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;keyword1&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+  &#34;status&#34;: {
+    &#34;success&#34;: true,
+    &#34;details&#34;: &#34;Successfully seeded location - see location details.&#34;
+  },
+  &#34;handle&#34;: &#34;10378.1/1688092&#34;,
+  &#34;s3_location&#34;: {
+    &#34;bucket_name&#34;: &#34;dev-rrap-storage-bucket&#34;,
+    &#34;path&#34;: &#34;datasets/10378-1-1688092/&#34;,
+    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688092/&#34;
+  }
+}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Upload-data-associated-with-registered-data">Upload data associated with registered data<a class="anchor-link" href="#Upload-data-associated-with-registered-data"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">DEFAULT_DATA_STORE_ENDPOINT</span> <span class="o">=</span> <span class="n">data_store</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="s2">&quot;10378.1/1688081&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">&quot;./data&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Download-data-from-a-data-registry">Download data from a data registry<a class="anchor-link" href="#Download-data-from-a-data-registry"> </a></h4>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">DEFAULT_DATA_STORE_ENDPOINT</span> <span class="o">=</span> <span class="n">data_store</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="s2">&quot;10378.1/1688081&quot;</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 </div>
  
 
