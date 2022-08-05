@@ -20,3 +20,4 @@ Gemfile.lock
 python_packages/rrap_packages.egg-info/
 
 .ipynb_checkpoints/
+.venv_mvp_demo/
