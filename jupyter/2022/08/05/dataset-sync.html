@@ -79,7 +79,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -328,7 +328,9 @@ Looking for existing tokens in local storage.
 
 Validating found tokens
 
-Found tokens valid, using.
+Trying to use found tokens to refresh the access token.
+
+Token refresh successful.
 
 </pre>
 </div>
@@ -420,7 +422,8 @@ Found tokens valid, using.
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-
+<span class="n">new_handle</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'handle'</span><span class="p">]</span>
+<span class="n">display</span><span class="p">(</span><span class="n">new_handle</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
@@ -433,19 +436,59 @@ Found tokens valid, using.
 
 <div class="output_area">
 
+
+
+<div class="output_text output_subarea ">
+<pre>'10378.1/1688315'</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>'{\n  "status": {\n    "success": true,\n    "details": "Successfully seeded location - see location details."\n  },\n  "handle": "10378.1/1688315",\n  "s3_location": {\n    "bucket_name": "dev-rrap-storage-bucket",\n    "path": "datasets/10378-1-1688315/",\n    "s3_uri": "s3://dev-rrap-storage-bucket/datasets/10378-1-1688315/"\n  }\n}'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/items/list-all-datasets"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+<span class="n">reg_items</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">'registry_items'</span><span class="p">]</span>
+<span class="k">if</span> <span class="nb">any</span><span class="p">(</span> <span class="n">item</span><span class="p">[</span><span class="s1">'handle'</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_handle</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reg_items</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Found new handle: </span><span class="si">{</span><span class="n">new_handle</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Did NOT find new handle: </span><span class="si">{</span><span class="n">new_handle</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>{
-  "status": {
-    "success": true,
-    "details": "Successfully seeded location - see location details."
-  },
-  "handle": "10378.1/1688092",
-  "s3_location": {
-    "bucket_name": "dev-rrap-storage-bucket",
-    "path": "datasets/10378-1-1688092/",
-    "s3_uri": "s3://dev-rrap-storage-bucket/datasets/10378-1-1688092/"
-  }
-}
+<pre>Found new handle: 10378.1/1688315
 </pre>
 </div>
 </div>
@@ -473,11 +516,39 @@ Found tokens valid, using.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">DEFAULT_DATA_STORE_ENDPOINT</span> <span class="o">=</span> <span class="n">data_store</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="s2">"10378.1/1688081"</span><span class="p">,</span> <span class="n">auth</span><span class="p">,</span> <span class="s2">"./data"</span><span class="p">)</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">"./data"</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb Cell 15</span> in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X16sdnNjb2RlLXJlbW90ZQ%3D%3D?line=0'&gt;1&lt;/a&gt;</span> auth = token_manager.get_auth
+<span class="ansi-green-fg">----&gt; &lt;a href='vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X16sdnNjb2RlLXJlbW90ZQ%3D%3D?line=1'&gt;2&lt;/a&gt;</span> IOHelper.upload(new_handle, auth(), "./data", data_api)
+
+File <span class="ansi-green-fg">~/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:263</span>, in <span class="ansi-cyan-fg">upload</span><span class="ansi-blue-fg">(handle, auth, source_dir, data_store_api_endpoint)</span>
+<span class="ansi-green-intense-fg ansi-bold">    260</span>     print(f"Found dataset: {response['dataset_name']}.")
+<span class="ansi-green-intense-fg ansi-bold">    261</span> else:
+<span class="ansi-green-intense-fg ansi-bold">    262</span>     # Handle was not found
+<span class="ansi-green-fg">--&gt; 263</span>     raise ValueError(
+<span class="ansi-green-intense-fg ansi-bold">    264</span>         f'Invalid input... the dataset with that handle: {handle} could not be found.')
+<span class="ansi-green-intense-fg ansi-bold">    266</span> # get write credentials for this dataset
+<span class="ansi-green-intense-fg ansi-bold">    267</span> creds = _write_dataset(s3_loc, auth=auth, endpoint = data_store_api_endpoint)
+
+<span class="ansi-red-fg">ValueError</span>: Invalid input... the dataset with that handle: 10378.1/1688315 could not be found.</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -501,11 +572,39 @@ Found tokens valid, using.
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">DEFAULT_DATA_STORE_ENDPOINT</span> <span class="o">=</span> <span class="n">data_store</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'./data'</span><span class="p">,</span> <span class="s2">"10378.1/1688081"</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'./data'</span><span class="p">,</span> <span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="n">data_api</span><span class="p">)</span>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb Cell 17</span> in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
+<span class="ansi-green-intense-fg ansi-bold">      &lt;a href='vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X21sdnNjb2RlLXJlbW90ZQ%3D%3D?line=0'&gt;1&lt;/a&gt;</span> auth = token_manager.get_auth
+<span class="ansi-green-fg">----&gt; &lt;a href='vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X21sdnNjb2RlLXJlbW90ZQ%3D%3D?line=1'&gt;2&lt;/a&gt;</span> IOHelper.download('./data', new_handle, auth(), data_api)
+
+File <span class="ansi-green-fg">~/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:311</span>, in <span class="ansi-cyan-fg">download</span><span class="ansi-blue-fg">(download_path, handle, auth, data_store_api_endpoint)</span>
+<span class="ansi-green-intense-fg ansi-bold">    308</span>     print(f"Found dataset: {response['dataset_name']}.")
+<span class="ansi-green-intense-fg ansi-bold">    309</span> else:
+<span class="ansi-green-intense-fg ansi-bold">    310</span>     # Handle was not found
+<span class="ansi-green-fg">--&gt; 311</span>     raise ValueError(
+<span class="ansi-green-intense-fg ansi-bold">    312</span>         f'Invalid input... the dataset with that handle: {handle} could not be found.')
+<span class="ansi-green-intense-fg ansi-bold">    314</span> # get read credentials for this dataset
+<span class="ansi-green-intense-fg ansi-bold">    315</span> creds = _read_dataset(s3_loc, auth=auth, endpoint = data_store_api_endpoint)
+
+<span class="ansi-red-fg">ValueError</span>: Invalid input... the dataset with that handle: 10378.1/1688315 could not be found.</pre>
+</div>
+</div>
+
 </div>
 </div>
 
