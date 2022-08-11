@@ -48,6 +48,7 @@ layout: notebook
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
 <span class="kn">import</span> <span class="nn">mdsisclienttools.datastore.ReadWriteHelper</span> <span class="k">as</span> <span class="nn">IOHelper</span>
+<span class="kn">import</span> <span class="nn">mdsisclienttools</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -58,6 +59,47 @@ layout: notebook
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pip._internal.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># pip &lt; 10.0</span>
+    <span class="kn">from</span> <span class="nn">pip.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">freeze</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
+<span class="n">found</span> <span class="o">=</span> <span class="p">[</span><span class="n">package</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span> <span class="k">if</span> <span class="n">package</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;mdsisclienttools&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>[&#39;mdsisclienttools==1.4.0&#39;]</pre>
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -177,9 +219,7 @@ Looking for existing tokens in local storage.
 
 Validating found tokens
 
-Trying to use found tokens to refresh the access token.
-
-Token refresh successful.
+Found tokens valid, using.
 
 </pre>
 </div>
@@ -274,19 +314,28 @@ Token refresh successful.
 
 
 <div class="output_text output_subarea ">
-<pre>&#39;10378.1/1688315&#39;</pre>
+<pre>&#39;10378.1/1688325&#39;</pre>
 </div>
 
 </div>
 
 <div class="output_area">
 
-
-
-<div class="output_text output_subarea ">
-<pre>&#39;{\n  &#34;status&#34;: {\n    &#34;success&#34;: true,\n    &#34;details&#34;: &#34;Successfully seeded location - see location details.&#34;\n  },\n  &#34;handle&#34;: &#34;10378.1/1688315&#34;,\n  &#34;s3_location&#34;: {\n    &#34;bucket_name&#34;: &#34;dev-rrap-storage-bucket&#34;,\n    &#34;path&#34;: &#34;datasets/10378-1-1688315/&#34;,\n    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688315/&#34;\n  }\n}&#39;</pre>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{
+  &#34;status&#34;: {
+    &#34;success&#34;: true,
+    &#34;details&#34;: &#34;Successfully seeded location - see location details.&#34;
+  },
+  &#34;handle&#34;: &#34;10378.1/1688325&#34;,
+  &#34;s3_location&#34;: {
+    &#34;bucket_name&#34;: &#34;dev-rrap-storage-bucket&#34;,
+    &#34;path&#34;: &#34;datasets/10378-1-1688325/&#34;,
+    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688325/&#34;
+  }
+}
+</pre>
 </div>
-
 </div>
 
 </div>
@@ -323,7 +372,7 @@ Token refresh successful.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Found new handle: 10378.1/1688315
+<pre>Found new handle: 10378.1/1688325
 </pre>
 </div>
 </div>
@@ -360,24 +409,38 @@ Token refresh successful.
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb Cell 15</span> in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href=&#39;vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X16sdnNjb2RlLXJlbW90ZQ%3D%3D?line=0&#39;&gt;1&lt;/a&gt;</span> auth = token_manager.get_auth
-<span class="ansi-green-fg">----&gt; &lt;a href=&#39;vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X16sdnNjb2RlLXJlbW90ZQ%3D%3D?line=1&#39;&gt;2&lt;/a&gt;</span> IOHelper.upload(new_handle, auth(), &#34;./data&#34;, data_api)
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found dataset: MVP Demo Dataset.
 
-File <span class="ansi-green-fg">~/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:263</span>, in <span class="ansi-cyan-fg">upload</span><span class="ansi-blue-fg">(handle, auth, source_dir, data_store_api_endpoint)</span>
-<span class="ansi-green-intense-fg ansi-bold">    260</span>     print(f&#34;Found dataset: {response[&#39;dataset_name&#39;]}.&#34;)
-<span class="ansi-green-intense-fg ansi-bold">    261</span> else:
-<span class="ansi-green-intense-fg ansi-bold">    262</span>     # Handle was not found
-<span class="ansi-green-fg">--&gt; 263</span>     raise ValueError(
-<span class="ansi-green-intense-fg ansi-bold">    264</span>         f&#39;Invalid input... the dataset with that handle: {handle} could not be found.&#39;)
-<span class="ansi-green-intense-fg ansi-bold">    266</span> # get write credentials for this dataset
-<span class="ansi-green-intense-fg ansi-bold">    267</span> creds = _write_dataset(s3_loc, auth=auth, endpoint = data_store_api_endpoint)
+Attempting to upload files to ./data
+</pre>
+</div>
+</div>
 
-<span class="ansi-red-fg">ValueError</span>: Invalid input... the dataset with that handle: 10378.1/1688315 could not be found.</pre>
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/usr/lib/python3.8/tempfile.py:957: ResourceWarning: Implicitly cleaning up &lt;TemporaryDirectory &#39;/tmp/tmp8b3y7ea9&#39;&gt;
+  _warnings.warn(warn_message, ResourceWarning)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Upload complete.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:289: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 34232), raddr=(&#39;52.95.132.118&#39;, 443)&gt;
+  _upload_files(s3_loc=s3_loc, s3_creds=creds,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+</pre>
 </div>
 </div>
 
@@ -413,24 +476,25 @@ File <span class="ansi-green-fg">~/repo/rrap-demo-blog/.venv_mvp_demo/lib/python
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-<span class="ansi-green-intense-fg ansi-bold">/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb Cell 17</span> in <span class="ansi-cyan-fg">&lt;cell line: 2&gt;</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">      &lt;a href=&#39;vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X21sdnNjb2RlLXJlbW90ZQ%3D%3D?line=0&#39;&gt;1&lt;/a&gt;</span> auth = token_manager.get_auth
-<span class="ansi-green-fg">----&gt; &lt;a href=&#39;vscode-notebook-cell://ssh-remote%2Brrap-dev-aws/home/andrew/repo/rrap-demo-blog/_notebooks/2022-08-05-dataset-sync.ipynb#X21sdnNjb2RlLXJlbW90ZQ%3D%3D?line=1&#39;&gt;2&lt;/a&gt;</span> IOHelper.download(&#39;./data&#39;, new_handle, auth(), data_api)
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found dataset: MVP Demo Dataset.
 
-File <span class="ansi-green-fg">~/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:311</span>, in <span class="ansi-cyan-fg">download</span><span class="ansi-blue-fg">(download_path, handle, auth, data_store_api_endpoint)</span>
-<span class="ansi-green-intense-fg ansi-bold">    308</span>     print(f&#34;Found dataset: {response[&#39;dataset_name&#39;]}.&#34;)
-<span class="ansi-green-intense-fg ansi-bold">    309</span> else:
-<span class="ansi-green-intense-fg ansi-bold">    310</span>     # Handle was not found
-<span class="ansi-green-fg">--&gt; 311</span>     raise ValueError(
-<span class="ansi-green-intense-fg ansi-bold">    312</span>         f&#39;Invalid input... the dataset with that handle: {handle} could not be found.&#39;)
-<span class="ansi-green-intense-fg ansi-bold">    314</span> # get read credentials for this dataset
-<span class="ansi-green-intense-fg ansi-bold">    315</span> creds = _read_dataset(s3_loc, auth=auth, endpoint = data_store_api_endpoint)
+Attempting to download files to ./data
+Download complete.
+</pre>
+</div>
+</div>
 
-<span class="ansi-red-fg">ValueError</span>: Invalid input... the dataset with that handle: 10378.1/1688315 could not be found.</pre>
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 33804), raddr=(&#39;52.95.132.202&#39;, 443)&gt;
+  _download_files(s3_loc=s3_loc, s3_creds=creds,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 33806), raddr=(&#39;52.95.132.202&#39;, 443)&gt;
+  _download_files(s3_loc=s3_loc, s3_creds=creds,
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+</pre>
 </div>
 </div>
 
