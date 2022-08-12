@@ -123,6 +123,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#About">About </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Run-all-imports">Run all imports </a></li>
+<li class="toc-entry toc-h3"><a href="#Logging-and-Warning">Logging and Warning </a></li>
 <li class="toc-entry toc-h3"><a href="#Define-global-variables">Define global variables </a></li>
 </ul>
 </li>
@@ -136,8 +137,8 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h3"><a href="#Register-a-dataset">Register a dataset </a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#Upload-data-associated-with-registered-data">Upload data associated with registered data </a></li>
 <li class="toc-entry toc-h4"><a href="#Download-data-from-a-data-registry">Download data from a data registry </a></li>
+<li class="toc-entry toc-h4"><a href="#Upload-data-associated-with-registered-data">Upload data associated with registered data </a></li>
 </ul>
 </li>
 </ul>
@@ -194,8 +195,42 @@ window.onload = wrap_img;
 
 <span class="kn">from</span> <span class="nn">cloudpathlib</span> <span class="kn">import</span> <span class="n">S3Client</span>
 <span class="kn">import</span> <span class="nn">cloudpathlib</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Logging-and-Warning">
+<a class="anchor" href="#Logging-and-Warning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Logging and Warning<a class="anchor-link" href="#Logging-and-Warning"> </a>
+</h3>
+<p>Sometimes it nice to not have warnings in the output area.</p>
+<p>Comment this next cell out so that warnings appear</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'once'</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">"log.txt"</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'always'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+                        <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">'^</span><span class="si">{0}</span><span class="s1">\.'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">"This is a DeprecationWarning"</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -235,7 +270,7 @@ window.onload = wrap_img;
 
 
 <div class="output_text output_subarea ">
-<pre>['mdsisclienttools==1.4.0']</pre>
+<pre>['mdsisclienttools==1.4.1']</pre>
 </div>
 
 </div>
@@ -420,6 +455,7 @@ Found tokens valid, using.
 <a class="anchor" href="#Register-a-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Register a dataset<a class="anchor-link" href="#Register-a-dataset"> </a>
 </h3>
 <p>see <a href="https://gbrrestoration.github.io/rrap-mds-knowledge-hub/information-system/data-store/registering-and-uploading-a-dataset.html">Rigistering and uploading a dataset</a></p>
+<p><a href="#toc">Return to Top</a></p>
 
 </div>
 </div>
@@ -479,7 +515,7 @@ Found tokens valid, using.
 
 
 <div class="output_text output_subarea ">
-<pre>'10378.1/1688325'</pre>
+<pre>'10378.1/1688646'</pre>
 </div>
 
 </div>
@@ -492,11 +528,11 @@ Found tokens valid, using.
     "success": true,
     "details": "Successfully seeded location - see location details."
   },
-  "handle": "10378.1/1688325",
+  "handle": "10378.1/1688646",
   "s3_location": {
     "bucket_name": "dev-rrap-storage-bucket",
-    "path": "datasets/10378-1-1688325/",
-    "s3_uri": "s3://dev-rrap-storage-bucket/datasets/10378-1-1688325/"
+    "path": "datasets/10378-1-1688646/",
+    "s3_uri": "s3://dev-rrap-storage-bucket/datasets/10378-1-1688646/"
   }
 }
 </pre>
@@ -537,77 +573,7 @@ Found tokens valid, using.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Found new handle: 10378.1/1688325
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Upload-data-associated-with-registered-data">
-<a class="anchor" href="#Upload-data-associated-with-registered-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload data associated with registered data<a class="anchor-link" href="#Upload-data-associated-with-registered-data"> </a>
-</h4>
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">"./data"</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Found dataset: MVP Demo Dataset.
-
-Attempting to upload files to ./data
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/usr/lib/python3.8/tempfile.py:957: ResourceWarning: Implicitly cleaning up &lt;TemporaryDirectory '/tmp/tmp8b3y7ea9'&gt;
-  _warnings.warn(warn_message, ResourceWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Upload complete.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:289: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('172.31.1.35', 34232), raddr=('52.95.132.118', 443)&gt;
-  _upload_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<pre>Found new handle: 10378.1/1688646
 </pre>
 </div>
 </div>
@@ -624,6 +590,8 @@ ResourceWarning: Enable tracemalloc to get the object allocation traceback
 <h4 id="Download-data-from-a-data-registry">
 <a class="anchor" href="#Download-data-from-a-data-registry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download data from a data registry<a class="anchor-link" href="#Download-data-from-a-data-registry"> </a>
 </h4>
+<p><a href="#toc">Return to Top</a></p>
+
 </div>
 </div>
 </div>
@@ -656,15 +624,48 @@ Download complete.
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Upload-data-associated-with-registered-data">
+<a class="anchor" href="#Upload-data-associated-with-registered-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload data associated with registered data<a class="anchor-link" href="#Upload-data-associated-with-registered-data"> </a>
+</h4>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">"./data"</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('172.31.1.35', 33804), raddr=('52.95.132.202', 443)&gt;
-  _download_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('172.31.1.35', 33806), raddr=('52.95.132.202', 443)&gt;
-  _download_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found dataset: MVP Demo Dataset.
+
+Attempting to upload files to ./data
+Upload complete.
 </pre>
 </div>
 </div>
