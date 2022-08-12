@@ -54,8 +54,38 @@ layout: notebook
 
 <span class="kn">from</span> <span class="nn">cloudpathlib</span> <span class="kn">import</span> <span class="n">S3Client</span>
 <span class="kn">import</span> <span class="nn">cloudpathlib</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Logging-and-Warning">Logging and Warning<a class="anchor-link" href="#Logging-and-Warning"> </a></h3><p>Sometimes it nice to not have warnings in the output area.</p>
+<p>Comment this next cell out so that warnings appear</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;once&#39;</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;always&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+                        <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">{0}</span><span class="s1">\.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;This is a DeprecationWarning&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -95,7 +125,7 @@ layout: notebook
 
 
 <div class="output_text output_subarea ">
-<pre>[&#39;mdsisclienttools==1.4.0&#39;]</pre>
+<pre>[&#39;mdsisclienttools==1.4.1&#39;]</pre>
 </div>
 
 </div>
@@ -255,6 +285,7 @@ Found tokens valid, using.
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Register-a-dataset">Register a dataset<a class="anchor-link" href="#Register-a-dataset"> </a></h3><p>see <a href="https://gbrrestoration.github.io/rrap-mds-knowledge-hub/information-system/data-store/registering-and-uploading-a-dataset.html">Rigistering and uploading a dataset</a></p>
+<p><a href="#toc">Return to Top</a></p>
 
 </div>
 </div>
@@ -314,7 +345,7 @@ Found tokens valid, using.
 
 
 <div class="output_text output_subarea ">
-<pre>&#39;10378.1/1688325&#39;</pre>
+<pre>&#39;10378.1/1688646&#39;</pre>
 </div>
 
 </div>
@@ -327,11 +358,11 @@ Found tokens valid, using.
     &#34;success&#34;: true,
     &#34;details&#34;: &#34;Successfully seeded location - see location details.&#34;
   },
-  &#34;handle&#34;: &#34;10378.1/1688325&#34;,
+  &#34;handle&#34;: &#34;10378.1/1688646&#34;,
   &#34;s3_location&#34;: {
     &#34;bucket_name&#34;: &#34;dev-rrap-storage-bucket&#34;,
-    &#34;path&#34;: &#34;datasets/10378-1-1688325/&#34;,
-    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688325/&#34;
+    &#34;path&#34;: &#34;datasets/10378-1-1688646/&#34;,
+    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688646/&#34;
   }
 }
 </pre>
@@ -372,7 +403,7 @@ Found tokens valid, using.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Found new handle: 10378.1/1688325
+<pre>Found new handle: 10378.1/1688646
 </pre>
 </div>
 </div>
@@ -385,74 +416,8 @@ Found tokens valid, using.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Upload-data-associated-with-registered-data">Upload data associated with registered data<a class="anchor-link" href="#Upload-data-associated-with-registered-data"> </a></h4>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<h4 id="Download-data-from-a-data-registry">Download data from a data registry<a class="anchor-link" href="#Download-data-from-a-data-registry"> </a></h4><p><a href="#toc">Return to Top</a></p>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">&quot;./data&quot;</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Found dataset: MVP Demo Dataset.
-
-Attempting to upload files to ./data
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/usr/lib/python3.8/tempfile.py:957: ResourceWarning: Implicitly cleaning up &lt;TemporaryDirectory &#39;/tmp/tmp8b3y7ea9&#39;&gt;
-  _warnings.warn(warn_message, ResourceWarning)
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Upload complete.
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:289: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 34232), raddr=(&#39;52.95.132.118&#39;, 443)&gt;
-  _upload_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Download-data-from-a-data-registry">Download data from a data registry<a class="anchor-link" href="#Download-data-from-a-data-registry"> </a></h4>
 </div>
 </div>
 </div>
@@ -485,15 +450,44 @@ Download complete.
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Upload-data-associated-with-registered-data">Upload data associated with registered data<a class="anchor-link" href="#Upload-data-associated-with-registered-data"> </a></h4><p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">&quot;./data&quot;</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 33804), raddr=(&#39;52.95.132.202&#39;, 443)&gt;
-  _download_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
-/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:339: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 33806), raddr=(&#39;52.95.132.202&#39;, 443)&gt;
-  _download_files(s3_loc=s3_loc, s3_creds=creds,
-ResourceWarning: Enable tracemalloc to get the object allocation traceback
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Found dataset: MVP Demo Dataset.
+
+Attempting to upload files to ./data
+Upload complete.
 </pre>
 </div>
 </div>
