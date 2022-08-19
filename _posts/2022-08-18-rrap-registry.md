@@ -1,7 +1,7 @@
 ---
 keywords: fastai
-description: A tutorial of RRAP-IS registering Models (Tools), Entities (Data, software) and Agent (Person, Organisation) using Jupyter notebooks.
-title: RRAP-IS Register Models, Entities and Actors Demo Notebook
+description: A tutorial of RRAP-IS registering Models (Entity), People or Organisations (Agent) or Model run (Activity) using Jupyter notebooks.
+title: RRAP-IS Register for Models, Entities and Actors Demo Notebook
 toc: true 
 badges: true
 comments: true
@@ -310,8 +310,8 @@ layout: notebook
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="p">[{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;ADRIA&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;ADRIA&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coral Community Network&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/gbrrestoration/CoCoNet-model/blob/main/README.md&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Yet to be published&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/gbrrestoration/&quot;</span><span class="p">,</span>
     <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/&quot;</span>
     <span class="p">},{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;eReefs&quot;</span><span class="p">,</span>
@@ -329,8 +329,8 @@ layout: notebook
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Reefmod&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Reefmod&quot;</span><span class="p">,</span>
     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Modelling fine-scale ecological processes&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/wp-content/uploads/2020/09/T6-Modelling-Methods-and-Findings_26April_FINAL3.pdf#page=24&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/&quot;</span>
+    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/ymbozec/REEFMOD.6.8_GBR/blob/main/README.md&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/ymbozec/REEFMOD.6.8_GBR&quot;</span>
     <span class="p">},{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;CoCoNet&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CoCoNet&quot;</span><span class="p">,</span>
@@ -340,9 +340,9 @@ layout: notebook
     <span class="p">},{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;IPMF&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;IPMF&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Coral Community Network&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/gbrrestoration/CoCoNet-model/blob/main/README.md&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/&quot;</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;IPMF private repo at the moment&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/open-AIMS/IPMF/blob/main/README.md&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/open-AIMS/IPMF/&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
