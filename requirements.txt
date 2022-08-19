@@ -11,3 +11,4 @@ holoviews
 pandas
 numpy
 matplotlib
+enum-switch
