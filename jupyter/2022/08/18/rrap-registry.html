@@ -4,21 +4,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>RRAP-IS Register Models, Entities and Actors Demo Notebook | RRAP M&amp;DS Information System</title>
+<title>RRAP-IS Register for Models, Entities and Actors Demo Notebook | RRAP M&amp;DS Information System</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="RRAP-IS Register Models, Entities and Actors Demo Notebook" />
+<meta property="og:title" content="RRAP-IS Register for Models, Entities and Actors Demo Notebook" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="A tutorial of RRAP-IS registering Models (Tools), Entities (Data, software) and Agent (Person, Organisation) using Jupyter notebooks." />
-<meta property="og:description" content="A tutorial of RRAP-IS registering Models (Tools), Entities (Data, software) and Agent (Person, Organisation) using Jupyter notebooks." />
+<meta name="description" content="A tutorial of RRAP-IS registering Models (Entity), People or Organisations (Agent) or Model run (Activity) using Jupyter notebooks." />
+<meta property="og:description" content="A tutorial of RRAP-IS registering Models (Entity), People or Organisations (Agent) or Model run (Activity) using Jupyter notebooks." />
 <link rel="canonical" href="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html" />
 <meta property="og:url" content="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html" />
 <meta property="og:site_name" content="RRAP M&amp;DS Information System" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2022-08-18T00:00:00-05:00" />
 <meta name="twitter:card" content="summary" />
-<meta property="twitter:title" content="RRAP-IS Register Models, Entities and Actors Demo Notebook" />
+<meta property="twitter:title" content="RRAP-IS Register for Models, Entities and Actors Demo Notebook" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-08-18T00:00:00-05:00","datePublished":"2022-08-18T00:00:00-05:00","description":"A tutorial of RRAP-IS registering Models (Tools), Entities (Data, software) and Agent (Person, Organisation) using Jupyter notebooks.","headline":"RRAP-IS Register Models, Entities and Actors Demo Notebook","mainEntityOfPage":{"@type":"WebPage","@id":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html"},"url":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html"}</script>
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-08-18T00:00:00-05:00","datePublished":"2022-08-18T00:00:00-05:00","description":"A tutorial of RRAP-IS registering Models (Entity), People or Organisations (Agent) or Model run (Activity) using Jupyter notebooks.","headline":"RRAP-IS Register for Models, Entities and Actors Demo Notebook","mainEntityOfPage":{"@type":"WebPage","@id":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html"},"url":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/rrap-demo-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gbrrestoration.github.io/rrap-demo-blog/feed.xml" title="RRAP M&amp;DS Information System" /><link rel="shortcut icon" type="image/x-icon" href="/rrap-demo-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -73,7 +73,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">RRAP-IS Register Models, Entities and Actors Demo Notebook</h1><p class="page-description">A tutorial of RRAP-IS registering Models (Tools), Entities (Data, software) and Agent (Person, Organisation) using Jupyter notebooks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-08-18T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">RRAP-IS Register for Models, Entities and Actors Demo Notebook</h1><p class="page-description">A tutorial of RRAP-IS registering Models (Entity), People or Organisations (Agent) or Model run (Activity) using Jupyter notebooks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-08-18T00:00:00-05:00" itemprop="datePublished">
         Aug 18, 2022
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -480,8 +480,8 @@ window.onload = wrap_img;
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">models</span> <span class="o">=</span> <span class="p">[{</span>
     <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"ADRIA"</span><span class="p">,</span>
     <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"ADRIA"</span><span class="p">,</span>
-    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Coral Community Network"</span><span class="p">,</span>
-    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/CoCoNet-model/blob/main/README.md"</span><span class="p">,</span>
+    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Yet to be published"</span><span class="p">,</span>
+    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/"</span><span class="p">,</span>
     <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://gbrrestoration.org/"</span>
     <span class="p">},{</span>
     <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"eReefs"</span><span class="p">,</span>
@@ -499,8 +499,8 @@ window.onload = wrap_img;
     <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"Reefmod"</span><span class="p">,</span>
     <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Reefmod"</span><span class="p">,</span>
     <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Modelling fine-scale ecological processes"</span><span class="p">,</span>
-    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://gbrrestoration.org/wp-content/uploads/2020/09/T6-Modelling-Methods-and-Findings_26April_FINAL3.pdf#page=24"</span><span class="p">,</span>
-    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://gbrrestoration.org/"</span>
+    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/ymbozec/REEFMOD.6.8_GBR/blob/main/README.md"</span><span class="p">,</span>
+    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://github.com/ymbozec/REEFMOD.6.8_GBR"</span>
     <span class="p">},{</span>
     <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"CoCoNet"</span><span class="p">,</span>
     <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"CoCoNet"</span><span class="p">,</span>
@@ -510,9 +510,9 @@ window.onload = wrap_img;
     <span class="p">},{</span>
     <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"IPMF"</span><span class="p">,</span>
     <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"IPMF"</span><span class="p">,</span>
-    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Coral Community Network"</span><span class="p">,</span>
-    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/CoCoNet-model/blob/main/README.md"</span><span class="p">,</span>
-    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://gbrrestoration.org/"</span>
+    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"IPMF private repo at the moment"</span><span class="p">,</span>
+    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/open-AIMS/IPMF/blob/main/README.md"</span><span class="p">,</span>
+    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://github.com/open-AIMS/IPMF/"</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
