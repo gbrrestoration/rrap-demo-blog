@@ -155,7 +155,7 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Demonstration">Demonstration<a class="anchor-link" href="#Demonstration"> </a></h2><p>This demonstration is for registering elements that will enable provenance traces</p>
+<h2 id="Notebook-helper-functions">Notebook helper functions<a class="anchor-link" href="#Notebook-helper-functions"> </a></h2><p><a href="#toc">Return to Top</a></p>
 
 </div>
 </div>
@@ -167,9 +167,53 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
-    <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/entity/model/create&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span>  <span class="n">model</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum_switch</span> <span class="kn">import</span> <span class="n">Switch</span>
+<span class="k">class</span> <span class="nc">ProvType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">AGENT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ACTIVITY</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ENTITY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">class</span> <span class="nc">ItemType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PERSON</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ORGANISATION</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MODELRUN</span> <span class="o">=</span> <span class="mi">4</span>
+
+<span class="k">class</span> <span class="nc">ProvTypeFromItemType</span><span class="p">(</span><span class="n">Switch</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">MODEL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
+    <span class="k">def</span> <span class="nf">PERSON</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">ORGANISATION</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">MODELRUN</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ACTIVITY</span>
+
+<span class="n">prov_of_item</span> <span class="o">=</span> <span class="n">ProvTypeFromItemType</span><span class="p">(</span><span class="n">ItemType</span><span class="p">)</span>
+<span class="n">provs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">prov_of_item</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ItemType</span><span class="p">]</span>        
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">register_item</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/create&#39;</span>
     <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
     <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
 </pre></div>
@@ -181,6 +225,34 @@ layout: notebook
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">registry_list</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/list&#39;</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Demonstration">Demonstration<a class="anchor-link" href="#Demonstration"> </a></h2><p>This demonstration is for registering elements that will enable provenance traces</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Register-a-model-(CoCoNet)">Register a model (CoCoNet)<a class="anchor-link" href="#Register-a-model-(CoCoNet)"> </a></h3>
@@ -202,8 +274,8 @@ layout: notebook
     <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -273,8 +345,27 @@ layout: notebook
     <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://gbrrestoration.org/&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">models</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -298,27 +389,6 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">register_person</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
-    <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/agent/person/create&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span>  <span class="n">person</span>
-    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
-    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">people</span> <span class="o">=</span> <span class="p">[{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew Freebairn&quot;</span><span class="p">,</span>
     <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew&quot;</span><span class="p">,</span>
@@ -327,8 +397,8 @@ layout: notebook
     <span class="s2">&quot;orcid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://orcid.org/0000-0001-9429-6559&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_person</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">PERSON</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -371,8 +441,27 @@ layout: notebook
     <span class="s2">&quot;orcid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://orcid.org/&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_person</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">person</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">PERSON</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">person</span> <span class="ow">in</span> <span class="n">people</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">PERSON</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -396,35 +485,14 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">register_organistation</span><span class="p">(</span><span class="n">org</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
-    <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/agent/organisation/create&quot;</span>
-    <span class="n">payload</span> <span class="o">=</span>  <span class="n">org</span>
-    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
-    <span class="k">return</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">organisations</span> <span class="o">=</span> <span class="p">[{</span>
     <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Commonwealth Scientific and Industrial Research Organisation&quot;</span><span class="p">,</span>
     <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Commonwealth Scientific and Industrial Research Organisation (CSIRO)&quot;</span><span class="p">,</span>
     <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/03qn8fb07&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_organistation</span><span class="p">(</span><span class="n">org</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">org</span> <span class="ow">in</span> <span class="n">organisations</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">org</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">ORGANISATION</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">org</span> <span class="ow">in</span> <span class="n">organisations</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -471,8 +539,27 @@ layout: notebook
     <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/001xkv632&quot;</span>
     <span class="p">}]</span>
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_organistation</span><span class="p">(</span><span class="n">org</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">org</span> <span class="ow">in</span> <span class="n">organisations</span><span class="p">]</span>
-<span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">org</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">ORGANISATION</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">org</span> <span class="ow">in</span> <span class="n">organisations</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">ORGANISATION</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
 </pre></div>
 
     </div>
