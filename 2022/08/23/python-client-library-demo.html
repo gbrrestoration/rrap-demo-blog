@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Python API Client Wrapper Demo | RRAP M&amp;DS Information System</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Python API Client Wrapper Demo" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="© Reef Restoration and Adaptation Program. All rights reserved." />
+<meta property="og:description" content="© Reef Restoration and Adaptation Program. All rights reserved." />
+<link rel="canonical" href="https://gbrrestoration.github.io/rrap-demo-blog/2022/08/23/python-client-library-demo.html" />
+<meta property="og:url" content="https://gbrrestoration.github.io/rrap-demo-blog/2022/08/23/python-client-library-demo.html" />
+<meta property="og:site_name" content="RRAP M&amp;DS Information System" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-08-23T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Python API Client Wrapper Demo" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-08-23T00:00:00-05:00","datePublished":"2022-08-23T00:00:00-05:00","description":"© Reef Restoration and Adaptation Program. All rights reserved.","headline":"Python API Client Wrapper Demo","mainEntityOfPage":{"@type":"WebPage","@id":"https://gbrrestoration.github.io/rrap-demo-blog/2022/08/23/python-client-library-demo.html"},"url":"https://gbrrestoration.github.io/rrap-demo-blog/2022/08/23/python-client-library-demo.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/rrap-demo-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gbrrestoration.github.io/rrap-demo-blog/feed.xml" title="RRAP M&amp;DS Information System" /><link rel="shortcut icon" type="image/x-icon" href="/rrap-demo-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/rrap-demo-blog/">RRAP M&amp;DS Information System</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/rrap-demo-blog/about/">About Me</a><a class="page-link" href="/rrap-demo-blog/search/">Search</a><a class="page-link" href="/rrap-demo-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Python API Client Wrapper Demo</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-08-23T00:00:00-05:00" itemprop="datePublished">
+        Aug 23, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      1 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gbrrestoration/rrap-demo-blog/tree/master/_notebooks/2022-08-23-python-client-library-demo.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+<div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?urlpath=lab/tree/_notebooks%2F2022-08-23-python-client-library-demo.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+<!-- <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?filepath=_notebooks%2F2022-08-23-python-client-library-demo.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div> -->
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-08-23-python-client-library-demo.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Import-client-libraries">Import client libraries<a class="anchor-link" href="#Import-client-libraries"> </a></h2>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">rrap_mds_is_data_api</span>
+<span class="kn">import</span> <span class="nn">rrap_mds_is_prov_api</span>
+<span class="kn">import</span> <span class="nn">rrap_mds_is_registry_api</span>
+<span class="kn">import</span> <span class="nn">rrap_mds_is_landing_portal_api</span>
+<span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Setup-authorisation">Setup authorisation<a class="anchor-link" href="#Setup-authorisation"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">get_token</span> <span class="o">=</span> <span class="n">DeviceFlowManager</span><span class="p">(</span>
+    <span class="n">stage</span><span class="o">=</span><span class="s2">&quot;TEST&quot;</span><span class="p">,</span>
+    <span class="n">keycloak_endpoint</span><span class="o">=</span><span class="s2">&quot;https://auth.dev.rrap-is.com/auth/realms/rrap&quot;</span>
+<span class="p">)</span><span class="o">.</span><span class="n">get_token</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Attempting to generate authorisation tokens.
+
+Looking for existing tokens in local storage.
+
+Validating found tokens
+
+Found tokens valid, using.
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Demonstrate-registry-API-client">Demonstrate registry API client<a class="anchor-link" href="#Demonstrate-registry-API-client"> </a></h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">rrap_mds_is_registry_api.configuration</span> <span class="kn">import</span> <span class="n">Configuration</span>
+<span class="kn">import</span> <span class="nn">rrap_mds_is_registry_api.apis</span> <span class="k">as</span> <span class="nn">registry_apis</span>
+<span class="kn">import</span> <span class="nn">rrap_mds_is_registry_api.models</span> <span class="k">as</span> <span class="nn">registry_models</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># We want token to be ready at the time that we call the API so </span>
+<span class="c1"># write a function which generates the config on demand</span>
+<span class="k">def</span> <span class="nf">get_config</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Configuration</span><span class="p">:</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">Configuration</span><span class="p">(</span><span class="n">host</span><span class="o">=</span><span class="s2">&quot;https://registry-api.testing.rrap-is.com&quot;</span><span class="p">)</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">access_token</span> <span class="o">=</span> <span class="n">get_token</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">config</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_client</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">rrap_mds_is_registry_api</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">:</span>
+    <span class="k">return</span> <span class="n">rrap_mds_is_registry_api</span><span class="o">.</span><span class="n">ApiClient</span><span class="p">(</span>
+        <span class="n">configuration</span><span class="o">=</span><span class="n">get_config</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">person_api</span> <span class="o">=</span> <span class="n">registry_apis</span><span class="o">.</span><span class="n">PersonApi</span><span class="p">(</span><span class="n">get_client</span><span class="p">())</span>
+<span class="n">all_people</span> <span class="o">=</span> <span class="n">person_api</span><span class="o">.</span><span class="n">list_agent_person</span><span class="p">(</span><span class="n">_check_return_type</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">all_people</span><span class="o">.</span><span class="n">items</span>
+<span class="n">example_people</span><span class="p">:</span> <span class="n">registry_models</span><span class="o">.</span><span class="n">ItemPerson</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">person</span><span class="p">:</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;first_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;John&quot;</span> <span class="ow">and</span> <span class="n">person</span><span class="p">[</span><span class="s1">&#39;last_name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Doe&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">))</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">example_people</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span>
+<span class="n">example_person</span> <span class="o">=</span> <span class="n">example_people</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">example_person</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;display_name&#39;: &#39;Reef Modeller for eReef&#39;, &#39;first_name&#39;: &#39;John&#39;, &#39;last_name&#39;: &#39;Doe&#39;, &#39;email&#39;: &#39;John.Doe@uni-of.au&#39;, &#39;orcid&#39;: &#39;https://orcid.org/0000-0000-000-0000&#39;, &#39;id&#39;: &#39;10378.1/1687652&#39;, &#39;created_timestamp&#39;: 1658822301, &#39;updated_timestamp&#39;: 1658822301, &#39;item_category&#39;: &#39;AGENT&#39;, &#39;item_subtype&#39;: &#39;PERSON&#39;}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">person_api</span> <span class="o">=</span> <span class="n">registry_apis</span><span class="o">.</span><span class="n">PersonApi</span><span class="p">(</span><span class="n">get_client</span><span class="p">())</span>
+<span class="n">result_person</span> <span class="o">=</span> <span class="n">person_api</span><span class="o">.</span><span class="n">fetch_agent_person</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">example_person</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">],</span><span class="n">_check_return_type</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result_person</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>{&#39;item&#39;: {&#39;created_timestamp&#39;: 1658822301,
+          &#39;display_name&#39;: &#39;Reef Modeller for eReef&#39;,
+          &#39;email&#39;: &#39;John.Doe@uni-of.au&#39;,
+          &#39;first_name&#39;: &#39;John&#39;,
+          &#39;id&#39;: &#39;10378.1/1687652&#39;,
+          &#39;item_category&#39;: &#39;AGENT&#39;,
+          &#39;item_subtype&#39;: &#39;PERSON&#39;,
+          &#39;last_name&#39;: &#39;Doe&#39;,
+          &#39;orcid&#39;: &#39;https://orcid.org/0000-0000-000-0000&#39;,
+          &#39;updated_timestamp&#39;: 1658822301},
+ &#39;item_is_seed&#39;: False,
+ &#39;status&#39;: {&#39;details&#39;: &#39;Successfully retrieved complete item and parsed into &#39;
+                       &#39;current data model.&#39;,
+            &#39;success&#39;: True}}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+
+  </div><a class="u-url" href="/rrap-demo-blog/2022/08/23/python-client-library-demo.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+    <data class="u-url" href="/rrap-demo-blog/"></data>
+
+    <div class="wrapper">
+
+        <div class="footer-col-wrapper">
+            <div class="footer-col">
+                <p class="feed-subscribe">
+                    <a href="/rrap-demo-blog/feed.xml">
+                        <svg class="svg-icon orange">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#rss"></use>
+                        </svg><span>Subscribe</span>
+                    </a>
+                </p>
+            </div>
+            <div class="footer-col">
+                <p>© Reef Restoration and Adaptation Program. All rights reserved.</p>
+            </div>
+        </div>
+        <div>
+            <h3 style="text-align: center;">Acknowledgement of Country</h3>
+            <p style="text-align: center;">The Reef Restoration and Adaptation Program respects and recognises all Traditional Owners of the Great Barrier Reef as First Nations Peoples holding the hopes, dreams, traditions and cultures of the Reef.</p>
+        </div>
+        <div class="social-links">
+            <ul class="social-media-list">
+                <li><a rel="me" href="https://github.com/gbrrestoration" target="_blank" title="gbrrestoration"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#github"></use>
+                        </svg></a></li>
+                <li><a rel="me" href="https://twitter.com/GBRFoundation" target="_blank" title="GBRFoundation"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#twitter"></use>
+                        </svg></a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</footer></body>
+
+</html>
