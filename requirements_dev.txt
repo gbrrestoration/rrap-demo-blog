@@ -1,18 +1,7 @@
 # To ensure app dependencies are ported from your virtual environment/host machine into your container, run 'pip freeze > requirements.txt' in the terminal to overwrite this file
-requests
-pydantic
-python-jose[cryptography]
+-r requirements.txt
 ipython
 jupyter
 jupyterlab
 ipywidgets
-mdsisclienttools
-json2tree
-beautifulsoup4
-networkx
-nx_altair
-holoviews
-pandas
-numpy
-matplotlib
-enum-switch
+ipykernel

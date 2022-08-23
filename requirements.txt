@@ -12,3 +12,10 @@ pandas
 numpy
 matplotlib
 enum-switch
+
+# Wrapper libraries - currently git repos 
+# pull from test branches
+git+https://github.com/gbrrestoration/data-store-api-python-wrapper@test#egg=rrap-mds-is-data-api
+git+https://github.com/gbrrestoration/prov-api-python-wrapper@test#egg=rrap-mds-is-prov-api
+git+https://github.com/gbrrestoration/registry-api-python-wrapper@test#egg=rrap-mds-is-registry-api
+git+https://github.com/gbrrestoration/landing-portal-api-python-wrapper@test#egg=rrap-mds-is-landing-portal-api
