@@ -3,7 +3,7 @@ requests
 pydantic
 python-jose[cryptography]
 mdsisclienttools
-json2tree
+json2html
 beautifulsoup4
 networkx
 nx_altair
