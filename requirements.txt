@@ -12,6 +12,7 @@ pandas
 numpy
 matplotlib
 enum-switch
+json2html
 
 # Wrapper libraries - currently git repos 
 # pull from test branches
