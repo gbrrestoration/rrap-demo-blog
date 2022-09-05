@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
-<loc>https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/07/19/registry-query.html</loc>
-<lastmod>2022-07-19T00:00:00-05:00</lastmod>
-</url>
-<url>
 <loc>https://gbrrestoration.github.io/rrap-demo-blog/jupyter/authentication/2022/07/20/rrap-auth-demo.html</loc>
 <lastmod>2022-07-20T00:00:00-05:00</lastmod>
 </url>
@@ -23,6 +19,10 @@
 <url>
 <loc>https://gbrrestoration.github.io/rrap-demo-blog/2022/08/23/python-client-library-demo.html</loc>
 <lastmod>2022-08-23T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://gbrrestoration.github.io/rrap-demo-blog/jupyter/registry/2022/09/02/registry-query.html</loc>
+<lastmod>2022-09-02T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://gbrrestoration.github.io/rrap-demo-blog/about/</loc>
