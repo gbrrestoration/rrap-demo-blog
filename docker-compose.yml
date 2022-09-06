@@ -23,7 +23,9 @@ services:
 
   notebook:
     <<: *fastpages
-    command: jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=8080 --NotebookApp.token='' --NotebookApp.password=''
+    command: >
+       bash -c "pip install -r requirements.txt  
+       && jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=8080 --NotebookApp.token='' --NotebookApp.password='' "
     ports:
       - "8080:8080"
 
