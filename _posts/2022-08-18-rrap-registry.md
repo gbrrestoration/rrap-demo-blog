@@ -179,6 +179,7 @@ layout: notebook
     <span class="n">PERSON</span> <span class="o">=</span> <span class="mi">2</span>
     <span class="n">ORGANISATION</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">MODELRUN</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">MODEL_RUN_WORKFLOW</span> <span class="o">=</span> <span class="mi">5</span>
 
 <span class="k">class</span> <span class="nc">ProvTypeFromItemType</span><span class="p">(</span><span class="n">Switch</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">MODEL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -193,11 +194,32 @@ layout: notebook
     <span class="k">def</span> <span class="nf">MODELRUN</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ACTIVITY</span>
 
+    <span class="k">def</span> <span class="nf">MODEL_RUN_WORKFLOW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
 <span class="n">prov_of_item</span> <span class="o">=</span> <span class="n">ProvTypeFromItemType</span><span class="p">(</span><span class="n">ItemType</span><span class="p">)</span>
 <span class="n">provs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">prov_of_item</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ItemType</span><span class="p">]</span>        
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ProvType.ENTITY
+ProvType.AGENT
+ProvType.AGENT
+ProvType.ACTIVITY
+ProvType.ENTITY
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -369,6 +391,85 @@ layout: notebook
 </pre></div>
 
     </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Register-Workflow-Definition">Register Workflow Definition<a class="anchor-link" href="#Register-Workflow-Definition"> </a></h3><p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">workflows</span> <span class="o">=</span> <span class="p">[{</span>
+  <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;software&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;automation_schedule&quot;</span><span class="p">:</span> <span class="p">{},</span>
+  <span class="s2">&quot;input_templates&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;string&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;output_templates&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;string&quot;</span>
+  <span class="p">]</span>
+<span class="p">}]</span>
+
+<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">responses</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">wf</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL_RUN_WORKFLOW</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">wf</span> <span class="ow">in</span> <span class="n">workflows</span><span class="p">]</span>
+<span class="nb">vars</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">responses</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Token validation failed due to error: Signature has expired.
+Refreshing using refresh token
+
+{
+  &#34;status&#34;: {
+    &#34;success&#34;: true,
+    &#34;details&#34;: &#34;Successfully uploaded the complete item. Return item includes handle id.&#34;
+  },
+  &#34;created_item&#34;: {
+    &#34;display_name&#34;: &#34;string&#34;,
+    &#34;version&#34;: &#34;string&#34;,
+    &#34;software&#34;: &#34;string&#34;,
+    &#34;automation_schedule&#34;: {},
+    &#34;input_templates&#34;: [
+      &#34;string&#34;
+    ],
+    &#34;output_templates&#34;: [
+      &#34;string&#34;
+    ],
+    &#34;id&#34;: &#34;10378.1/1691171&#34;,
+    &#34;created_timestamp&#34;: 1662358946,
+    &#34;updated_timestamp&#34;: 1662358946,
+    &#34;item_category&#34;: &#34;ENTITY&#34;,
+    &#34;item_subtype&#34;: &#34;MODEL_RUN_WORKFLOW_DEFINITION&#34;,
+    &#34;record_type&#34;: &#34;COMPLETE_ITEM&#34;
+  }
+}
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
