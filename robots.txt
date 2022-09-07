@@ -1,1 +1,1 @@
-Sitemap: https://gbrrestoration.github.io/rrap-demo-blog/sitemap.xml
+Sitemap: https://gbrrestoration.github.io/sitemap.xml
