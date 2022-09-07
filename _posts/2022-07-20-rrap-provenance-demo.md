@@ -44,7 +44,7 @@ layout: notebook
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">json2tree</span>
+<span class="kn">from</span> <span class="nn">json2html</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
@@ -161,7 +161,27 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">wrap_html_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">ul_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;width: auto; height: 400px; overflow-y: auto; &quot;</span>
+    <span class="n">ul_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">div_tag</span><span class="p">)</span>
+    <span class="n">new_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;details&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
+    
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+    <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Results&quot;</span>
+    <span class="n">soup</span><span class="o">.</span><span class="n">div</span><span class="o">.</span><span class="n">insert_after</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
+    
+<span class="k">def</span> <span class="nf">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">):</span>
+        <span class="n">json_obj_in_html</span> <span class="o">=</span> <span class="n">json2html</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span> <span class="n">response_json</span>  <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap_html_table</span><span class="p">(</span><span class="n">json_obj_in_html</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
             <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
@@ -211,13 +231,21 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Register-a-model-run">Register a model run<a class="anchor-link" href="#Register-a-model-run"> </a></h3><p>A model run consists of six main elements that have already been registered in the RRAP-IS Registry.  These elements are - Workflow definition,</p>
+<h3 id="Register-a-model-run">Register a model run<a class="anchor-link" href="#Register-a-model-run"> </a></h3><p>A model run consists of ten main elements where many have already been registered in the RRAP-IS Registry.</p>
+<p>These elements are:</p>
 <ul>
-<li>Input template,</li>
-<li>Output template,</li>
-<li>Modeller and</li>
-<li>Requesting Organisation</li>
+<li>Start Time,</li>
+<li>End Time,</li>
+<li>Workflow definition*,</li>
+<li>Input dataset*,</li>
+<li>Input template*,</li>
+<li>Output dataset*, </li>
+<li>Output template*,</li>
+<li>Modeller* and</li>
+<li>Requesting Organisation*</li>
 </ul>
+<p>*pre-registered elements.</p>
+<p>For examples of registering elements please see <a href="/rrap-demo-blog/jupyter/2022/08/18/rrap-registry.html" target="_blank">RRAP-IS Register blog post</a> or <a href="/rrap-demo-blog/jupyter/registry/2022/09/02/registry-query.html" target="_blank">RRAP-IS Register Query blog post</a></p>
 <p>see <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Model-Runs/operation/register_model_run_complete_model_run_register_complete_post" target="_blank">Endpoint documentation</a></p>
 
 </div>
@@ -275,9 +303,8 @@ layout: notebook
 <span class="p">}</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -289,60 +316,296 @@ layout: notebook
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{
-  &#34;status&#34;: {
-    &#34;success&#34;: true,
-    &#34;details&#34;: &#34;All successful.&#34;
-  },
-  &#34;record_info&#34;: {
-    &#34;id&#34;: &#34;10378.1/1691231&#34;,
-    &#34;prov_json&#34;: &#34;{\&#34;prefix\&#34;: {\&#34;default\&#34;: \&#34;http://hdl.handle.net/\&#34;}, \&#34;activity\&#34;: {\&#34;10378.1/1691231\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ACTIVITY\&#34;, \&#34;item_subtype\&#34;: \&#34;MODEL_RUN\&#34;}}, \&#34;entity\&#34;: {\&#34;10378.1/1688622\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ENTITY\&#34;, \&#34;item_subtype\&#34;: \&#34;DATASET\&#34;}, \&#34;10378.1/1688634\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ENTITY\&#34;, \&#34;item_subtype\&#34;: \&#34;DATASET\&#34;}, \&#34;10378.1/1691197\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ENTITY\&#34;, \&#34;item_subtype\&#34;: \&#34;MODEL_RUN_WORKFLOW_DEFINITION\&#34;, \&#34;prov:type\&#34;: {\&#34;$\&#34;: \&#34;prov:Collection\&#34;, \&#34;type\&#34;: \&#34;prov:QUALIFIED_NAME\&#34;}}, \&#34;10378.1/1690478\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ENTITY\&#34;, \&#34;item_subtype\&#34;: \&#34;DATASET_TEMPLATE\&#34;}, \&#34;10378.1/1691116\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;ENTITY\&#34;, \&#34;item_subtype\&#34;: \&#34;MODEL\&#34;}}, \&#34;agent\&#34;: {\&#34;10378.1/1691160\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;AGENT\&#34;, \&#34;item_subtype\&#34;: \&#34;PERSON\&#34;}, \&#34;10378.1/1690557\&#34;: {\&#34;model_run/10378.1/1691231\&#34;: true, \&#34;item_category\&#34;: \&#34;AGENT\&#34;, \&#34;item_subtype\&#34;: \&#34;ORGANISATION\&#34;}}, \&#34;used\&#34;: {\&#34;_:id1\&#34;: {\&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;, \&#34;prov:entity\&#34;: \&#34;10378.1/1688622\&#34;}, \&#34;_:id3\&#34;: {\&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;, \&#34;prov:entity\&#34;: \&#34;10378.1/1691116\&#34;}, \&#34;_:id4\&#34;: {\&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;, \&#34;prov:entity\&#34;: \&#34;10378.1/1691197\&#34;}}, \&#34;wasGeneratedBy\&#34;: {\&#34;_:id2\&#34;: {\&#34;prov:entity\&#34;: \&#34;10378.1/1688634\&#34;, \&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;}}, \&#34;wasAssociatedWith\&#34;: {\&#34;_:id5\&#34;: {\&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;, \&#34;prov:agent\&#34;: \&#34;10378.1/1691160\&#34;}, \&#34;_:id6\&#34;: {\&#34;prov:activity\&#34;: \&#34;10378.1/1691231\&#34;, \&#34;prov:agent\&#34;: \&#34;10378.1/1690557\&#34;}}, \&#34;wasAttributedTo\&#34;: {\&#34;_:id7\&#34;: {\&#34;prov:entity\&#34;: \&#34;10378.1/1688634\&#34;, \&#34;prov:agent\&#34;: \&#34;10378.1/1691160\&#34;}}, \&#34;hadMember\&#34;: {\&#34;_:id8\&#34;: {\&#34;prov:collection\&#34;: \&#34;10378.1/1691197\&#34;, \&#34;prov:entity\&#34;: \&#34;10378.1/1690478\&#34;}, \&#34;_:id11\&#34;: {\&#34;prov:collection\&#34;: \&#34;10378.1/1691197\&#34;, \&#34;prov:entity\&#34;: \&#34;10378.1/1691116\&#34;}}, \&#34;wasInfluencedBy\&#34;: {\&#34;_:id9\&#34;: {\&#34;prov:influencee\&#34;: \&#34;10378.1/1688622\&#34;, \&#34;prov:influencer\&#34;: \&#34;10378.1/1690478\&#34;}, \&#34;_:id10\&#34;: {\&#34;prov:influencee\&#34;: \&#34;10378.1/1688634\&#34;, \&#34;prov:influencer\&#34;: \&#34;10378.1/1690478\&#34;}}}&#34;,
-    &#34;record&#34;: {
-      &#34;workflow_definition&#34;: {
-        &#34;id&#34;: &#34;10378.1/1691197&#34;
-      },
-      &#34;inputs&#34;: {
-        &#34;datasets&#34;: {
-          &#34;10378.1/1690478&#34;: {
-            &#34;template&#34;: {
-              &#34;id&#34;: &#34;10378.1/1690478&#34;
-            },
-            &#34;dataset_type&#34;: &#34;DATA_STORE&#34;,
-            &#34;dataset&#34;: {
-              &#34;id&#34;: &#34;10378.1/1688622&#34;
-            }
-          }
-        }
-      },
-      &#34;outputs&#34;: {
-        &#34;datasets&#34;: {
-          &#34;10378.1/1690478&#34;: {
-            &#34;template&#34;: {
-              &#34;id&#34;: &#34;10378.1/1690478&#34;
-            },
-            &#34;dataset_type&#34;: &#34;DATA_STORE&#34;,
-            &#34;dataset&#34;: {
-              &#34;id&#34;: &#34;10378.1/1688634&#34;
-            }
-          }
-        }
-      },
-      &#34;associations&#34;: {
-        &#34;modeller&#34;: {
-          &#34;id&#34;: &#34;10378.1/1691160&#34;
-        },
-        &#34;requesting_organisation&#34;: {
-          &#34;id&#34;: &#34;10378.1/1690557&#34;
-        }
-      },
-      &#34;start_time&#34;: 0,
-      &#34;end_time&#34;: 1662467929
-    }
-  }
-}
-</pre>
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<html>
+ <body>
+  <details>
+   <div style="width: auto; height: 400px; overflow-y: auto; ">
+    <table border="1">
+     <tr>
+      <th>
+       status
+      </th>
+      <td>
+       <table border="1">
+        <tr>
+         <th>
+          success
+         </th>
+         <td>
+          True
+         </td>
+        </tr>
+        <tr>
+         <th>
+          details
+         </th>
+         <td>
+          All successful.
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       record_info
+      </th>
+      <td>
+       <table border="1">
+        <tr>
+         <th>
+          id
+         </th>
+         <td>
+          10378.1/1691332
+         </td>
+        </tr>
+        <tr>
+         <th>
+          prov_json
+         </th>
+         <td>
+          {"prefix": {"default": "http://hdl.handle.net/"}, "activity": {"10378.1/1691332": {"model_run/10378.1/1691332": true, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN"}}, "entity": {"10378.1/1688622": {"model_run/10378.1/1691332": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1688634": {"model_run/10378.1/1691332": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1691197": {"model_run/10378.1/1691332": true, "item_category": "ENTITY", "item_subtype": "MODEL_RUN_WORKFLOW_DEFINITION", "prov:type": {"$": "prov:Collection", "type": "prov:QUALIFIED_NAME"}}, "10378.1/1690478": {"model_run/10378.1/1691332": true, "item_category": "ENTITY", "item_subtype": "DATASET_TEMPLATE"}, "10378.1/1691116": {"model_run/10378.1/1691332": true, "item_category": "ENTITY", "item_subtype": "MODEL"}}, "agent": {"10378.1/1691160": {"model_run/10378.1/1691332": true, "item_category": "AGENT", "item_subtype": "PERSON"}, "10378.1/1690557": {"model_run/10378.1/1691332": true, "item_category": "AGENT", "item_subtype": "ORGANISATION"}}, "used": {"_:id1": {"prov:activity": "10378.1/1691332", "prov:entity": "10378.1/1688622"}, "_:id3": {"prov:activity": "10378.1/1691332", "prov:entity": "10378.1/1691116"}, "_:id4": {"prov:activity": "10378.1/1691332", "prov:entity": "10378.1/1691197"}}, "wasGeneratedBy": {"_:id2": {"prov:entity": "10378.1/1688634", "prov:activity": "10378.1/1691332"}}, "wasAssociatedWith": {"_:id5": {"prov:activity": "10378.1/1691332", "prov:agent": "10378.1/1691160"}, "_:id6": {"prov:activity": "10378.1/1691332", "prov:agent": "10378.1/1690557"}}, "wasAttributedTo": {"_:id7": {"prov:entity": "10378.1/1688634", "prov:agent": "10378.1/1691160"}}, "hadMember": {"_:id8": {"prov:collection": "10378.1/1691197", "prov:entity": "10378.1/1690478"}, "_:id11": {"prov:collection": "10378.1/1691197", "prov:entity": "10378.1/1691116"}}, "wasInfluencedBy": {"_:id9": {"prov:influencee": "10378.1/1688622", "prov:influencer": "10378.1/1690478"}, "_:id10": {"prov:influencee": "10378.1/1688634", "prov:influencer": "10378.1/1690478"}}}
+         </td>
+        </tr>
+        <tr>
+         <th>
+          record
+         </th>
+         <td>
+          <table border="1">
+           <tr>
+            <th>
+             workflow_definition
+            </th>
+            <td>
+             <table border="1">
+              <tr>
+               <th>
+                id
+               </th>
+               <td>
+                10378.1/1691197
+               </td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr>
+            <th>
+             inputs
+            </th>
+            <td>
+             <table border="1">
+              <tr>
+               <th>
+                datasets
+               </th>
+               <td>
+                <table border="1">
+                 <tr>
+                  <th>
+                   10378.1/1690478
+                  </th>
+                  <td>
+                   <table border="1">
+                    <tr>
+                     <th>
+                      template
+                     </th>
+                     <td>
+                      <table border="1">
+                       <tr>
+                        <th>
+                         id
+                        </th>
+                        <td>
+                         10378.1/1690478
+                        </td>
+                       </tr>
+                      </table>
+                     </td>
+                    </tr>
+                    <tr>
+                     <th>
+                      dataset_type
+                     </th>
+                     <td>
+                      DATA_STORE
+                     </td>
+                    </tr>
+                    <tr>
+                     <th>
+                      dataset
+                     </th>
+                     <td>
+                      <table border="1">
+                       <tr>
+                        <th>
+                         id
+                        </th>
+                        <td>
+                         10378.1/1688622
+                        </td>
+                       </tr>
+                      </table>
+                     </td>
+                    </tr>
+                   </table>
+                  </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr>
+            <th>
+             outputs
+            </th>
+            <td>
+             <table border="1">
+              <tr>
+               <th>
+                datasets
+               </th>
+               <td>
+                <table border="1">
+                 <tr>
+                  <th>
+                   10378.1/1690478
+                  </th>
+                  <td>
+                   <table border="1">
+                    <tr>
+                     <th>
+                      template
+                     </th>
+                     <td>
+                      <table border="1">
+                       <tr>
+                        <th>
+                         id
+                        </th>
+                        <td>
+                         10378.1/1690478
+                        </td>
+                       </tr>
+                      </table>
+                     </td>
+                    </tr>
+                    <tr>
+                     <th>
+                      dataset_type
+                     </th>
+                     <td>
+                      DATA_STORE
+                     </td>
+                    </tr>
+                    <tr>
+                     <th>
+                      dataset
+                     </th>
+                     <td>
+                      <table border="1">
+                       <tr>
+                        <th>
+                         id
+                        </th>
+                        <td>
+                         10378.1/1688634
+                        </td>
+                       </tr>
+                      </table>
+                     </td>
+                    </tr>
+                   </table>
+                  </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr>
+            <th>
+             associations
+            </th>
+            <td>
+             <table border="1">
+              <tr>
+               <th>
+                modeller
+               </th>
+               <td>
+                <table border="1">
+                 <tr>
+                  <th>
+                   id
+                  </th>
+                  <td>
+                   10378.1/1691160
+                  </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+              <tr>
+               <th>
+                requesting_organisation
+               </th>
+               <td>
+                <table border="1">
+                 <tr>
+                  <th>
+                   id
+                  </th>
+                  <td>
+                   10378.1/1690557
+                  </td>
+                 </tr>
+                </table>
+               </td>
+              </tr>
+             </table>
+            </td>
+           </tr>
+           <tr>
+            <th>
+             start_time
+            </th>
+            <td>
+             0
+            </td>
+           </tr>
+           <tr>
+            <th>
+             end_time
+            </th>
+            <td>
+             1662467929
+            </td>
+           </tr>
+          </table>
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+    </table>
+   </div>
+   <summary>
+    Results
+   </summary>
+  </details>
+ </body>
+</html>
 </div>
+
 </div>
 
 </div>
@@ -378,9 +641,12 @@ layout: notebook
 <span class="n">result_graph</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s2">&quot;graph&quot;</span><span class="p">]</span>
 
 <span class="n">a_graph</span> <span class="o">=</span> <span class="n">json_graph</span><span class="o">.</span><span class="n">node_link_graph</span><span class="p">(</span><span class="n">result_graph</span><span class="p">)</span>
-<span class="n">im</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">from_networkx</span><span class="p">(</span><span class="n">a_graph</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">fruchterman_reingold_layout</span><span class="p">)</span><span class="c1">#.opts(tools=[&#39;hover&#39;])</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Graph</span><span class="o">.</span><span class="n">from_networkx</span><span class="p">(</span><span class="n">a_graph</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">fruchterman_reingold_layout</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="c1">#.opts(tools=[&#39;hover&#39;])</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Labels</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="s1">&#39;item_category&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">Labels</span><span class="p">(</span><span class="n">text_font_size</span><span class="o">=</span><span class="s1">&#39;12pt&#39;</span><span class="p">,</span> <span class="n">text_color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">xoffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">yoffset</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">))</span>
+<span class="n">labels_2</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Labels</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">],</span> <span class="s1">&#39;item_subtype&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">Labels</span><span class="p">(</span><span class="n">text_font_size</span><span class="o">=</span><span class="s1">&#39;8pt&#39;</span><span class="p">,</span> <span class="n">xoffset</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">yoffset</span><span class="o">=-</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">bgcolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">))</span>
+<span class="n">hv_graph</span> <span class="o">=</span> <span class="p">(</span><span class="n">im</span> <span class="o">*</span> <span class="n">labels</span> <span class="o">*</span> <span class="n">labels_2</span><span class="p">)</span>
 
-<span class="n">hv</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">im</span><span class="p">,</span> <span class="s1">&#39;lineage_network.html&#39;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;bokeh&#39;</span><span class="p">)</span>
+<span class="n">hv</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">hv_graph</span><span class="p">,</span> <span class="s1">&#39;lineage_network.html&#39;</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="s1">&#39;bokeh&#39;</span><span class="p">)</span>
 
 <span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;lineage_network.html&#39;</span><span class="p">)</span>
 </pre></div>
@@ -428,10 +694,10 @@ layout: notebook
   </head>
   <body>
           
-              <div class="bk-root" id="3740f17e-f602-4028-aceb-9b62d6eded22" data-root-id="2268"></div>
+              <div class="bk-root" id="8dfd977a-d590-4736-a9ac-3c342d906bdf" data-root-id="4970"></div>
       
-        <script type="application/json" id="2449">
-          {"48bd927b-ccc5-4369-ab93-d27ee9a7c4a7":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAA==","dtype":"int32","order":"little","shape":[7]},"index_hover":["10378.1/1688622","10378.1/1690478","10378.1/1690557","10378.1/1691116","10378.1/1691160","10378.1/1691197","10378.1/1691200"],"item_category":["ENTITY","ENTITY","AGENT","ENTITY","AGENT","ENTITY","ACTIVITY"],"item_subtype":["DATASET","DATASET_TEMPLATE","ORGANISATION","MODEL","PERSON","MODEL_RUN_WORKFLOW_DEFINITION","MODEL_RUN"]},"selected":{"id":"2348"},"selection_policy":{"id":"2347"}},"id":"2305","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"2318"},"group":null,"inspection_policy":{"id":"2331"},"layout_provider":{"id":"2307"},"node_renderer":{"id":"2312"},"selection_policy":{"id":"2329"}},"id":"2320","type":"GraphRenderer"},{"attributes":{"end":0.922417673292474,"reset_end":0.922417673292474,"reset_start":-1.1747652430265885,"start":-1.1747652430265885,"tags":[[["y","y",null]]]},"id":"2271","type":"Range1d"},{"attributes":{},"id":"2338","type":"AllLabels"},{"attributes":{},"id":"2287","type":"BasicTicker"},{"attributes":{},"id":"2334","type":"BasicTickFormatter"},{"attributes":{},"id":"2292","type":"WheelZoomTool"},{"attributes":{"fill_color":{"value":"#30a2da"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"2308","type":"Circle"},{"attributes":{"graph_layout":{"0":[0.376494731991228,0.6255537387278673],"1":[0.7040462641551051,0.7476524302658855],"2":[-0.8637697026115693,-0.5978438921357272],"3":[0.2235457120367536,-1.0],"4":[-0.776376672096717,0.4849003668235205],"5":[0.4767331991875361,-0.131164294631821],"6":[-0.14067353266233643,-0.12909834904972534]}},"id":"2307","type":"StaticLayoutProvider"},{"attributes":{"callback":null,"renderers":[{"id":"2320"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"2272","type":"HoverTool"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer01965","sizing_mode":"stretch_width"},"id":"2351","type":"Spacer"},{"attributes":{},"id":"2290","type":"SaveTool"},{"attributes":{},"id":"2337","type":"BasicTickFormatter"},{"attributes":{"overlay":{"id":"2296"}},"id":"2293","type":"BoxZoomTool"},{"attributes":{},"id":"2294","type":"ResetTool"},{"attributes":{"coordinates":null,"data_source":{"id":"2305"},"glyph":{"id":"2308"},"group":null,"hover_glyph":{"id":"2310"},"muted_glyph":{"id":"2311"},"nonselection_glyph":{"id":"2309"},"view":{"id":"2313"}},"id":"2312","type":"GlyphRenderer"},{"attributes":{"callback":null},"id":"2295","type":"TapTool"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer01964","sizing_mode":"stretch_width"},"id":"2269","type":"Spacer"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"2310","type":"Circle"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"2296","type":"BoxAnnotation"},{"attributes":{},"id":"2347","type":"UnionRenderers"},{"attributes":{},"id":"2350","type":"Selection"},{"attributes":{"data":{"end":{"__ndarray__":"AAAAAAMAAAAFAAAABAAAAAIAAAABAAAAAQAAAAMAAAA=","dtype":"int32","order":"little","shape":[8]},"start":{"__ndarray__":"BgAAAAYAAAAGAAAABgAAAAYAAAAAAAAABQAAAAUAAAA=","dtype":"int32","order":"little","shape":[8]}},"selected":{"id":"2350"},"selection_policy":{"id":"2349"}},"id":"2306","type":"ColumnDataSource"},{"attributes":{"tools":[{"id":"2272"},{"id":"2290"},{"id":"2291"},{"id":"2292"},{"id":"2293"},{"id":"2294"},{"id":"2295"}]},"id":"2297","type":"Toolbar"},{"attributes":{},"id":"2348","type":"Selection"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"2311","type":"Circle"},{"attributes":{"source":{"id":"2305"}},"id":"2313","type":"CDSView"},{"attributes":{"line_width":{"value":2}},"id":"2314","type":"MultiLine"},{"attributes":{},"id":"2283","type":"BasicTicker"},{"attributes":{"axis":{"id":"2282"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"2285","type":"Grid"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"2309","type":"Circle"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2317","type":"MultiLine"},{"attributes":{},"id":"2349","type":"UnionRenderers"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"2274","type":"Title"},{"attributes":{"source":{"id":"2306"}},"id":"2319","type":"CDSView"},{"attributes":{"children":[{"id":"2269"},{"id":"2273"},{"id":"2351"}],"margin":[0,0,0,0],"name":"Row01960","tags":["embedded"]},"id":"2268","type":"Row"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"2334"},"group":null,"major_label_policy":{"id":"2335"},"ticker":{"id":"2283"}},"id":"2282","type":"LinearAxis"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"2316","type":"MultiLine"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2315","type":"MultiLine"},{"attributes":{"coordinates":null,"data_source":{"id":"2306"},"glyph":{"id":"2314"},"group":null,"hover_glyph":{"id":"2316"},"muted_glyph":{"id":"2317"},"nonselection_glyph":{"id":"2315"},"view":{"id":"2319"}},"id":"2318","type":"GlyphRenderer"},{"attributes":{"axis":{"id":"2286"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"2289","type":"Grid"},{"attributes":{},"id":"2329","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"2278","type":"LinearScale"},{"attributes":{},"id":"2280","type":"LinearScale"},{"attributes":{},"id":"2335","type":"AllLabels"},{"attributes":{"below":[{"id":"2282"}],"center":[{"id":"2285"},{"id":"2289"}],"left":[{"id":"2286"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"2320"}],"sizing_mode":"fixed","title":{"id":"2274"},"toolbar":{"id":"2297"},"width":800,"x_range":{"id":"2270"},"x_scale":{"id":"2278"},"y_range":{"id":"2271"},"y_scale":{"id":"2280"}},"id":"2273","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"2331","type":"NodesAndLinkedEdges"},{"attributes":{"end":0.8216324616626056,"reset_end":0.8216324616626056,"reset_start":-0.9813559001190698,"start":-0.9813559001190698,"tags":[[["x","x",null]]]},"id":"2270","type":"Range1d"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"2337"},"group":null,"major_label_policy":{"id":"2338"},"ticker":{"id":"2287"}},"id":"2286","type":"LinearAxis"},{"attributes":{},"id":"2291","type":"PanTool"}],"root_ids":["2268"]},"title":"Bokeh Application","version":"2.4.3"}}
+        <script type="application/json" id="5209">
+          {"3724dba0-481b-4880-a1d7-89a353d09e7d":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{},"id":"5078","type":"Selection"},{"attributes":{"end":0.6039145031169921,"reset_end":0.6039145031169921,"reset_start":-0.6801125208224856,"start":-0.6801125208224856,"tags":[[["y","y",null]]]},"id":"4973","type":"Range1d"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer06824","sizing_mode":"stretch_width"},"id":"5079","type":"Spacer"},{"attributes":{},"id":"4980","type":"LinearScale"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"5011"},"group":null,"major_label_policy":{"id":"5012"},"ticker":{"id":"4989"}},"id":"4988","type":"LinearAxis"},{"attributes":{"end":1.1327935134771967,"reset_end":1.1327935134771967,"reset_start":-0.903373693173156,"start":-0.903373693173156,"tags":[[["x","x",null]]]},"id":"4972","type":"Range1d"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"4976","type":"Title"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"4998","type":"BoxAnnotation"},{"attributes":{"tools":[{"id":"4974"},{"id":"4992"},{"id":"4993"},{"id":"4994"},{"id":"4995"},{"id":"4996"},{"id":"4997"}]},"id":"4999","type":"Toolbar"},{"attributes":{"angle":{"value":0},"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"5052"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"5053"}},"y_offset":{"value":0}},"id":"5062","type":"Text"},{"attributes":{},"id":"5009","type":"AllLabels"},{"attributes":{},"id":"4982","type":"LinearScale"},{"attributes":{"background_fill_color":"pink","below":[{"id":"4984"}],"center":[{"id":"4987"},{"id":"4991"}],"left":[{"id":"4988"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"5028"},{"id":"5049"},{"id":"5060"}],"sizing_mode":"fixed","title":{"id":"4976"},"toolbar":{"id":"4999"},"width":800,"x_range":{"id":"4972"},"x_scale":{"id":"4980"},"y_range":{"id":"4973"},"y_scale":{"id":"4982"}},"id":"4975","subtype":"Figure","type":"Plot"},{"attributes":{"data":{"item_subtype":["DATASET","DATASET_TEMPLATE","ORGANISATION","MODEL","PERSON","MODEL_RUN_WORKFLOW_DEFINITION","MODEL_RUN"],"x":{"__ndarray__":"gjLdQw3U4r+mrdfDl6jov////////+8/DoZfdnYA17+xUUFZyRrpPxNaqhwkb8+/D6A3w3/3xj8=","dtype":"float64","order":"little","shape":[7]},"y":{"__ndarray__":"LRofNz9r2b+V+ZHn3gyRPy6z8da3L8w/qUHjCmnN3z9StrNY61biv0Y2qlVxZNE/cVLHj3ILor8=","dtype":"float64","order":"little","shape":[7]}},"selected":{"id":"5055"},"selection_policy":{"id":"5072"}},"id":"5054","type":"ColumnDataSource"},{"attributes":{},"id":"5077","type":"UnionRenderers"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"5008"},"group":null,"major_label_policy":{"id":"5009"},"ticker":{"id":"4985"}},"id":"4984","type":"LinearAxis"},{"attributes":{},"id":"4993","type":"PanTool"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"5024","type":"MultiLine"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"5025","type":"MultiLine"},{"attributes":{},"id":"5070","type":"UnionRenderers"},{"attributes":{},"id":"5037","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"4985","type":"BasicTicker"},{"attributes":{},"id":"5012","type":"AllLabels"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"5019","type":"Circle"},{"attributes":{"source":{"id":"5014"}},"id":"5027","type":"CDSView"},{"attributes":{"axis":{"id":"4984"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"4987","type":"Grid"},{"attributes":{"range":null,"value":0.05},"id":"5042","type":"Dodge"},{"attributes":{"range":null},"id":"5052","type":"Dodge"},{"attributes":{"callback":null},"id":"4997","type":"TapTool"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"5041"}},"y":{"field":"y","transform":{"id":"5042"}}},"id":"5048","type":"Text"},{"attributes":{},"id":"5055","type":"Selection"},{"attributes":{"axis":{"id":"4988"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"4991","type":"Grid"},{"attributes":{"range":null},"id":"5041","type":"Dodge"},{"attributes":{},"id":"5039","type":"NodesAndLinkedEdges"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"5052"}},"y":{"field":"y","transform":{"id":"5053"}}},"id":"5057","type":"Text"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"5018","type":"Circle"},{"attributes":{"coordinates":null,"data_source":{"id":"5014"},"glyph":{"id":"5022"},"group":null,"hover_glyph":{"id":"5024"},"muted_glyph":{"id":"5025"},"nonselection_glyph":{"id":"5023"},"view":{"id":"5027"}},"id":"5026","type":"GlyphRenderer"},{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAA==","dtype":"int32","order":"little","shape":[7]},"index_hover":["10378.1/1688622","10378.1/1690478","10378.1/1690557","10378.1/1691116","10378.1/1691160","10378.1/1691197","10378.1/1691200"],"item_category":["ENTITY","ENTITY","AGENT","ENTITY","AGENT","ENTITY","ACTIVITY"],"item_subtype":["DATASET","DATASET_TEMPLATE","ORGANISATION","MODEL","PERSON","MODEL_RUN_WORKFLOW_DEFINITION","MODEL_RUN"]},"selected":{"id":"5076"},"selection_policy":{"id":"5075"}},"id":"5013","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"5026"},"group":null,"inspection_policy":{"id":"5039"},"layout_provider":{"id":"5015"},"node_renderer":{"id":"5020"},"selection_policy":{"id":"5037"}},"id":"5028","type":"GraphRenderer"},{"attributes":{"data":{"end":{"__ndarray__":"AAAAAAMAAAAFAAAABAAAAAIAAAABAAAAAQAAAAMAAAA=","dtype":"int32","order":"little","shape":[8]},"start":{"__ndarray__":"BgAAAAYAAAAGAAAABgAAAAYAAAAAAAAABQAAAAUAAAA=","dtype":"int32","order":"little","shape":[8]}},"selected":{"id":"5078"},"selection_policy":{"id":"5077"}},"id":"5014","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"data_source":{"id":"5043"},"glyph":{"id":"5046"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"5048"},"nonselection_glyph":{"id":"5047"},"selection_glyph":{"id":"5051"},"view":{"id":"5050"}},"id":"5049","type":"GlyphRenderer"},{"attributes":{},"id":"4994","type":"WheelZoomTool"},{"attributes":{"angle":{"value":0},"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"5041"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"5042"}},"y_offset":{"value":0}},"id":"5051","type":"Text"},{"attributes":{},"id":"5011","type":"BasicTickFormatter"},{"attributes":{"line_width":{"value":2}},"id":"5022","type":"MultiLine"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"5023","type":"MultiLine"},{"attributes":{},"id":"5008","type":"BasicTickFormatter"},{"attributes":{},"id":"5044","type":"Selection"},{"attributes":{"fill_color":{"value":"#30a2da"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"5016","type":"Circle"},{"attributes":{},"id":"5072","type":"UnionRenderers"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"5017","type":"Circle"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"5052"}},"y":{"field":"y","transform":{"id":"5053"}}},"id":"5059","type":"Text"},{"attributes":{},"id":"4989","type":"BasicTicker"},{"attributes":{"source":{"id":"5013"}},"id":"5021","type":"CDSView"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"5052"}},"y":{"field":"y","transform":{"id":"5053"}}},"id":"5058","type":"Text"},{"attributes":{"source":{"id":"5054"}},"id":"5061","type":"CDSView"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer06823","sizing_mode":"stretch_width"},"id":"4971","type":"Spacer"},{"attributes":{"source":{"id":"5043"}},"id":"5050","type":"CDSView"},{"attributes":{},"id":"5075","type":"UnionRenderers"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"5041"}},"y":{"field":"y","transform":{"id":"5042"}}},"id":"5047","type":"Text"},{"attributes":{"overlay":{"id":"4998"}},"id":"4995","type":"BoxZoomTool"},{"attributes":{},"id":"5076","type":"Selection"},{"attributes":{"children":[{"id":"4971"},{"id":"4975"},{"id":"5079"}],"margin":[0,0,0,0],"name":"Row06819","tags":["embedded"]},"id":"4970","type":"Row"},{"attributes":{},"id":"4992","type":"SaveTool"},{"attributes":{"range":null,"value":-0.05},"id":"5053","type":"Dodge"},{"attributes":{"coordinates":null,"data_source":{"id":"5013"},"glyph":{"id":"5016"},"group":null,"hover_glyph":{"id":"5018"},"muted_glyph":{"id":"5019"},"nonselection_glyph":{"id":"5017"},"view":{"id":"5021"}},"id":"5020","type":"GlyphRenderer"},{"attributes":{"coordinates":null,"data_source":{"id":"5054"},"glyph":{"id":"5057"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"5059"},"nonselection_glyph":{"id":"5058"},"selection_glyph":{"id":"5062"},"view":{"id":"5061"}},"id":"5060","type":"GlyphRenderer"},{"attributes":{},"id":"4996","type":"ResetTool"},{"attributes":{"callback":null,"renderers":[{"id":"5028"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"4974","type":"HoverTool"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"5041"}},"y":{"field":"y","transform":{"id":"5042"}}},"id":"5046","type":"Text"},{"attributes":{"graph_layout":{"0":[-0.5883852315397038,-0.3971708334251243],"1":[-0.770580179695959,0.01665066040413306],"2":[0.9999999999999999,0.22020624156302787],"3":[-0.3594032436359108,0.4969122511220357],"4":[0.7845198386444762,-0.5731102688275291],"5":[-0.2455792560546831,0.271755536706085],"6":[0.17942807228178068,-0.03524358754262814]}},"id":"5015","type":"StaticLayoutProvider"},{"attributes":{"data":{"item_category":["ENTITY","ENTITY","AGENT","ENTITY","AGENT","ENTITY","ACTIVITY"],"x":{"__ndarray__":"gjLdQw3U4r+mrdfDl6jov////////+8/DoZfdnYA17+xUUFZyRrpPxNaqhwkb8+/D6A3w3/3xj8=","dtype":"float64","order":"little","shape":[7]},"y":{"__ndarray__":"LRofNz9r2b+V+ZHn3gyRPy6z8da3L8w/qUHjCmnN3z9StrNY61biv0Y2qlVxZNE/cVLHj3ILor8=","dtype":"float64","order":"little","shape":[7]}},"selected":{"id":"5044"},"selection_policy":{"id":"5070"}},"id":"5043","type":"ColumnDataSource"}],"root_ids":["4970"]},"title":"Bokeh Application","version":"2.4.3"}}
         </script>
         <script type="text/javascript">
           (function() {
@@ -439,8 +705,8 @@ layout: notebook
               Bokeh.safely(function() {
                 (function(root) {
                   function embed_document(root) {
-                  const docs_json = document.getElementById('2449').textContent;
-                  const render_items = [{"docid":"48bd927b-ccc5-4369-ab93-d27ee9a7c4a7","root_ids":["2268"],"roots":{"2268":"3740f17e-f602-4028-aceb-9b62d6eded22"}}];
+                  const docs_json = document.getElementById('5209').textContent;
+                  const render_items = [{"docid":"3724dba0-481b-4880-a1d7-89a353d09e7d","root_ids":["4970"],"roots":{"4970":"8dfd977a-d590-4736-a9ac-3c342d906bdf"}}];
                   root.Bokeh.embed.embed_items(docs_json, render_items);
                   }
                   if (root.Bokeh !== undefined) {
@@ -555,10 +821,10 @@ layout: notebook
   </head>
   <body>
           
-              <div class="bk-root" id="6c630a87-c90d-4057-b7ef-902bf689caeb" data-root-id="2450"></div>
+              <div class="bk-root" id="e6696d3d-f9d0-43ab-9209-1887eab0fe11" data-root-id="5210"></div>
       
-        <script type="application/json" id="2629">
-          {"6f9901f1-83ae-4042-883a-f4367d179a2c":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{},"id":"2527","type":"UnionRenderers"},{"attributes":{},"id":"2509","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"2528","type":"Selection"},{"attributes":{"axis":{"id":"2464"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"2467","type":"Grid"},{"attributes":{"below":[{"id":"2464"}],"center":[{"id":"2467"},{"id":"2471"}],"left":[{"id":"2468"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"2500"}],"sizing_mode":"fixed","title":{"id":"2456"},"toolbar":{"id":"2478"},"width":800,"x_range":{"id":"2452"},"x_scale":{"id":"2460"},"y_range":{"id":"2453"},"y_scale":{"id":"2462"}},"id":"2455","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"2529","type":"UnionRenderers"},{"attributes":{},"id":"2462","type":"LinearScale"},{"attributes":{},"id":"2515","type":"AllLabels"},{"attributes":{},"id":"2460","type":"LinearScale"},{"attributes":{},"id":"2511","type":"NodesAndLinkedEdges"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"2456","type":"Title"},{"attributes":{"callback":null,"renderers":[{"id":"2500"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"2454","type":"HoverTool"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer02055","sizing_mode":"stretch_width"},"id":"2451","type":"Spacer"},{"attributes":{},"id":"2514","type":"BasicTickFormatter"},{"attributes":{},"id":"2517","type":"BasicTickFormatter"},{"attributes":{"end":1.2,"reset_end":1.2,"reset_start":-1.2,"start":-1.2,"tags":[[["y","y",null]]]},"id":"2453","type":"Range1d"},{"attributes":{},"id":"2518","type":"AllLabels"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"2514"},"group":null,"major_label_policy":{"id":"2515"},"ticker":{"id":"2465"}},"id":"2464","type":"LinearAxis"},{"attributes":{},"id":"2465","type":"BasicTicker"},{"attributes":{"fill_color":{"value":"#30a2da"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"2488","type":"Circle"},{"attributes":{"end":0.37048072977777724,"reset_end":0.37048072977777724,"reset_start":-0.3704807297777774,"start":-0.3704807297777774,"tags":[[["x","x",null]]]},"id":"2452","type":"Range1d"},{"attributes":{"tools":[{"id":"2454"},{"id":"2472"},{"id":"2473"},{"id":"2474"},{"id":"2475"},{"id":"2476"}]},"id":"2478","type":"Toolbar"},{"attributes":{},"id":"2473","type":"PanTool"},{"attributes":{"graph_layout":{"0":[0.32215715632850195,1.0],"1":[-0.3221571563285021,-0.9999999999999999]}},"id":"2487","type":"StaticLayoutProvider"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer02056","sizing_mode":"stretch_width"},"id":"2531","type":"Spacer"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"2498"},"group":null,"inspection_policy":{"id":"2511"},"layout_provider":{"id":"2487"},"node_renderer":{"id":"2492"},"selection_policy":{"id":"2509"}},"id":"2500","type":"GraphRenderer"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"2517"},"group":null,"major_label_policy":{"id":"2518"},"ticker":{"id":"2469"}},"id":"2468","type":"LinearAxis"},{"attributes":{"axis":{"id":"2468"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"2471","type":"Grid"},{"attributes":{},"id":"2469","type":"BasicTicker"},{"attributes":{},"id":"2530","type":"Selection"},{"attributes":{},"id":"2474","type":"WheelZoomTool"},{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAA=","dtype":"int32","order":"little","shape":[2]},"index_hover":["10378.1/1688634","10378.1/1691200"],"item_category":["ENTITY","ACTIVITY"],"item_subtype":["DATASET","MODEL_RUN"]},"selected":{"id":"2528"},"selection_policy":{"id":"2527"}},"id":"2485","type":"ColumnDataSource"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"2490","type":"Circle"},{"attributes":{},"id":"2472","type":"SaveTool"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2495","type":"MultiLine"},{"attributes":{"data":{"end":{"__ndarray__":"AQAAAA==","dtype":"int32","order":"little","shape":[1]},"start":{"__ndarray__":"AAAAAA==","dtype":"int32","order":"little","shape":[1]}},"selected":{"id":"2530"},"selection_policy":{"id":"2529"}},"id":"2486","type":"ColumnDataSource"},{"attributes":{"overlay":{"id":"2477"}},"id":"2475","type":"BoxZoomTool"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"2491","type":"Circle"},{"attributes":{},"id":"2476","type":"ResetTool"},{"attributes":{"source":{"id":"2485"}},"id":"2493","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2497","type":"MultiLine"},{"attributes":{"line_width":{"value":2}},"id":"2494","type":"MultiLine"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"2477","type":"BoxAnnotation"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"2489","type":"Circle"},{"attributes":{"source":{"id":"2486"}},"id":"2499","type":"CDSView"},{"attributes":{"coordinates":null,"data_source":{"id":"2485"},"glyph":{"id":"2488"},"group":null,"hover_glyph":{"id":"2490"},"muted_glyph":{"id":"2491"},"nonselection_glyph":{"id":"2489"},"view":{"id":"2493"}},"id":"2492","type":"GlyphRenderer"},{"attributes":{"children":[{"id":"2451"},{"id":"2455"},{"id":"2531"}],"margin":[0,0,0,0],"name":"Row02051","tags":["embedded"]},"id":"2450","type":"Row"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"2496","type":"MultiLine"},{"attributes":{"coordinates":null,"data_source":{"id":"2486"},"glyph":{"id":"2494"},"group":null,"hover_glyph":{"id":"2496"},"muted_glyph":{"id":"2497"},"nonselection_glyph":{"id":"2495"},"view":{"id":"2499"}},"id":"2498","type":"GlyphRenderer"}],"root_ids":["2450"]},"title":"Bokeh Application","version":"2.4.3"}}
+        <script type="application/json" id="5389">
+          {"b60689f0-3662-4546-b253-f2ace5a3d25f":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{"graph_layout":{"0":[1.0,0.10632881709825767],"1":[-1.0,-0.10632881709825767]}},"id":"5247","type":"StaticLayoutProvider"},{"attributes":{},"id":"5232","type":"SaveTool"},{"attributes":{},"id":"5277","type":"BasicTickFormatter"},{"attributes":{"source":{"id":"5246"}},"id":"5259","type":"CDSView"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"5277"},"group":null,"major_label_policy":{"id":"5278"},"ticker":{"id":"5229"}},"id":"5228","type":"LinearAxis"},{"attributes":{},"id":"5269","type":"NodesAndLinkedEdges"},{"attributes":{"below":[{"id":"5224"}],"center":[{"id":"5227"},{"id":"5231"}],"left":[{"id":"5228"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"5260"}],"sizing_mode":"fixed","title":{"id":"5216"},"toolbar":{"id":"5238"},"width":800,"x_range":{"id":"5212"},"x_scale":{"id":"5220"},"y_range":{"id":"5213"},"y_scale":{"id":"5222"}},"id":"5215","subtype":"Figure","type":"Plot"},{"attributes":{"end":0.1275945805179092,"reset_end":0.1275945805179092,"reset_start":-0.1275945805179092,"start":-0.1275945805179092,"tags":[[["y","y",null]]]},"id":"5213","type":"Range1d"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"5251","type":"Circle"},{"attributes":{},"id":"5287","type":"UnionRenderers"},{"attributes":{},"id":"5289","type":"UnionRenderers"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer07037","sizing_mode":"stretch_width"},"id":"5291","type":"Spacer"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"5256","type":"MultiLine"},{"attributes":{},"id":"5225","type":"BasicTicker"},{"attributes":{},"id":"5288","type":"Selection"},{"attributes":{"axis":{"id":"5224"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"5227","type":"Grid"},{"attributes":{},"id":"5275","type":"AllLabels"},{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAA=","dtype":"int32","order":"little","shape":[2]},"index_hover":["10378.1/1688634","10378.1/1691200"],"item_category":["ENTITY","ACTIVITY"],"item_subtype":["DATASET","MODEL_RUN"]},"selected":{"id":"5288"},"selection_policy":{"id":"5287"}},"id":"5245","type":"ColumnDataSource"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"5274"},"group":null,"major_label_policy":{"id":"5275"},"ticker":{"id":"5225"}},"id":"5224","type":"LinearAxis"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"5237","type":"BoxAnnotation"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer07036","sizing_mode":"stretch_width"},"id":"5211","type":"Spacer"},{"attributes":{"callback":null,"renderers":[{"id":"5260"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"5214","type":"HoverTool"},{"attributes":{},"id":"5233","type":"PanTool"},{"attributes":{"line_width":{"value":2}},"id":"5254","type":"MultiLine"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"5216","type":"Title"},{"attributes":{"fill_color":{"value":"#30a2da"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"5248","type":"Circle"},{"attributes":{"coordinates":null,"data_source":{"id":"5246"},"glyph":{"id":"5254"},"group":null,"hover_glyph":{"id":"5256"},"muted_glyph":{"id":"5257"},"nonselection_glyph":{"id":"5255"},"view":{"id":"5259"}},"id":"5258","type":"GlyphRenderer"},{"attributes":{},"id":"5236","type":"ResetTool"},{"attributes":{"overlay":{"id":"5237"}},"id":"5235","type":"BoxZoomTool"},{"attributes":{"source":{"id":"5245"}},"id":"5253","type":"CDSView"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"#30a2da"},"hatch_alpha":{"value":0.2},"hatch_color":{"value":"#30a2da"},"line_alpha":{"value":0.2},"size":{"value":15}},"id":"5249","type":"Circle"},{"attributes":{"end":1.15,"reset_end":1.15,"reset_start":-1.15,"start":-1.15,"tags":[[["x","x",null]]]},"id":"5212","type":"Range1d"},{"attributes":{"coordinates":null,"data_source":{"id":"5245"},"glyph":{"id":"5248"},"group":null,"hover_glyph":{"id":"5250"},"muted_glyph":{"id":"5251"},"nonselection_glyph":{"id":"5249"},"view":{"id":"5253"}},"id":"5252","type":"GlyphRenderer"},{"attributes":{},"id":"5290","type":"Selection"},{"attributes":{"data":{"end":{"__ndarray__":"AQAAAA==","dtype":"int32","order":"little","shape":[1]},"start":{"__ndarray__":"AAAAAA==","dtype":"int32","order":"little","shape":[1]}},"selected":{"id":"5290"},"selection_policy":{"id":"5289"}},"id":"5246","type":"ColumnDataSource"},{"attributes":{"tools":[{"id":"5214"},{"id":"5232"},{"id":"5233"},{"id":"5234"},{"id":"5235"},{"id":"5236"}]},"id":"5238","type":"Toolbar"},{"attributes":{},"id":"5222","type":"LinearScale"},{"attributes":{},"id":"5220","type":"LinearScale"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"5258"},"group":null,"inspection_policy":{"id":"5271"},"layout_provider":{"id":"5247"},"node_renderer":{"id":"5252"},"selection_policy":{"id":"5269"}},"id":"5260","type":"GraphRenderer"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"5257","type":"MultiLine"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"5255","type":"MultiLine"},{"attributes":{"axis":{"id":"5228"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"5231","type":"Grid"},{"attributes":{"children":[{"id":"5211"},{"id":"5215"},{"id":"5291"}],"margin":[0,0,0,0],"name":"Row07032","tags":["embedded"]},"id":"5210","type":"Row"},{"attributes":{},"id":"5271","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"5229","type":"BasicTicker"},{"attributes":{},"id":"5234","type":"WheelZoomTool"},{"attributes":{},"id":"5274","type":"BasicTickFormatter"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"value":"#30a2da"},"size":{"value":15}},"id":"5250","type":"Circle"},{"attributes":{},"id":"5278","type":"AllLabels"}],"root_ids":["5210"]},"title":"Bokeh Application","version":"2.4.3"}}
         </script>
         <script type="text/javascript">
           (function() {
@@ -566,8 +832,8 @@ layout: notebook
               Bokeh.safely(function() {
                 (function(root) {
                   function embed_document(root) {
-                  const docs_json = document.getElementById('2629').textContent;
-                  const render_items = [{"docid":"6f9901f1-83ae-4042-883a-f4367d179a2c","root_ids":["2450"],"roots":{"2450":"6c630a87-c90d-4057-b7ef-902bf689caeb"}}];
+                  const docs_json = document.getElementById('5389').textContent;
+                  const render_items = [{"docid":"b60689f0-3662-4546-b253-f2ace5a3d25f","root_ids":["5210"],"roots":{"5210":"e6696d3d-f9d0-43ab-9209-1887eab0fe11"}}];
                   root.Bokeh.embed.embed_items(docs_json, render_items);
                   }
                   if (root.Bokeh !== undefined) {
