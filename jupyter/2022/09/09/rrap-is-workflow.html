@@ -135,23 +135,23 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Notebook-helper-functions">Notebook helper functions </a></li>
 <li class="toc-entry toc-h2"><a href="#Demonstration">Demonstration </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#Model">Model </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#List-all-existing-models">List all existing models </a></li>
-<li class="toc-entry toc-h4"><a href="#Register-a-new-model">Register a new model </a></li>
-<li class="toc-entry toc-h4"><a href="#Obtain-the-newly-Registered-Model-for-use">Obtain the newly Registered Model for use </a></li>
-</ul>
-</li>
 <li class="toc-entry toc-h3"><a href="#Data">Data </a>
 <ul>
 <li class="toc-entry toc-h4"><a href="#List-existing-dataset">List existing dataset </a></li>
 <li class="toc-entry toc-h4"><a href="#Register-a-new-dataset">Register a new dataset </a></li>
-<li class="toc-entry toc-h4"><a href="#Download-and-use-a-registered-dataset">Download and use a registered dataset </a></li>
+<li class="toc-entry toc-h4"><a href="#Download-a-registered-dataset">Download a registered dataset </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Model">Model </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#List-all-existing-models">List all existing models </a></li>
+<li class="toc-entry toc-h4"><a href="#Register-a-new-model">Register a new model </a></li>
+<li class="toc-entry toc-h4"><a href="#Obtain-the-newly-registered-model-for-use">Obtain the newly registered model for use </a></li>
 <li class="toc-entry toc-h4"><a href="#Execute-the-model">Execute the model </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h3"><a href="#Register-the-outputs">Register the outputs </a></li>
-<li class="toc-entry toc-h3"><a href="#Upload-outputs-associated-with-the-metadata">Upload outputs associated with the metadata </a></li>
+<li class="toc-entry toc-h3"><a href="#Upload-model-outputs">Upload model outputs </a></li>
 <li class="toc-entry toc-h3"><a href="#Register-model-run">Register model run </a></li>
 <li class="toc-entry toc-h3"><a href="#Provenance">Provenance </a></li>
 </ul>
@@ -171,7 +171,7 @@ window.onload = wrap_img;
 <h2 id="About">
 <a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
 </h2>
-<p>This notebook is a demonstration of ... RRAP data repository.</p>
+<p>This notebook is a demonstration of integrating the RRAP-IS with a simple model run.</p>
 
 </div>
 </div>
@@ -444,127 +444,12 @@ window.onload = wrap_img;
 <a class="anchor" href="#Demonstration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demonstration<a class="anchor-link" href="#Demonstration"> </a>
 </h2>
 <p>This demonstration illustrates how the RRAP-IS system can be integrated within a modelling scenario to use registered project data, upload and register model outputs and discover provenance information (what data was used for a particular model run and what are the associated outputs).</p>
-<p>For the demonstration a fictitious model is used, the data is actual RRAP data and the provenance information is only</p>
+<p>For the demonstration a fictitious model is used, the data is actual RRAP data and the provenance information is only derived from this exercise</p>
+<p><a href="#toc">Return to Top</a></p>
 
 </div>
 </div>
 </div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Model">
-<a class="anchor" href="#Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model<a class="anchor-link" href="#Model"> </a>
-</h3>
-<p>We should be able to discover a model within the Registry or we can register a new model. First we will show how to list existing registered models and then we will demonstrate registering a new model.  Then we will use the registery to obtain a model.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="List-all-existing-models">
-<a class="anchor" href="#List-all-existing-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>List all existing models<a class="anchor-link" href="#List-all-existing-models"> </a>
-</h4>
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">response_json</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
-
-<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Register-a-new-model">
-<a class="anchor" href="#Register-a-new-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Register a new model<a class="anchor-link" href="#Register-a-new-model"> </a>
-</h4>
-<p>To register a model it first needs to be in a system where it is version and retievable via that version code. We suggest using GitHub and will demonstrate the use here.  Once in a version control system we can register it in the RRAP-IS.</p>
-<ol>
-<li>Commit the model to GitHub (This is done outside of the Jupyter env)</li>
-<li>Register the model with RRAP-IS Registry</li>
-</ol>
-<p>Note: That the <code>source_url</code> is a permalink which can be used to download the model file.</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="p">[{</span>
-    <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"RRAP-IS Demo"</span><span class="p">,</span>
-    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"DEMO"</span><span class="p">,</span>
-    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Dummy model for demonstartion purposes"</span><span class="p">,</span>
-    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md"</span><span class="p">,</span>
-    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/rrap-demo-model/raw/main/demomodel.py"</span>
-    <span class="p">}]</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
-<span class="n">response_json</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model</span><span class="p">]</span>
-<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Obtain-the-newly-Registered-Model-for-use">
-<a class="anchor" href="#Obtain-the-newly-Registered-Model-for-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtain the newly Registered Model for use<a class="anchor-link" href="#Obtain-the-newly-Registered-Model-for-use"> </a>
-</h4>
-<p>With the above information download the model</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
-<span class="n">model_source_url</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'created_item'</span><span class="p">][</span><span class="s1">'source_url'</span><span class="p">]</span>
-<span class="n">location</span> <span class="o">=</span> <span class="s1">'./data'</span>
-<span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'wget'</span><span class="p">,</span> <span class="s1">'-r'</span><span class="p">,</span> <span class="s1">'-l'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">,</span> <span class="s1">'-p'</span><span class="p">,</span> <span class="s1">'-nd'</span><span class="p">,</span> <span class="s1">'-P'</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">model_source_url</span><span class="p">]</span>
-<span class="n">result</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
-<span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -669,8 +554,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Download-and-use-a-registered-dataset">
-<a class="anchor" href="#Download-and-use-a-registered-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download and use a registered dataset<a class="anchor-link" href="#Download-and-use-a-registered-dataset"> </a>
+<h4 id="Download-a-registered-dataset">
+<a class="anchor" href="#Download-a-registered-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download a registered dataset<a class="anchor-link" href="#Download-a-registered-dataset"> </a>
 </h4>
 </div>
 </div>
@@ -684,6 +569,123 @@ window.onload = wrap_img;
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">IOHelper</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">'./data'</span><span class="p">,</span> <span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="n">data_api</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Model">
+<a class="anchor" href="#Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model<a class="anchor-link" href="#Model"> </a>
+</h3>
+<p>We should be able to discover a model within the Registry or we can register a new model. First we will show how to list existing registered models and then we will demonstrate registering a new model.  Then we will use the registery to obtain a model.</p>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="List-all-existing-models">
+<a class="anchor" href="#List-all-existing-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>List all existing models<a class="anchor-link" href="#List-all-existing-models"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Register-a-new-model">
+<a class="anchor" href="#Register-a-new-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Register a new model<a class="anchor-link" href="#Register-a-new-model"> </a>
+</h4>
+<p>To register a model it first needs to be in a system where it is version and retievable via that version code. We suggest using GitHub and will demonstrate the use here.  Once in a version control system we can register it in the RRAP-IS.</p>
+<ol>
+<li>Commit the model to GitHub (This is done outside of the Jupyter env)</li>
+<li>Register the model with RRAP-IS Registry</li>
+</ol>
+<p>Note: That the <code>source_url</code> is a permalink which can be used to download the model file.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s2">"display_name"</span><span class="p">:</span> <span class="s2">"RRAP-IS Demo"</span><span class="p">,</span>
+    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"DEMO"</span><span class="p">,</span>
+    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Dummy model for demonstartion purposes"</span><span class="p">,</span>
+    <span class="s2">"documentation_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md"</span><span class="p">,</span>
+    <span class="s2">"source_url"</span><span class="p">:</span> <span class="s2">"https://github.com/gbrrestoration/rrap-demo-model/raw/main/demomodel.py"</span>
+    <span class="p">}]</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model</span><span class="p">]</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Obtain-the-newly-registered-model-for-use">
+<a class="anchor" href="#Obtain-the-newly-registered-model-for-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Obtain the newly registered model for use<a class="anchor-link" href="#Obtain-the-newly-registered-model-for-use"> </a>
+</h4>
+<p>With the above information download the model</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="n">model_source_url</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">'created_item'</span><span class="p">][</span><span class="s1">'source_url'</span><span class="p">]</span>
+<span class="n">location</span> <span class="o">=</span> <span class="s1">'./data'</span>
+<span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'wget'</span><span class="p">,</span> <span class="s1">'-r'</span><span class="p">,</span> <span class="s1">'-l'</span><span class="p">,</span> <span class="s1">'1'</span><span class="p">,</span> <span class="s1">'-p'</span><span class="p">,</span> <span class="s1">'-nd'</span><span class="p">,</span> <span class="s1">'-P'</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">model_source_url</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -783,8 +785,8 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Upload-outputs-associated-with-the-metadata">
-<a class="anchor" href="#Upload-outputs-associated-with-the-metadata" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload outputs associated with the metadata<a class="anchor-link" href="#Upload-outputs-associated-with-the-metadata"> </a>
+<h3 id="Upload-model-outputs">
+<a class="anchor" href="#Upload-model-outputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Upload model outputs<a class="anchor-link" href="#Upload-model-outputs"> </a>
 </h3>
 </div>
 </div>
@@ -886,6 +888,7 @@ window.onload = wrap_img;
 <a class="anchor" href="#Provenance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Provenance<a class="anchor-link" href="#Provenance"> </a>
 </h3>
 <p>As all data, modellers, organisations and activities (<strong>specific to producing data used in decisions</strong>) are registered in RRAP-IS it is possible to travers the linage between these entities.  This can be useful in discovering what data (or modeller/model/s) was used to produce certain outputs.</p>
+<p><a href="#toc">Return to Top</a></p>
 
 </div>
 </div>
