@@ -40,14 +40,16 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">json2html</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
-
+<span class="kn">import</span> <span class="nn">mdsisclienttools.datastore.ReadWriteHelper</span> <span class="k">as</span> <span class="nn">IOHelper</span>
+<span class="kn">import</span> <span class="nn">mdsisclienttools</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
@@ -76,7 +78,7 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">data_store</span> <span class="o">=</span> <span class="s2">&quot;https://data.testing.rrap-is.com&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_store</span> <span class="o">=</span> <span class="s2">&quot;https://data.testing.rrap-is.com&quot;</span>
 <span class="n">data_api</span> <span class="o">=</span> <span class="s2">&quot;https://data-api.testing.rrap-is.com&quot;</span>
 <span class="n">registry_api</span> <span class="o">=</span> <span class="s2">&quot;https://registry-api.testing.rrap-is.com&quot;</span>
 <span class="n">prov_api</span> <span class="o">=</span> <span class="s2">&quot;https://prov-api.testing.rrap-is.com&quot;</span>
@@ -104,34 +106,6 @@ layout: notebook
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea ">
-<pre>&#39;Checking base urls&#39;</pre>
-</div>
-
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Testing - https://data-api.testing.rrap-is.com - Passed
-Testing - https://registry-api.testing.rrap-is.com - Passed
-Testing - https://prov-api.testing.rrap-is.com - Passed
-Testing - https://auth.dev.rrap-is.com/auth/realms/rrap - Passed
-Testing - https://data.testing.rrap-is.com - Passed
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -150,7 +124,7 @@ Testing - https://data.testing.rrap-is.com - Passed
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">local_token_storage</span> <span class="o">=</span> <span class="s2">&quot;.tokens.json&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">local_token_storage</span> <span class="o">=</span> <span class="s2">&quot;.tokens.json&quot;</span>
 
 <span class="n">token_manager</span> <span class="o">=</span> <span class="n">DeviceFlowManager</span><span class="p">(</span>
     <span class="n">stage</span><span class="o">=</span><span class="s2">&quot;TEST&quot;</span><span class="p">,</span>
@@ -183,6 +157,114 @@ Testing - https://data.testing.rrap-is.com - Passed
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Notebook-helper-functions">Notebook helper functions<a class="anchor-link" href="#Notebook-helper-functions"> </a></h2><p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum_switch</span> <span class="kn">import</span> <span class="n">Switch</span>
+
+<span class="k">def</span> <span class="nf">wrap_html_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">ul_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;width: auto; height: 400px; overflow-y: auto; &quot;</span>
+    <span class="n">ul_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">div_tag</span><span class="p">)</span>
+    <span class="n">new_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;details&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
+    
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+    <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Results&quot;</span>
+    <span class="n">soup</span><span class="o">.</span><span class="n">div</span><span class="o">.</span><span class="n">insert_after</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
+    
+<span class="k">def</span> <span class="nf">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">):</span>
+        <span class="n">json_obj_in_html</span> <span class="o">=</span> <span class="n">json2html</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span> <span class="n">response_json</span>  <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap_html_table</span><span class="p">(</span><span class="n">json_obj_in_html</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="c1"># If the response was successful, no Exception will be raised</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">http_err</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Other error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">err</span> <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+        
+<span class="k">class</span> <span class="nc">ProvType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">AGENT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ACTIVITY</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ENTITY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">class</span> <span class="nc">ItemType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PERSON</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ORGANISATION</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MODELRUN</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">MODEL_RUN_WORKFLOW</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">class</span> <span class="nc">ProvTypeFromItemType</span><span class="p">(</span><span class="n">Switch</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">MODEL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
+    <span class="k">def</span> <span class="nf">PERSON</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">ORGANISATION</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">MODELRUN</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ACTIVITY</span>
+
+    <span class="k">def</span> <span class="nf">MODEL_RUN_WORKFLOW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
+<span class="n">prov_of_item</span> <span class="o">=</span> <span class="n">ProvTypeFromItemType</span><span class="p">(</span><span class="n">ItemType</span><span class="p">)</span>
+<span class="n">provs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">prov_of_item</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ItemType</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">register_item</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/create&#39;</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+    <span class="k">return</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">registry_list</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/list&#39;</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+    <span class="k">return</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Demonstration">Demonstration<a class="anchor-link" href="#Demonstration"> </a></h2><p>This demonstration illustrates how the RRAP-IS system can be integrated within a modelling scenario to use registered project data, upload and register model outputs and discover provenance information (what data was used for a particular model run and what are the associated outputs).</p>
 <p>For the demonstration a fictitious model is used, the data is actual RRAP data and the provenance information is only</p>
 
@@ -202,18 +284,94 @@ Testing - https://data.testing.rrap-is.com - Passed
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">registry_list</span><span class="p">(</span><span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Register-a-new-model">Register a new model<a class="anchor-link" href="#Register-a-new-model"> </a></h4>
+<h4 id="Register-a-new-model">Register a new model<a class="anchor-link" href="#Register-a-new-model"> </a></h4><p>To register a model it first needs to be in a system where it is version and retievable via that version code. We suggest using GitHub and will demonstrate the use here.  Once in a version control system we can register it in the RRAP-IS.</p>
+<ol>
+<li>Commit the model to GitHub (This is done outside of the Jupyter env)</li>
+<li>Register the model with RRAP-IS Registry</li>
+</ol>
+<p>Note: That the <code>source_url</code> is a permalink which can be used to download the model file.</p>
+
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="p">[{</span>
+    <span class="s2">&quot;display_name&quot;</span><span class="p">:</span> <span class="s2">&quot;RRAP-IS Demo&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;DEMO&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Dummy model for demonstartion purposes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;documentation_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;source_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/gbrrestoration/rrap-demo-model/raw/main/demomodel.py&quot;</span>
+    <span class="p">}]</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model</span><span class="p">]</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Obtain-the-newly-Registered-Model-for-use">Obtain the newly Registered Model for use<a class="anchor-link" href="#Obtain-the-newly-Registered-Model-for-use"> </a></h4>
+<h4 id="Obtain-the-newly-Registered-Model-for-use">Obtain the newly Registered Model for use<a class="anchor-link" href="#Obtain-the-newly-Registered-Model-for-use"> </a></h4><p>With the above information download the model</p>
+
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span>
+<span class="n">model_source_url</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;created_item&#39;</span><span class="p">][</span><span class="s1">&#39;source_url&#39;</span><span class="p">]</span>
+<span class="n">location</span> <span class="o">=</span> <span class="s1">&#39;./data&#39;</span>
+<span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;wget&#39;</span><span class="p">,</span> <span class="s1">&#39;-r&#39;</span><span class="p">,</span> <span class="s1">&#39;-l&#39;</span><span class="p">,</span> <span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;-p&#39;</span><span class="p">,</span> <span class="s1">&#39;-nd&#39;</span><span class="p">,</span> <span class="s1">&#39;-P&#39;</span><span class="p">,</span> <span class="n">location</span><span class="p">,</span> <span class="n">model_source_url</span><span class="p">]</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">)</span>
+<span class="p">(</span><span class="n">out</span><span class="p">,</span><span class="n">err</span><span class="p">)</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Data">Data<a class="anchor-link" href="#Data"> </a></h3><p>Similar to models we should use registered data else we should register new data and then use the registry to obtain the data.  We will demonstrate listing existing dataset and registering a new dataset.  Finally we will demonstrate using the registry to obtain data for a model run, register the run and the results/outputs from the run along with who (Modeller and Organisation) ran the model.</p>
@@ -223,28 +381,286 @@ Testing - https://data.testing.rrap-is.com - Passed
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="List-existing-datasets">List existing datasets<a class="anchor-link" href="#List-existing-datasets"> </a></h4>
+<h4 id="List-existing-dataset">List existing dataset<a class="anchor-link" href="#List-existing-dataset"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">dataset_id</span> <span class="o">=</span> <span class="s1">&#39;10378.1/1689073&#39;</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/items/fetch-dataset&quot;</span>
+<span class="n">param</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;handle_id=</span><span class="si">{</span><span class="n">dataset_id</span><span class="si">}</span><span class="s1">&#39;</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Register-a-new-dataset">Register a new dataset<a class="anchor-link" href="#Register-a-new-dataset"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/register/mint-dataset&quot;</span>
+<span class="n">payload</span> <span class="o">=</span>  <span class="p">{</span>
+  <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew Freebairn&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;andrew.freebairn@csiro.au&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orcid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://orcid.org/0000-0001-9429-6559&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;organisation&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CSIRO&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/03qn8fb07&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;dataset_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MVP Demo Dataset&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;For demonstration purposes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/057xz1h85&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;created_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;published_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creativecommons.org/licenses/by/4.0/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;keyword1&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">new_handle</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h4 id="Download-and-use-a-registered-dataset">Download and use a registered dataset<a class="anchor-link" href="#Download-and-use-a-registered-dataset"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;./data&#39;</span><span class="p">,</span> <span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="n">data_api</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Execute-the-model-and-register-the-outputs">Execute the model and register the outputs<a class="anchor-link" href="#Execute-the-model-and-register-the-outputs"> </a></h4>
+<h4 id="Execute-the-model">Execute the model<a class="anchor-link" href="#Execute-the-model"> </a></h4>
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">data.demomodel</span> <span class="k">as</span> <span class="nn">demo</span>
+
+<span class="n">d_demo</span> <span class="o">=</span> <span class="n">demo</span><span class="o">.</span><span class="n">demo_model</span><span class="p">()</span>
+<span class="n">d_demo</span><span class="o">.</span><span class="n">runtimestep</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Register-the-outputs">Register the outputs<a class="anchor-link" href="#Register-the-outputs"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/register/mint-dataset&quot;</span>
+<span class="n">payload</span> <span class="o">=</span>  <span class="p">{</span>
+  <span class="s2">&quot;author&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew Freebairn&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="s2">&quot;andrew.freebairn@csiro.au&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;orcid&quot;</span><span class="p">:</span> <span class="s2">&quot;https://orcid.org/0000-0001-9429-6559&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;organisation&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CSIRO&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/03qn8fb07&quot;</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;dataset_info&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MVP Demo Outputs&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;For demonstration purposes&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;publisher&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Andrew&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;ror&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ror.org/057xz1h85&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;created_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;published_date&quot;</span><span class="p">:</span> <span class="s2">&quot;2022-08-05&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="s2">&quot;https://creativecommons.org/licenses/by/4.0/&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;keywords&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;keyword1&quot;</span>
+    <span class="p">],</span>
+    <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.0.1&quot;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">new_handle</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Upload-outputs-associated-with-the-metadata">Upload outputs associated with the metadata<a class="anchor-link" href="#Upload-outputs-associated-with-the-metadata"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">IOHelper</span><span class="o">.</span><span class="n">upload</span><span class="p">(</span><span class="n">new_handle</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="s2">&quot;readme.txt&quot;</span><span class="p">,</span> <span class="n">data_api</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Register-model-run">Register model run<a class="anchor-link" href="#Register-model-run"> </a></h3>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/model_run/register_complete&quot;</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;start_time&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+  <span class="s2">&quot;end_time&quot;</span><span class="p">:</span> <span class="mi">1662467929</span><span class="p">,</span>
+  <span class="s2">&quot;workflow_definition&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1691197&quot;</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;inputs&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;datasets&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;10378.1/1690478&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1690478&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;dataset_type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATA_STORE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1688622&quot;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;outputs&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;datasets&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;10378.1/1690478&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;template&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1690478&quot;</span>
+        <span class="p">},</span>
+        <span class="s2">&quot;dataset_type&quot;</span><span class="p">:</span> <span class="s2">&quot;DATA_STORE&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;dataset&quot;</span><span class="p">:</span> <span class="p">{</span>
+          <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1688634&quot;</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="s2">&quot;associations&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">&quot;modeller&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1691160&quot;</span>
+    <span class="p">},</span>
+    <span class="s2">&quot;requesting_organisation&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1690557&quot;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Provenance">Provenance<a class="anchor-link" href="#Provenance"> </a></h3><p>As all data, modellers, organisations and activities (<strong>specific to producing data used in decisions</strong>) are registered in RRAP-IS it is possible to travers the linage between these entities.  This can be useful in discovering what data (or modeller/model/s) was used to produce certain outputs.</p>
