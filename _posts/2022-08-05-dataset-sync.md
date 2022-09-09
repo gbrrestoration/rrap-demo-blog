@@ -45,6 +45,7 @@ layout: notebook
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">json2html</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
 <span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
 <span class="kn">import</span> <span class="nn">mdsisclienttools.datastore.ReadWriteHelper</span> <span class="k">as</span> <span class="nn">IOHelper</span>
@@ -57,79 +58,6 @@ layout: notebook
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Logging-and-Warning">Logging and Warning<a class="anchor-link" href="#Logging-and-Warning"> </a></h3><p>Sometimes it nice to not have warnings in the output area.</p>
-<p>Comment this next cell out so that warnings appear</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
-<span class="kn">import</span> <span class="nn">re</span>
-<span class="kn">import</span> <span class="nn">warnings</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
-<span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;always&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
-                        <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">{0}</span><span class="s1">\.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)))</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;This is a DeprecationWarning&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">pip._internal.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># pip &lt; 10.0</span>
-    <span class="kn">from</span> <span class="nn">pip.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
-
-<span class="n">packages</span> <span class="o">=</span> <span class="n">freeze</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
-<span class="n">found</span> <span class="o">=</span> <span class="p">[</span><span class="n">package</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span> <span class="k">if</span> <span class="n">package</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;mdsisclienttools&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-
-<span class="n">display</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea ">
-<pre>[&#39;mdsisclienttools==1.4.1&#39;]</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -263,6 +191,127 @@ Found tokens valid, using.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Helper-functions">Helper functions<a class="anchor-link" href="#Helper-functions"> </a></h2><p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">wrap_html_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">ul_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="p">[</span><span class="s1">&#39;style&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;width: auto; height: 400px; overflow-y: auto; &quot;</span>
+    <span class="n">ul_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">div_tag</span><span class="p">)</span>
+    <span class="n">new_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;details&quot;</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
+    
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">)</span>
+    <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;Results&quot;</span>
+    <span class="n">soup</span><span class="o">.</span><span class="n">div</span><span class="o">.</span><span class="n">insert_after</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
+    
+<span class="k">def</span> <span class="nf">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">):</span>
+        <span class="n">json_obj_in_html</span> <span class="o">=</span> <span class="n">json2html</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span> <span class="n">response_json</span>  <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap_html_table</span><span class="p">(</span><span class="n">json_obj_in_html</span><span class="p">)</span>
+    
+<span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="c1"># If the response was successful, no Exception will be raised</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">http_err</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Other error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="n">err</span> <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+
+<span class="c1">## This is used to identify the current version of a package</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">pip._internal.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>  <span class="c1"># pip &lt; 10.0</span>
+    <span class="kn">from</span> <span class="nn">pip.operations</span> <span class="kn">import</span> <span class="n">freeze</span>
+
+<span class="n">packages</span> <span class="o">=</span> <span class="n">freeze</span><span class="o">.</span><span class="n">freeze</span><span class="p">()</span>
+<span class="n">found</span> <span class="o">=</span> <span class="p">[</span><span class="n">package</span> <span class="k">for</span> <span class="n">package</span> <span class="ow">in</span> <span class="n">packages</span> <span class="k">if</span> <span class="n">package</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;mdsisclienttools&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+<span class="n">display</span><span class="p">(</span><span class="n">found</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>[&#39;mdsisclienttools==1.4.1&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Logging-and-Warning">Logging and Warning<a class="anchor-link" href="#Logging-and-Warning"> </a></h3><p>Sometimes it nice to not have warnings in the output area.</p>
+<p>Comment this next cell out so that warnings appear</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s2">&quot;log.txt&quot;</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">captureWarnings</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;always&#39;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">,</span>
+                        <span class="n">module</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^</span><span class="si">{0}</span><span class="s1">\.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)))</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;This is a DeprecationWarning&quot;</span><span class="p">,</span><span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Endpoint-Documentation">Endpoint Documentation<a class="anchor-link" href="#Endpoint-Documentation"> </a></h2><p>Endpoint documentation can be found by appending either <code>/docs</code> or <code>/redoc</code> on the end a base URL.</p>
 <p>For example:</p>
 <ul>
@@ -327,10 +376,9 @@ Found tokens valid, using.
 <span class="p">}</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-<span class="n">new_handle</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span>
-<span class="n">display</span><span class="p">(</span><span class="n">new_handle</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">(),</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;POST&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">new_handle</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -343,30 +391,88 @@ Found tokens valid, using.
 <div class="output_area">
 
 
-
-<div class="output_text output_subarea ">
-<pre>&#39;10378.1/1688646&#39;</pre>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<html>
+ <body>
+  <details>
+   <div style="width: auto; height: 400px; overflow-y: auto; ">
+    <table border="1">
+     <tr>
+      <th>
+       status
+      </th>
+      <td>
+       <table border="1">
+        <tr>
+         <th>
+          success
+         </th>
+         <td>
+          True
+         </td>
+        </tr>
+        <tr>
+         <th>
+          details
+         </th>
+         <td>
+          Successfully seeded location - see location details.
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       handle
+      </th>
+      <td>
+       10378.1/1691374
+      </td>
+     </tr>
+     <tr>
+      <th>
+       s3_location
+      </th>
+      <td>
+       <table border="1">
+        <tr>
+         <th>
+          bucket_name
+         </th>
+         <td>
+          dev-rrap-storage-bucket
+         </td>
+        </tr>
+        <tr>
+         <th>
+          path
+         </th>
+         <td>
+          datasets/10378-1-1691374/
+         </td>
+        </tr>
+        <tr>
+         <th>
+          s3_uri
+         </th>
+         <td>
+          s3://dev-rrap-storage-bucket/datasets/10378-1-1691374/
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+    </table>
+   </div>
+   <summary>
+    Results
+   </summary>
+  </details>
+ </body>
+</html>
 </div>
 
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>{
-  &#34;status&#34;: {
-    &#34;success&#34;: true,
-    &#34;details&#34;: &#34;Successfully seeded location - see location details.&#34;
-  },
-  &#34;handle&#34;: &#34;10378.1/1688646&#34;,
-  &#34;s3_location&#34;: {
-    &#34;bucket_name&#34;: &#34;dev-rrap-storage-bucket&#34;,
-    &#34;path&#34;: &#34;datasets/10378-1-1688646/&#34;,
-    &#34;s3_uri&#34;: &#34;s3://dev-rrap-storage-bucket/datasets/10378-1-1688646/&#34;
-  }
-}
-</pre>
-</div>
 </div>
 
 </div>
@@ -375,6 +481,12 @@ Found tokens valid, using.
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Find-the-newly-minited-dataset">Find the newly minited dataset<a class="anchor-link" href="#Find-the-newly-minited-dataset"> </a></h2>
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -385,8 +497,9 @@ Found tokens valid, using.
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/registry/items/list-all-datasets&quot;</span>
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">data_api</span> <span class="o">+</span> <span class="n">postfix</span> 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
-<span class="n">reg_items</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;registry_items&#39;</span><span class="p">]</span>
+<span class="c1"># response = requests.get(endpoint, auth=auth())</span>
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">reg_items</span> <span class="o">=</span> <span class="n">response_json</span><span class="p">[</span><span class="s1">&#39;registry_items&#39;</span><span class="p">]</span>
 <span class="k">if</span> <span class="nb">any</span><span class="p">(</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;handle&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">new_handle</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reg_items</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Found new handle: </span><span class="si">{</span><span class="n">new_handle</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 <span class="k">else</span><span class="p">:</span>
@@ -403,7 +516,7 @@ Found tokens valid, using.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Found new handle: 10378.1/1688646
+<pre>Found new handle: 10378.1/1691374
 </pre>
 </div>
 </div>
