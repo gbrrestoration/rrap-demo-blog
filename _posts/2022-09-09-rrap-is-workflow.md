@@ -22,6 +22,7 @@ layout: notebook
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="About">About<a class="anchor-link" href="#About"> </a></h2><p>This notebook is a demonstration of integrating the RRAP-IS with a simple model run.</p>
+<p><img src="/rrap-demo-blog/images/copied_from_nb/assets/data_store_prov_store_overview.jpg" alt=""></p>
 
 </div>
 </div>
@@ -187,9 +188,7 @@ Looking for existing tokens in local storage.
 
 Validating found tokens
 
-Trying to use found tokens to refresh the access token.
-
-Token refresh successful.
+Found tokens valid, using.
 
 </pre>
 </div>
@@ -1109,7 +1108,7 @@ ProvType.ENTITY
        handle
       </th>
       <td>
-       10378.1/1691433
+       10378.1/1691465
       </td>
      </tr>
      <tr>
@@ -1131,7 +1130,7 @@ ProvType.ENTITY
           path
          </th>
          <td>
-          datasets/10378-1-1691433/
+          datasets/10378-1-1691465/
          </td>
         </tr>
         <tr>
@@ -1139,7 +1138,7 @@ ProvType.ENTITY
           s3_uri
          </th>
          <td>
-          s3://dev-rrap-storage-bucket/datasets/10378-1-1691433/
+          s3://dev-rrap-storage-bucket/datasets/10378-1-1691465/
          </td>
         </tr>
        </table>
@@ -1201,7 +1200,7 @@ Upload complete.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:293: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 35002), raddr=(&#39;52.95.129.98&#39;, 443)&gt;
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:293: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 51782), raddr=(&#39;52.95.128.222&#39;, 443)&gt;
   _upload_files(s3_loc=s3_loc, s3_creds=creds,
 </pre>
 </div>
@@ -1253,9 +1252,9 @@ Download complete.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:343: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 43062), raddr=(&#39;52.95.134.170&#39;, 443)&gt;
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:343: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 55976), raddr=(&#39;52.95.129.86&#39;, 443)&gt;
   _download_files(s3_loc=s3_loc, s3_creds=creds,
-/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:343: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=68, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 56534), raddr=(&#39;52.95.132.178&#39;, 443)&gt;
+/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:343: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=65, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 55978), raddr=(&#39;52.95.129.86&#39;, 443)&gt;
   _download_files(s3_loc=s3_loc, s3_creds=creds,
 </pre>
 </div>
@@ -2607,6 +2606,41 @@ Download complete.
          </tr>
          <tr>
           <td>
+           RRAP-IS Demo
+          </td>
+          <td>
+           DEMO
+          </td>
+          <td>
+           Dummy model for demonstartion purposes
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model.git
+          </td>
+          <td>
+           10378.1/1691434
+          </td>
+          <td>
+           1662965203
+          </td>
+          <td>
+           1662965203
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
            RRAP-model (repo commit id - 1234)
           </td>
           <td>
@@ -2899,6 +2933,41 @@ Download complete.
            https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md
           </td>
           <td>
+           https://github.com/gbrrestoration/rrap-demo-model.git
+          </td>
+          <td>
+           10378.1/1691442
+          </td>
+          <td>
+           1662970883
+          </td>
+          <td>
+           1662970883
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
+           RRAP-IS Demo
+          </td>
+          <td>
+           DEMO
+          </td>
+          <td>
+           Dummy model for demonstartion purposes
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md
+          </td>
+          <td>
            https://github.com/gbrrestoration/rrap-demo-model/blob/f691cd77fec118fdc0549860e65e1cbe7625b31d/demo-model.py
           </td>
           <td>
@@ -2909,6 +2978,41 @@ Download complete.
           </td>
           <td>
            1662704064
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
+           RRAP-IS Demo
+          </td>
+          <td>
+           DEMO
+          </td>
+          <td>
+           Dummy model for demonstartion purposes
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model.git
+          </td>
+          <td>
+           10378.1/1691459
+          </td>
+          <td>
+           1663043853
+          </td>
+          <td>
+           1663043853
           </td>
           <td>
            ENTITY
@@ -3307,6 +3411,41 @@ Download complete.
          </tr>
          <tr>
           <td>
+           RRAP-IS Demo
+          </td>
+          <td>
+           DEMO
+          </td>
+          <td>
+           Dummy model for demonstartion purposes
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model/blob/main/README.md
+          </td>
+          <td>
+           https://github.com/gbrrestoration/rrap-demo-model.git
+          </td>
+          <td>
+           10378.1/1691447
+          </td>
+          <td>
+           1662971024
+          </td>
+          <td>
+           1662971024
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
            (Simulator) Software Model 10378.1/1690374
           </td>
           <td>
@@ -3678,7 +3817,7 @@ Download complete.
        total_item_count
       </th>
       <td>
-       65
+       69
       </td>
      </tr>
      <tr>
@@ -3686,7 +3825,7 @@ Download complete.
        complete_item_count
       </th>
       <td>
-       65
+       69
       </td>
      </tr>
      <tr>
@@ -3848,7 +3987,7 @@ Download complete.
            id
           </th>
           <td>
-           10378.1/1691434
+           10378.1/1691466
           </td>
          </tr>
          <tr>
@@ -3856,7 +3995,7 @@ Download complete.
            created_timestamp
           </th>
           <td>
-           1662965203
+           1663050186
           </td>
          </tr>
          <tr>
@@ -3864,7 +4003,7 @@ Download complete.
            updated_timestamp
           </th>
           <td>
-           1662965203
+           1663050186
           </td>
          </tr>
          <tr>
@@ -4140,7 +4279,7 @@ Download complete.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>cloning ....
+<pre>pull ....
 &lt;git.repo.base.Repo &#39;/home/andrew/repo/rrap-demo-blog/_notebooks/rrapDemoModel/.git&#39;&gt;
 </pre>
 </div>
@@ -4274,7 +4413,7 @@ Download complete.
        handle
       </th>
       <td>
-       10378.1/1691435
+       10378.1/1691467
       </td>
      </tr>
      <tr>
@@ -4296,7 +4435,7 @@ Download complete.
           path
          </th>
          <td>
-          datasets/10378-1-1691435/
+          datasets/10378-1-1691467/
          </td>
         </tr>
         <tr>
@@ -4304,7 +4443,7 @@ Download complete.
           s3_uri
          </th>
          <td>
-          s3://dev-rrap-storage-bucket/datasets/10378-1-1691435/
+          s3://dev-rrap-storage-bucket/datasets/10378-1-1691467/
          </td>
         </tr>
        </table>
@@ -4366,7 +4505,7 @@ Upload complete.
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:293: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=67, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 56474), raddr=(&#39;52.95.132.51&#39;, 443)&gt;
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/datastore/ReadWriteHelper.py:293: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 59330), raddr=(&#39;52.95.130.14&#39;, 443)&gt;
   _upload_files(s3_loc=s3_loc, s3_creds=creds,
 </pre>
 </div>
@@ -4440,7 +4579,6 @@ Upload complete.
 <span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">responses_json</span> <span class="o">=</span> <span class="p">[</span><span class="n">register_item</span><span class="p">(</span><span class="n">wf</span><span class="p">,</span> <span class="n">ItemType</span><span class="o">.</span><span class="n">MODEL_RUN_WORKFLOW</span><span class="p">,</span> <span class="n">auth</span><span class="p">)</span> <span class="k">for</span> <span class="n">wf</span> <span class="ow">in</span> <span class="n">workflows</span><span class="p">]</span>
 <span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">responses_json</span><span class="p">))</span>
-<span class="c1"># vars = [print(json.dumps(result.json(), indent=2)) for result in responses]</span>
 </pre></div>
 
     </div>
@@ -4553,7 +4691,7 @@ Upload complete.
            id
           </th>
           <td>
-           10378.1/1691436
+           10378.1/1691468
           </td>
          </tr>
          <tr>
@@ -4561,7 +4699,7 @@ Upload complete.
            created_timestamp
           </th>
           <td>
-           1662965217
+           1663050197
           </td>
          </tr>
          <tr>
@@ -4569,7 +4707,7 @@ Upload complete.
            updated_timestamp
           </th>
           <td>
-           1662965217
+           1663050197
           </td>
          </tr>
          <tr>
@@ -4726,7 +4864,7 @@ Upload complete.
           id
          </th>
          <td>
-          10378.1/1691437
+          10378.1/1691469
          </td>
         </tr>
         <tr>
@@ -4734,7 +4872,7 @@ Upload complete.
           prov_json
          </th>
          <td>
-          {"prefix": {"default": "http://hdl.handle.net/"}, "activity": {"10378.1/1691437": {"model_run/10378.1/1691437": true, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN"}}, "entity": {"10378.1/1691395": {"model_run/10378.1/1691437": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1691397": {"model_run/10378.1/1691437": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1691427": {"model_run/10378.1/1691437": true, "item_category": "ENTITY", "item_subtype": "MODEL_RUN_WORKFLOW_DEFINITION", "prov:type": {"$": "prov:Collection", "type": "prov:QUALIFIED_NAME"}}, "10378.1/1690478": {"model_run/10378.1/1691437": true, "item_category": "ENTITY", "item_subtype": "DATASET_TEMPLATE"}, "10378.1/1691396": {"model_run/10378.1/1691437": true, "item_category": "ENTITY", "item_subtype": "MODEL"}}, "agent": {"10378.1/1691138": {"model_run/10378.1/1691437": true, "item_category": "AGENT", "item_subtype": "PERSON"}, "10378.1/1691139": {"model_run/10378.1/1691437": true, "item_category": "AGENT", "item_subtype": "ORGANISATION"}}, "used": {"_:id1": {"prov:activity": "10378.1/1691437", "prov:entity": "10378.1/1691395"}, "_:id3": {"prov:activity": "10378.1/1691437", "prov:entity": "10378.1/1691396"}, "_:id4": {"prov:activity": "10378.1/1691437", "prov:entity": "10378.1/1691427"}}, "wasGeneratedBy": {"_:id2": {"prov:entity": "10378.1/1691397", "prov:activity": "10378.1/1691437"}}, "wasAssociatedWith": {"_:id5": {"prov:activity": "10378.1/1691437", "prov:agent": "10378.1/1691138"}, "_:id6": {"prov:activity": "10378.1/1691437", "prov:agent": "10378.1/1691139"}}, "wasAttributedTo": {"_:id7": {"prov:entity": "10378.1/1691397", "prov:agent": "10378.1/1691138"}}, "hadMember": {"_:id8": {"prov:collection": "10378.1/1691427", "prov:entity": "10378.1/1690478"}, "_:id11": {"prov:collection": "10378.1/1691427", "prov:entity": "10378.1/1691396"}}, "wasInfluencedBy": {"_:id9": {"prov:influencee": "10378.1/1691395", "prov:influencer": "10378.1/1690478"}, "_:id10": {"prov:influencee": "10378.1/1691397", "prov:influencer": "10378.1/1690478"}}}
+          {"prefix": {"default": "http://hdl.handle.net/"}, "activity": {"10378.1/1691469": {"model_run/10378.1/1691469": true, "item_category": "ACTIVITY", "item_subtype": "MODEL_RUN"}}, "entity": {"10378.1/1691395": {"model_run/10378.1/1691469": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1691397": {"model_run/10378.1/1691469": true, "item_category": "ENTITY", "item_subtype": "DATASET"}, "10378.1/1691427": {"model_run/10378.1/1691469": true, "item_category": "ENTITY", "item_subtype": "MODEL_RUN_WORKFLOW_DEFINITION", "prov:type": {"$": "prov:Collection", "type": "prov:QUALIFIED_NAME"}}, "10378.1/1690478": {"model_run/10378.1/1691469": true, "item_category": "ENTITY", "item_subtype": "DATASET_TEMPLATE"}, "10378.1/1691396": {"model_run/10378.1/1691469": true, "item_category": "ENTITY", "item_subtype": "MODEL"}}, "agent": {"10378.1/1691138": {"model_run/10378.1/1691469": true, "item_category": "AGENT", "item_subtype": "PERSON"}, "10378.1/1691139": {"model_run/10378.1/1691469": true, "item_category": "AGENT", "item_subtype": "ORGANISATION"}}, "used": {"_:id1": {"prov:activity": "10378.1/1691469", "prov:entity": "10378.1/1691395"}, "_:id3": {"prov:activity": "10378.1/1691469", "prov:entity": "10378.1/1691396"}, "_:id4": {"prov:activity": "10378.1/1691469", "prov:entity": "10378.1/1691427"}}, "wasGeneratedBy": {"_:id2": {"prov:entity": "10378.1/1691397", "prov:activity": "10378.1/1691469"}}, "wasAssociatedWith": {"_:id5": {"prov:activity": "10378.1/1691469", "prov:agent": "10378.1/1691138"}, "_:id6": {"prov:activity": "10378.1/1691469", "prov:agent": "10378.1/1691139"}}, "wasAttributedTo": {"_:id7": {"prov:entity": "10378.1/1691397", "prov:agent": "10378.1/1691138"}}, "hadMember": {"_:id8": {"prov:collection": "10378.1/1691427", "prov:entity": "10378.1/1690478"}, "_:id11": {"prov:collection": "10378.1/1691427", "prov:entity": "10378.1/1691396"}}, "wasInfluencedBy": {"_:id9": {"prov:influencee": "10378.1/1691395", "prov:influencer": "10378.1/1690478"}, "_:id10": {"prov:influencee": "10378.1/1691397", "prov:influencer": "10378.1/1690478"}}}
          </td>
         </tr>
         <tr>
@@ -4983,7 +5121,7 @@ Upload complete.
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Provenance">Provenance<a class="anchor-link" href="#Provenance"> </a></h3><p>As all data, modellers, organisations and activities (<strong>specific to producing data used in decisions</strong>) are registered in RRAP-IS it is possible to travers the linage between these entities.  This can be useful in discovering what data (or modeller/model/s) was used to produce certain outputs.</p>
+<h3 id="Provenance">Provenance<a class="anchor-link" href="#Provenance"> </a></h3><p>As all data, modellers, organisations and activities (<strong>specific to producing data used in decisions</strong>) are registered in RRAP-IS it is possible to traverse the linage between these entities.  This can be useful in discovering what data (or modeller/model/s) was used to produce certain outputs.</p>
 <p>Let's explore all entities associated with a modeller</p>
 <p><a href="#toc">Return to Top</a></p>
 
@@ -5068,10 +5206,10 @@ Upload complete.
   </head>
   <body>
           
-              <div class="bk-root" id="6ab044cb-0a36-404e-8bbd-1a8fe44f8e35" data-root-id="2938"></div>
+              <div class="bk-root" id="72df37a5-8067-4d52-b16d-a720a7543b56" data-root-id="1002"></div>
       
-        <script type="application/json" id="3179">
-          {"0de188fd-b868-4e29-b0a0-426af7e71732":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{"tools":[{"id":"2942"},{"id":"2960"},{"id":"2961"},{"id":"2962"},{"id":"2963"},{"id":"2964"},{"id":"2965"}]},"id":"2967","type":"Toolbar"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"3011"}},"y":{"field":"y","transform":{"id":"3012"}}},"id":"3018","type":"Text"},{"attributes":{},"id":"2960","type":"SaveTool"},{"attributes":{"end":0.9377958429279831,"reset_end":0.9377958429279831,"reset_start":-1.135195058808929,"start":-1.135195058808929,"tags":[[["x","x",null]]]},"id":"2940","type":"Range1d"},{"attributes":{"coordinates":null,"data_source":{"id":"3013"},"glyph":{"id":"3016"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"3018"},"nonselection_glyph":{"id":"3017"},"selection_glyph":{"id":"3021"},"view":{"id":"3020"}},"id":"3019","type":"GlyphRenderer"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"2979"},"group":null,"major_label_policy":{"id":"2980"},"ticker":{"id":"2957"}},"id":"2956","type":"LinearAxis"},{"attributes":{"axis":{"id":"2956"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"2959","type":"Grid"},{"attributes":{"range":null,"value":0.05},"id":"3012","type":"Dodge"},{"attributes":{},"id":"2961","type":"PanTool"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"field":"node_color","transform":{"id":"2981"}},"size":{"value":10}},"id":"2988","type":"Circle"},{"attributes":{"graph_layout":{"0":[-0.47334576493818886,-0.022508599145594946],"1":[-0.30239130586561247,-0.8761533430630135],"2":[-1.0,0.5191523155024956],"3":[0.13621205264692,0.8004517938427027],"4":[0.5858357390754985,0.37654885892357143],"5":[0.8026007841190541,-0.19125016373291268],"6":[0.25108849496232916,-0.6062408623272477]}},"id":"2984","type":"StaticLayoutProvider"},{"attributes":{"children":[{"id":"2939"},{"id":"2943"},{"id":"3049"}],"margin":[0,0,0,0],"name":"Row05723","tags":["embedded"]},"id":"2938","type":"Row"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer05728","sizing_mode":"stretch_width"},"id":"3049","type":"Spacer"},{"attributes":{"overlay":{"id":"2966"}},"id":"2963","type":"BoxZoomTool"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer05727","sizing_mode":"stretch_width"},"id":"2939","type":"Spacer"},{"attributes":{},"id":"2980","type":"AllLabels"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"2966","type":"BoxAnnotation"},{"attributes":{"axis":{"id":"2952"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"2955","type":"Grid"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"3022"}},"y":{"field":"y","transform":{"id":"3023"}}},"id":"3028","type":"Text"},{"attributes":{},"id":"2962","type":"WheelZoomTool"},{"attributes":{},"id":"3042","type":"UnionRenderers"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"2996"},"group":null,"inspection_policy":{"id":"3009"},"layout_provider":{"id":"2984"},"node_renderer":{"id":"2990"},"selection_policy":{"id":"3007"}},"id":"2998","type":"GraphRenderer"},{"attributes":{"callback":null},"id":"2965","type":"TapTool"},{"attributes":{},"id":"3025","type":"Selection"},{"attributes":{},"id":"2953","type":"BasicTicker"},{"attributes":{"range":null,"value":-0.05},"id":"3023","type":"Dodge"},{"attributes":{"coordinates":null,"data_source":{"id":"3024"},"glyph":{"id":"3027"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"3029"},"nonselection_glyph":{"id":"3028"},"selection_glyph":{"id":"3032"},"view":{"id":"3031"}},"id":"3030","type":"GlyphRenderer"},{"attributes":{},"id":"2957","type":"BasicTicker"},{"attributes":{"callback":null,"renderers":[{"id":"2998"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"2942","type":"HoverTool"},{"attributes":{},"id":"3045","type":"UnionRenderers"},{"attributes":{"end":0.9681123075332744,"reset_end":0.9681123075332744,"reset_start":-1.043813856753585,"start":-1.043813856753585,"tags":[[["y","y",null]]]},"id":"2941","type":"Range1d"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"node_color","transform":{"id":"2981"}},"hatch_alpha":{"value":0.2},"hatch_color":{"field":"node_color","transform":{"id":"2981"}},"line_alpha":{"value":0.2},"size":{"value":10}},"id":"2986","type":"Circle"},{"attributes":{},"id":"3046","type":"Selection"},{"attributes":{"data":{"item_subtype":["PERSON","DATASET","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN"],"x":{"__ndarray__":"FwQHCUxL3r8IZ1IQYVrTvwAAAAAAAPC/OkO4g2VvwT88CIWXKr/iPyAh8dbnruk/0faQetUR0D8=","dtype":"float64","order":"little","shape":[7]},"y":{"__ndarray__":"UR/WhH4Ml78kk1e8cgnsv4M6F1HlnOA/soaSFE2d6T8XEJtiYBnYP18zS6fiesi/QjimPFNm478=","dtype":"float64","order":"little","shape":[7]}},"selected":{"id":"3025"},"selection_policy":{"id":"3042"}},"id":"3024","type":"ColumnDataSource"},{"attributes":{"source":{"id":"3013"}},"id":"3020","type":"CDSView"},{"attributes":{},"id":"3047","type":"UnionRenderers"},{"attributes":{"angle":{"value":0},"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"3011"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"3012"}},"y_offset":{"value":0}},"id":"3021","type":"Text"},{"attributes":{"range":null},"id":"3022","type":"Dodge"},{"attributes":{"background_fill_color":"pink","below":[{"id":"2952"}],"center":[{"id":"2955"},{"id":"2959"}],"left":[{"id":"2956"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"2998"},{"id":"3019"},{"id":"3030"}],"sizing_mode":"fixed","title":{"id":"2944"},"toolbar":{"id":"2967"},"width":800,"x_range":{"id":"2940"},"x_scale":{"id":"2948"},"y_range":{"id":"2941"},"y_scale":{"id":"2950"}},"id":"2943","subtype":"Figure","type":"Plot"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"3022"}},"y":{"field":"y","transform":{"id":"3023"}}},"id":"3027","type":"Text"},{"attributes":{"source":{"id":"3024"}},"id":"3031","type":"CDSView"},{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAA==","dtype":"int32","order":"little","shape":[7]},"index_hover":["10378.1/1691138","10378.1/1691397","10378.1/1691419","10378.1/1691421","10378.1/1691426","10378.1/1691428","10378.1/1691437"],"item_category":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"],"item_subtype":["PERSON","DATASET","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN"],"node_color":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"]},"selected":{"id":"3046"},"selection_policy":{"id":"3045"}},"id":"2982","type":"ColumnDataSource"},{"attributes":{},"id":"2979","type":"BasicTickFormatter"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"2944","type":"Title"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"2976"},"group":null,"major_label_policy":{"id":"2977"},"ticker":{"id":"2953"}},"id":"2952","type":"LinearAxis"},{"attributes":{"coordinates":null,"data_source":{"id":"2983"},"glyph":{"id":"2992"},"group":null,"hover_glyph":{"id":"2994"},"muted_glyph":{"id":"2995"},"nonselection_glyph":{"id":"2993"},"view":{"id":"2997"}},"id":"2996","type":"GlyphRenderer"},{"attributes":{},"id":"3009","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"2948","type":"LinearScale"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"3022"}},"y":{"field":"y","transform":{"id":"3023"}}},"id":"3029","type":"Text"},{"attributes":{},"id":"2964","type":"ResetTool"},{"attributes":{},"id":"3040","type":"UnionRenderers"},{"attributes":{},"id":"3007","type":"NodesAndLinkedEdges"},{"attributes":{},"id":"2950","type":"LinearScale"},{"attributes":{"line_width":{"value":2}},"id":"2992","type":"MultiLine"},{"attributes":{"source":{"id":"2983"}},"id":"2997","type":"CDSView"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"3011"}},"y":{"field":"y","transform":{"id":"3012"}}},"id":"3016","type":"Text"},{"attributes":{},"id":"2976","type":"BasicTickFormatter"},{"attributes":{"range":null},"id":"3011","type":"Dodge"},{"attributes":{},"id":"3048","type":"Selection"},{"attributes":{"data":{"item_category":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"],"x":{"__ndarray__":"FwQHCUxL3r8IZ1IQYVrTvwAAAAAAAPC/OkO4g2VvwT88CIWXKr/iPyAh8dbnruk/0faQetUR0D8=","dtype":"float64","order":"little","shape":[7]},"y":{"__ndarray__":"UR/WhH4Ml78kk1e8cgnsv4M6F1HlnOA/soaSFE2d6T8XEJtiYBnYP18zS6fiesi/QjimPFNm478=","dtype":"float64","order":"little","shape":[7]}},"selected":{"id":"3014"},"selection_policy":{"id":"3040"}},"id":"3013","type":"ColumnDataSource"},{"attributes":{"fill_color":{"field":"node_color","transform":{"id":"2981"}},"hatch_color":{"field":"node_color","transform":{"id":"2981"}},"size":{"value":10}},"id":"2987","type":"Circle"},{"attributes":{"coordinates":null,"data_source":{"id":"2982"},"glyph":{"id":"2985"},"group":null,"hover_glyph":{"id":"2988"},"muted_glyph":{"id":"2989"},"nonselection_glyph":{"id":"2986"},"selection_glyph":{"id":"2987"},"view":{"id":"2991"}},"id":"2990","type":"GlyphRenderer"},{"attributes":{"fill_color":{"field":"node_color","transform":{"id":"2981"}},"hatch_color":{"field":"node_color","transform":{"id":"2981"}},"size":{"value":10}},"id":"2985","type":"Circle"},{"attributes":{"source":{"id":"2982"}},"id":"2991","type":"CDSView"},{"attributes":{},"id":"2977","type":"AllLabels"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"node_color","transform":{"id":"2981"}},"hatch_alpha":{"value":0.2},"hatch_color":{"field":"node_color","transform":{"id":"2981"}},"line_alpha":{"value":0.2},"size":{"value":10}},"id":"2989","type":"Circle"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"2994","type":"MultiLine"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2995","type":"MultiLine"},{"attributes":{"angle":{"value":0},"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"3022"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"3023"}},"y_offset":{"value":0}},"id":"3032","type":"Text"},{"attributes":{},"id":"3014","type":"Selection"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"3011"}},"y":{"field":"y","transform":{"id":"3012"}}},"id":"3017","type":"Text"},{"attributes":{"data":{"end":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA","dtype":"int32","order":"little","shape":[6]},"start":{"__ndarray__":"AgAAAAEAAAADAAAABAAAAAUAAAAGAAAA","dtype":"int32","order":"little","shape":[6]},"xs":[{"__ndarray__":"AAAAAAAA8L8XBAcJTEvevwAAAAAAAPh/X6IxeBSY4L8XBAcJTEvev+0nGimAdd+/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"CGdSEGFa078XBAcJTEvevwAAAAAAAPh/AcLffEKK3L8XBAcJTEvevzynJamk596/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"OkO4g2VvwT8XBAcJTEvevwAAAAAAAPh/TKfBrsaH3b8XBAcJTEvevwKljAKll9u/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"PAiFlyq/4j8XBAcJTEvevwAAAAAAAPh/BjQEJ7j+278XBAcJTEvev0zIBAULJdu/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"ICHx1ueu6T8XBAcJTEvevwAAAAAAAPh//i8eG/w/278XBAcJTEvev2CdPDbukNu/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"0faQetUR0D8XBAcJTEvevwAAAAAAAPh/4ROcMElF278XBAcJTEvev6sqRYGqyNy/","dtype":"float64","order":"little","shape":[6]}],"ys":[{"__ndarray__":"gzoXUeWc4D9RH9aEfgyXvwAAAAAAAPh/UC6fQh/SaL9RH9aEfgyXv8vfddUPzJc/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"JJNXvHIJ7L9RH9aEfgyXvwAAAAAAAPh/xdDSSrM7sL9RH9aEfgyXv+SAWZilILK/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"soaSFE2d6T9RH9aEfgyXvwAAAAAAAPh/xwhnv3rdmT9RH9aEfgyXv6DHw25+Lmc/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"FxCbYmAZ2D9RH9aEfgyXvwAAAAAAAPh/8v88aWrbhj9RH9aEfgyXv8X2Hk1srpi/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"XzNLp+J6yL9RH9aEfgyXvwAAAAAAAPh/nvR2CYUOhL9RH9aEfgyXv9q5Hvk5JKi/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"QjimPFNm479RH9aEfgyXvwAAAAAAAPh/r37CGBugor9RH9aEfgyXv/LZNFUR07C/","dtype":"float64","order":"little","shape":[6]}]},"selected":{"id":"3048"},"selection_policy":{"id":"3047"}},"id":"2983","type":"ColumnDataSource"},{"attributes":{"factors":["AGENT","ENTITY","ACTIVITY"],"palette":["blue","orange","green"]},"id":"2981","type":"CategoricalColorMapper"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"2993","type":"MultiLine"}],"root_ids":["2938"]},"title":"Bokeh Application","version":"2.4.3"}}
+        <script type="application/json" id="1243">
+          {"403f55ac-283c-4f9f-ba84-1dfbecdbc067":{"defs":[{"extends":null,"module":null,"name":"ReactiveHTML1","overrides":[],"properties":[]},{"extends":null,"module":null,"name":"FlexBox1","overrides":[],"properties":[{"default":"flex-start","kind":null,"name":"align_content"},{"default":"flex-start","kind":null,"name":"align_items"},{"default":"row","kind":null,"name":"flex_direction"},{"default":"wrap","kind":null,"name":"flex_wrap"},{"default":"flex-start","kind":null,"name":"justify_content"}]},{"extends":null,"module":null,"name":"GridStack1","overrides":[],"properties":[{"default":"warn","kind":null,"name":"mode"},{"default":null,"kind":null,"name":"ncols"},{"default":null,"kind":null,"name":"nrows"},{"default":true,"kind":null,"name":"allow_resize"},{"default":true,"kind":null,"name":"allow_drag"},{"default":[],"kind":null,"name":"state"}]},{"extends":null,"module":null,"name":"click1","overrides":[],"properties":[{"default":"","kind":null,"name":"terminal_output"},{"default":"","kind":null,"name":"debug_name"},{"default":0,"kind":null,"name":"clears"}]},{"extends":null,"module":null,"name":"NotificationAreaBase1","overrides":[],"properties":[{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"}]},{"extends":null,"module":null,"name":"NotificationArea1","overrides":[],"properties":[{"default":[],"kind":null,"name":"notifications"},{"default":"bottom-right","kind":null,"name":"position"},{"default":0,"kind":null,"name":"_clear"},{"default":[{"background":"#ffc107","icon":{"className":"fas fa-exclamation-triangle","color":"white","tagName":"i"},"type":"warning"},{"background":"#007bff","icon":{"className":"fas fa-info-circle","color":"white","tagName":"i"},"type":"info"}],"kind":null,"name":"types"}]},{"extends":null,"module":null,"name":"Notification","overrides":[],"properties":[{"default":null,"kind":null,"name":"background"},{"default":3000,"kind":null,"name":"duration"},{"default":null,"kind":null,"name":"icon"},{"default":"","kind":null,"name":"message"},{"default":null,"kind":null,"name":"notification_type"},{"default":false,"kind":null,"name":"_destroyed"}]},{"extends":null,"module":null,"name":"TemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]},{"extends":null,"module":null,"name":"MaterialTemplateActions1","overrides":[],"properties":[{"default":0,"kind":null,"name":"open_modal"},{"default":0,"kind":null,"name":"close_modal"}]}],"roots":{"references":[{"attributes":{"background_fill_color":"pink","below":[{"id":"1016"}],"center":[{"id":"1019"},{"id":"1023"}],"left":[{"id":"1020"}],"margin":[5,5,5,5],"min_border_bottom":10,"min_border_left":10,"min_border_right":10,"min_border_top":10,"renderers":[{"id":"1062"},{"id":"1083"},{"id":"1094"}],"sizing_mode":"fixed","title":{"id":"1008"},"toolbar":{"id":"1031"},"width":800,"x_range":{"id":"1004"},"x_scale":{"id":"1012"},"y_range":{"id":"1005"},"y_scale":{"id":"1014"}},"id":"1007","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1043","type":"BasicTickFormatter"},{"attributes":{},"id":"1089","type":"Selection"},{"attributes":{},"id":"1044","type":"AllLabels"},{"attributes":{},"id":"1012","type":"LinearScale"},{"attributes":{"data":{"item_subtype":["PERSON","DATASET","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN"],"x":{"__ndarray__":"2kqyIrZYzz+eEgplsx7sPwAAAAAAAPA/OMrZdFtR2r9nDlt5W73jv+NOGlqv3te/HxtfdD+wub/8mj4kyDjgP3Z1hmfJBea/OiLTKtpcwj+jFB2yPZrrv0T/tJggzdE/","dtype":"float64","order":"little","shape":[12]},"y":{"__ndarray__":"sKENKWDf7D+FRyGSLOCZv8HEb+Ue+uI/lfwo7rxH0z8ox3l7BQLvP5N8n858S9q/BzbSmFBZ6b+a3MrxnJ7nv9ZR8vx+0OK/qHAgvBq4lr+cv5Hrmp/QP0O2BpuGuNy/","dtype":"float64","order":"little","shape":[12]}},"selected":{"id":"1089"},"selection_policy":{"id":"1106"}},"id":"1088","type":"ColumnDataSource"},{"attributes":{},"id":"1104","type":"UnionRenderers"},{"attributes":{"factors":["AGENT","ENTITY","ACTIVITY"],"palette":["blue","orange","green"]},"id":"1045","type":"CategoricalColorMapper"},{"attributes":{"end":1.1451116992260857,"reset_end":1.1451116992260857,"reset_start":-0.9682676338605958,"start":-0.9682676338605958,"tags":[[["y","y",null]]]},"id":"1005","type":"Range1d"},{"attributes":{"axis":{"id":"1016"},"coordinates":null,"grid_line_color":null,"group":null,"ticker":null},"id":"1019","type":"Grid"},{"attributes":{"angle":{"value":0},"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"1075"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"1076"}},"y_offset":{"value":0}},"id":"1085","type":"Text"},{"attributes":{"range":null},"id":"1086","type":"Dodge"},{"attributes":{"children":[{"id":"1003"},{"id":"1007"},{"id":"1113"}],"margin":[0,0,0,0],"name":"Row01115","tags":["embedded"]},"id":"1002","type":"Row"},{"attributes":{"coordinates":null,"group":null,"text_color":"black","text_font_size":"12pt"},"id":"1008","type":"Title"},{"attributes":{"range":null,"value":-0.05},"id":"1087","type":"Dodge"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer01119","sizing_mode":"stretch_width"},"id":"1003","type":"Spacer"},{"attributes":{},"id":"1041","type":"AllLabels"},{"attributes":{"callback":null,"renderers":[{"id":"1062"}],"tags":["hv_created"],"tooltips":[["index","@{index_hover}"],["item_category","@{item_category}"],["item_subtype","@{item_subtype}"]]},"id":"1006","type":"HoverTool"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"node_color","transform":{"id":"1045"}},"hatch_alpha":{"value":0.2},"hatch_color":{"field":"node_color","transform":{"id":"1045"}},"line_alpha":{"value":0.2},"size":{"value":10}},"id":"1050","type":"Circle"},{"attributes":{},"id":"1073","type":"NodesAndLinkedEdges"},{"attributes":{"fill_color":{"value":"limegreen"},"hatch_color":{"field":"node_color","transform":{"id":"1045"}},"size":{"value":10}},"id":"1052","type":"Circle"},{"attributes":{"source":{"id":"1046"}},"id":"1055","type":"CDSView"},{"attributes":{},"id":"1014","type":"LinearScale"},{"attributes":{"coordinates":null,"data_source":{"id":"1046"},"glyph":{"id":"1049"},"group":null,"hover_glyph":{"id":"1052"},"muted_glyph":{"id":"1053"},"nonselection_glyph":{"id":"1050"},"selection_glyph":{"id":"1051"},"view":{"id":"1055"}},"id":"1054","type":"GlyphRenderer"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"1086"}},"y":{"field":"y","transform":{"id":"1087"}}},"id":"1092","type":"Text"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"1086"}},"y":{"field":"y","transform":{"id":"1087"}}},"id":"1093","type":"Text"},{"attributes":{},"id":"1017","type":"BasicTicker"},{"attributes":{"axis_label":"x","coordinates":null,"formatter":{"id":"1040"},"group":null,"major_label_policy":{"id":"1041"},"ticker":{"id":"1017"}},"id":"1016","type":"LinearAxis"},{"attributes":{"margin":[5,5,5,5],"name":"HSpacer01120","sizing_mode":"stretch_width"},"id":"1113","type":"Spacer"},{"attributes":{},"id":"1025","type":"PanTool"},{"attributes":{"axis_label":"y","coordinates":null,"formatter":{"id":"1043"},"group":null,"major_label_policy":{"id":"1044"},"ticker":{"id":"1021"}},"id":"1020","type":"LinearAxis"},{"attributes":{"axis":{"id":"1020"},"coordinates":null,"dimension":1,"grid_line_color":null,"group":null,"ticker":null},"id":"1023","type":"Grid"},{"attributes":{},"id":"1021","type":"BasicTicker"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.2},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"1075"}},"y":{"field":"y","transform":{"id":"1076"}}},"id":"1082","type":"Text"},{"attributes":{},"id":"1026","type":"WheelZoomTool"},{"attributes":{},"id":"1112","type":"Selection"},{"attributes":{"line_width":{"value":2}},"id":"1056","type":"MultiLine"},{"attributes":{},"id":"1111","type":"UnionRenderers"},{"attributes":{"source":{"id":"1088"}},"id":"1095","type":"CDSView"},{"attributes":{},"id":"1024","type":"SaveTool"},{"attributes":{"data":{"item_category":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"],"x":{"__ndarray__":"2kqyIrZYzz+eEgplsx7sPwAAAAAAAPA/OMrZdFtR2r9nDlt5W73jv+NOGlqv3te/HxtfdD+wub/8mj4kyDjgP3Z1hmfJBea/OiLTKtpcwj+jFB2yPZrrv0T/tJggzdE/","dtype":"float64","order":"little","shape":[12]},"y":{"__ndarray__":"sKENKWDf7D+FRyGSLOCZv8HEb+Ue+uI/lfwo7rxH0z8ox3l7BQLvP5N8n858S9q/BzbSmFBZ6b+a3MrxnJ7nv9ZR8vx+0OK/qHAgvBq4lr+cv5Hrmp/QP0O2BpuGuNy/","dtype":"float64","order":"little","shape":[12]}},"selected":{"id":"1078"},"selection_policy":{"id":"1104"}},"id":"1077","type":"ColumnDataSource"},{"attributes":{"overlay":{"id":"1030"}},"id":"1027","type":"BoxZoomTool"},{"attributes":{"angle":{"value":0},"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_alpha":{"value":1.0},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"text_font_style":{"value":"normal"},"text_line_height":{"value":1.2},"x":{"field":"x","transform":{"id":"1086"}},"x_offset":{"value":0},"y":{"field":"y","transform":{"id":"1087"}},"y_offset":{"value":0}},"id":"1096","type":"Text"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"1057","type":"MultiLine"},{"attributes":{},"id":"1028","type":"ResetTool"},{"attributes":{"callback":null},"id":"1029","type":"TapTool"},{"attributes":{"source":{"id":"1047"}},"id":"1061","type":"CDSView"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1030","type":"BoxAnnotation"},{"attributes":{"data":{"end":{"__ndarray__":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","dtype":"int32","order":"little","shape":[11]},"start":{"__ndarray__":"AgAAAAEAAAADAAAABAAAAAUAAAAGAAAABwAAAAgAAAAJAAAACgAAAAsAAAA=","dtype":"int32","order":"little","shape":[11]},"xs":[{"__ndarray__":"AAAAAAAA8D/aSrIitljPPwAAAAAAAPh/o85JEFD00j/aSrIitljPP11ZFuasANI/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"nhIKZbMe7D/aSrIitljPPwAAAAAAAPh/jlBV5ZZr0j/aSrIitljPPwjGguvOWNA/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"OMrZdFtR2r/aSrIitljPPwAAAAAAAPh/3zezlX2SzD/aSrIitljPP8JMRyUALsk/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"Zw5beVu947/aSrIitljPPwAAAAAAAPh/pY8mN6kbyT/aSrIitljPPzR3w8/sfsk/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"404aWq/e17/aSrIitljPPwAAAAAAAPh/OoCEaKAJzz/aSrIitljPPwb0dwk4fso/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"HxtfdD+wub/aSrIitljPPwAAAAAAAPh/CGpwQmRM0D/aSrIitljPP5uJ83jorMs/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"/Jo+JMg44D/aSrIitljPPwAAAAAAAPh/HrH53y5k0T/aSrIitljPPyLwnNiz0s0/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"dnWGZ8kF5r/aSrIitljPPwAAAAAAAPh/yBFs+OpBzj/aSrIitljPP7Hx4Z4oAMo/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"OiLTKtpcwj/aSrIitljPPwAAAAAAAPh/UWnTjDyX0D/aSrIitljPP4ZyIRBiMMw/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"oxQdsj2a67/aSrIitljPPwAAAAAAAPh/tsbCWdtcyz/aSrIitljPP38EKZOf18g/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"RP+0mCDN0T/aSrIitljPPwAAAAAAAPh/g3dqqMoA0T/aSrIitljPP+Z71yw2/Mw/","dtype":"float64","order":"little","shape":[6]}],"ys":[{"__ndarray__":"wcRv5R764j+woQ0pYN/sPwAAAAAAAPh/CSXJDA/h7D+woQ0pYN/sP54AYJ2Yt+s/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"hUchkizgmb+woQ0pYN/sPwAAAAAAAPh/0F7zfbP56z+woQ0pYN/sPwdGPTBXROs/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"lfwo7rxH0z+woQ0pYN/sPwAAAAAAAPh/a3XlssVi6z+woQ0pYN/sP4YYWIXMT+w/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"KMd5ewUC7z+woQ0pYN/sPwAAAAAAAPh/bmMXPRdd7D+woQ0pYN/sP4drTFaSne0/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"k3yfznxL2r+woQ0pYN/sPwAAAAAAAPh/S8eAANw76z+woQ0pYN/sP5eHzJS2xOs/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"BzbSmFBZ6b+woQ0pYN/sPwAAAAAAAPh/4jj7RRZD6z+woQ0pYN/sP+CBuiZDg+s/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"mtzK8Zye57+woQ0pYN/sPwAAAAAAAPh/Yo1GrZJ56z+woQ0pYN/sPxw0SlTeRus/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"1lHy/H7Q4r+woQ0pYN/sPwAAAAAAAPh/xOhYsTdB6z+woQ0pYN/sP/tsj0zO6+s/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"qHAgvBq4lr+woQ0pYN/sPwAAAAAAAPh/dzAi4iVM6z+woQ0pYN/sP1BTci01b+s/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"nL+R65qf0D+woQ0pYN/sPwAAAAAAAPh/zR5xSKSR6z+woQ0pYN/sP45sWTmtp+w/","dtype":"float64","order":"little","shape":[6]},{"__ndarray__":"Q7YGm4a43L+woQ0pYN/sPwAAAAAAAPh/1Rn3SG9f6z+woQ0pYN/sP7xHnrCGV+s/","dtype":"float64","order":"little","shape":[6]}]},"selected":{"id":"1112"},"selection_policy":{"id":"1111"}},"id":"1047","type":"ColumnDataSource"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"1075"}},"y":{"field":"y","transform":{"id":"1076"}}},"id":"1080","type":"Text"},{"attributes":{"line_alpha":{"value":0.2},"line_width":{"value":2}},"id":"1059","type":"MultiLine"},{"attributes":{"end":1.1396933685215558,"reset_end":1.1396933685215558,"reset_start":-1.002271615475632,"start":-1.002271615475632,"tags":[[["x","x",null]]]},"id":"1004","type":"Range1d"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"field":"node_color","transform":{"id":"1045"}},"hatch_alpha":{"value":0.2},"hatch_color":{"field":"node_color","transform":{"id":"1045"}},"line_alpha":{"value":0.2},"size":{"value":10}},"id":"1053","type":"Circle"},{"attributes":{"range":null},"id":"1075","type":"Dodge"},{"attributes":{},"id":"1106","type":"UnionRenderers"},{"attributes":{"data":{"index":{"__ndarray__":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAA","dtype":"int32","order":"little","shape":[12]},"index_hover":["10378.1/1691138","10378.1/1691397","10378.1/1691419","10378.1/1691421","10378.1/1691426","10378.1/1691428","10378.1/1691437","10378.1/1691445","10378.1/1691450","10378.1/1691462","10378.1/1691464","10378.1/1691469"],"item_category":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"],"item_subtype":["PERSON","DATASET","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN","MODEL_RUN"],"node_color":["AGENT","ENTITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY","ACTIVITY"]},"selected":{"id":"1110"},"selection_policy":{"id":"1109"}},"id":"1046","type":"ColumnDataSource"},{"attributes":{},"id":"1078","type":"Selection"},{"attributes":{"fill_color":{"field":"node_color","transform":{"id":"1045"}},"hatch_color":{"field":"node_color","transform":{"id":"1045"}},"size":{"value":10}},"id":"1051","type":"Circle"},{"attributes":{"range":null,"value":0.05},"id":"1076","type":"Dodge"},{"attributes":{"text":{"field":"item_subtype"},"text_align":{"value":"center"},"text_baseline":{"value":"middle"},"text_color":{"value":"black"},"text_font_size":{"value":"8pt"},"x":{"field":"x","transform":{"id":"1086"}},"y":{"field":"y","transform":{"id":"1087"}}},"id":"1091","type":"Text"},{"attributes":{"coordinates":null,"data_source":{"id":"1088"},"glyph":{"id":"1091"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1093"},"nonselection_glyph":{"id":"1092"},"selection_glyph":{"id":"1096"},"view":{"id":"1095"}},"id":"1094","type":"GlyphRenderer"},{"attributes":{},"id":"1110","type":"Selection"},{"attributes":{},"id":"1109","type":"UnionRenderers"},{"attributes":{"fill_color":{"field":"node_color","transform":{"id":"1045"}},"hatch_color":{"field":"node_color","transform":{"id":"1045"}},"size":{"value":10}},"id":"1049","type":"Circle"},{"attributes":{"text":{"field":"item_category"},"text_align":{"value":"center"},"text_alpha":{"value":0.1},"text_baseline":{"value":"middle"},"text_color":{"value":"blue"},"text_font_size":{"value":"12pt"},"x":{"field":"x","transform":{"id":"1075"}},"y":{"field":"y","transform":{"id":"1076"}}},"id":"1081","type":"Text"},{"attributes":{"source":{"id":"1077"}},"id":"1084","type":"CDSView"},{"attributes":{},"id":"1071","type":"NodesAndLinkedEdges"},{"attributes":{"graph_layout":{"0":[0.24489475912249398,0.9022675325223215],"1":[0.8787476514267671,-0.025269218844477876],"10":[-0.8625782469540763,0.25974152569596654],"11":[0.2781449786452763,-0.44876256121901664],"2":[1.0,0.5930323105987086],"3":[-0.411215652572682,0.3012535405905024],"4":[-0.616864907286481,0.9689967548021956],"5":[-0.372966611853583,-0.4108573930552179],"6":[-0.10034557906247386,-0.7921526894367056],"7":[0.5069313724423803,-0.738111946345174],"8":[-0.688206388662066,-0.5879511776316189],"9":[0.1434586247544461,-0.022186677677482308]}},"id":"1048","type":"StaticLayoutProvider"},{"attributes":{"coordinates":null,"data_source":{"id":"1077"},"glyph":{"id":"1080"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1082"},"nonselection_glyph":{"id":"1081"},"selection_glyph":{"id":"1085"},"view":{"id":"1084"}},"id":"1083","type":"GlyphRenderer"},{"attributes":{},"id":"1040","type":"BasicTickFormatter"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"1060"},"group":null,"inspection_policy":{"id":"1073"},"layout_provider":{"id":"1048"},"node_renderer":{"id":"1054"},"selection_policy":{"id":"1071"}},"id":"1062","type":"GraphRenderer"},{"attributes":{"coordinates":null,"data_source":{"id":"1047"},"glyph":{"id":"1056"},"group":null,"hover_glyph":{"id":"1058"},"muted_glyph":{"id":"1059"},"nonselection_glyph":{"id":"1057"},"view":{"id":"1061"}},"id":"1060","type":"GlyphRenderer"},{"attributes":{"tools":[{"id":"1006"},{"id":"1024"},{"id":"1025"},{"id":"1026"},{"id":"1027"},{"id":"1028"},{"id":"1029"}]},"id":"1031","type":"Toolbar"},{"attributes":{"line_color":{"value":"limegreen"},"line_width":{"value":2}},"id":"1058","type":"MultiLine"}],"root_ids":["1002"]},"title":"Bokeh Application","version":"2.4.3"}}
         </script>
         <script type="text/javascript">
           (function() {
@@ -5079,8 +5217,8 @@ Upload complete.
               Bokeh.safely(function() {
                 (function(root) {
                   function embed_document(root) {
-                  const docs_json = document.getElementById('3179').textContent;
-                  const render_items = [{"docid":"0de188fd-b868-4e29-b0a0-426af7e71732","root_ids":["2938"],"roots":{"2938":"6ab044cb-0a36-404e-8bbd-1a8fe44f8e35"}}];
+                  const docs_json = document.getElementById('1243').textContent;
+                  const render_items = [{"docid":"403f55ac-283c-4f9f-ba84-1dfbecdbc067","root_ids":["1002"],"roots":{"1002":"72df37a5-8067-4d52-b16d-a720a7543b56"}}];
                   root.Bokeh.embed.embed_items(docs_json, render_items);
                   }
                   if (root.Bokeh !== undefined) {

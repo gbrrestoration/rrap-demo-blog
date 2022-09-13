@@ -40,7 +40,8 @@ layout: notebook
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
+<span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">json</span>
@@ -102,11 +103,11 @@ layout: notebook
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; - Passed&#39;</span><span class="p">)</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; - Fail&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">()</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="c1"># catastrophic error. bail.</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39; - Fail&#39;</span><span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -168,27 +169,6 @@ Testing - https://auth.dev.rrap-is.com/auth/realms/rrap - Passed
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Attempting to generate authorisation tokens.
-
-Looking for existing tokens in local storage.
-
-Validating found tokens
-
-Found tokens valid, using.
-
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -686,6 +666,7 @@ Found tokens valid, using.
     <span class="s2">&quot;starting_id&quot;</span><span class="p">:</span> <span class="s2">&quot;10378.1/1688634&quot;</span><span class="p">,</span>
     <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="mi">1</span>
 <span class="p">}</span>
+
 <span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span>
 
 <span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>

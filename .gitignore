@@ -24,5 +24,6 @@ python_packages/rrap_packages.egg-info/
 
 # Ignore other artifacts of data
 _notebooks/data
+
 # But include things like demo file which are used
-!_notebooks/data/Demo_file.txt
+!_notebooks/data/demo_model_input.csv
