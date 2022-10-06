@@ -22,7 +22,8 @@ layout: notebook
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="About">About<a class="anchor-link" href="#About"> </a></h2><p>This notebook is a demonstration of integrating the RRAP-IS with a simple model run.</p>
-<p><img src="/rrap-demo-blog/images/copied_from_nb/assets/data_store_prov_store_overview.jpg" alt=""></p>
+<p><img src="/rrap-demo-blog/images/copied_from_nb/assets/data_store_prov_store_overview.jpg" alt="">
+<img src="/rrap-demo-blog/images/copied_from_nb/assets/provOverview.png" alt=""></p>
 
 </div>
 </div>
