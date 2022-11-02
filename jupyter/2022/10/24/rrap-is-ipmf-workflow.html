@@ -1,0 +1,1341 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>RRAP-IS Model Run Workflow Submit Demonstration Notebook | RRAP M&amp;DS Information System</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="RRAP-IS Model Run Workflow Submit Demonstration Notebook" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A tutorial of RRAP-IS system use from a modeller’s perspective." />
+<meta property="og:description" content="A tutorial of RRAP-IS system use from a modeller’s perspective." />
+<link rel="canonical" href="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/10/24/rrap-is-ipmf-workflow.html" />
+<meta property="og:url" content="https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/10/24/rrap-is-ipmf-workflow.html" />
+<meta property="og:site_name" content="RRAP M&amp;DS Information System" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2022-10-24T00:00:00-05:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="RRAP-IS Model Run Workflow Submit Demonstration Notebook" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","dateModified":"2022-10-24T00:00:00-05:00","datePublished":"2022-10-24T00:00:00-05:00","description":"A tutorial of RRAP-IS system use from a modeller’s perspective.","headline":"RRAP-IS Model Run Workflow Submit Demonstration Notebook","mainEntityOfPage":{"@type":"WebPage","@id":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/10/24/rrap-is-ipmf-workflow.html"},"url":"https://gbrrestoration.github.io/rrap-demo-blog/jupyter/2022/10/24/rrap-is-ipmf-workflow.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/rrap-demo-blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://gbrrestoration.github.io/rrap-demo-blog/feed.xml" title="RRAP M&amp;DS Information System" /><link rel="shortcut icon" type="image/x-icon" href="/rrap-demo-blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/rrap-demo-blog/">RRAP M&amp;DS Information System</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/rrap-demo-blog/about/">About Me</a><a class="page-link" href="/rrap-demo-blog/search/">Search</a><a class="page-link" href="/rrap-demo-blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">RRAP-IS Model Run Workflow Submit Demonstration Notebook</h1><p class="page-description">A tutorial of RRAP-IS system use from a modeller's perspective.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-10-24T00:00:00-05:00" itemprop="datePublished">
+        Oct 24, 2022
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/rrap-demo-blog/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-justify-center">
+          <div class="px-2">
+
+    <a href="https://github.com/gbrrestoration/rrap-demo-blog/tree/master/_notebooks/2022-10-24-rrap-is-ipmf-workflow.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          
+<div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?urlpath=lab/tree/_notebooks%2F2022-10-24-rrap-is-ipmf-workflow.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+<!-- <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/gbrrestoration/rrap-demo-blog/master?filepath=_notebooks%2F2022-10-24-rrap-is-ipmf-workflow.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/rrap-demo-blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div> -->
+          
+          
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#About">About </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Run-all-imports">Run all imports </a></li>
+<li class="toc-entry toc-h3"><a href="#Define-global-variables">Define global variables </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Authentication">Authentication </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server">Setup tokens using device authorisation flow against keycloak server </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Endpoint-Documentation">Endpoint Documentation </a></li>
+<li class="toc-entry toc-h2"><a href="#Notebook-helper-functions">Notebook helper functions </a></li>
+<li class="toc-entry toc-h2"><a href="#Demonstration">Demonstration </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Get-all-template-IDs">Get all template IDs </a></li>
+<li class="toc-entry toc-h3"><a href="#Get-Template-CSV-for-selected-template-ID">Get Template CSV for selected template ID </a></li>
+<li class="toc-entry toc-h3"><a href="#Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">Fill out workflow table with values and submit to https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv </a></li>
+<li class="toc-entry toc-h3"><a href="#Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">Submit converted model runs to https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit </a></li>
+</ul>
+</li>
+</ul><body>
+<!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2022-10-24-rrap-is-ipmf-workflow.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="About">
+<a class="anchor" href="#About" aria-hidden="true"><span class="octicon octicon-link"></span></a>About<a class="anchor-link" href="#About"> </a>
+</h2>
+<p>This notebook is a demonstration of integrating the RRAP-IS and submitting a model run.</p>
+<!-- ![](assets/data_store_prov_store_overview.jpg)
+
+![](/rrap-demo-blog/images/copied_from_nb/assets/provOverview.png) -->
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Run-all-imports">
+<a class="anchor" href="#Run-all-imports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run all imports<a class="anchor-link" href="#Run-all-imports"> </a>
+</h3>
+<p>Keep all your imports at the top of a notebook.  It allows for easier management.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%capture</span>
+<span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">json2html</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">IFrame</span><span class="p">,</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">JSON</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">mdsisclienttools.auth.TokenManager</span> <span class="kn">import</span> <span class="n">DeviceFlowManager</span>
+<span class="kn">import</span> <span class="nn">mdsisclienttools.datastore.ReadWriteHelper</span> <span class="k">as</span> <span class="nn">IOHelper</span>
+<span class="kn">from</span> <span class="nn">urllib.error</span> <span class="kn">import</span> <span class="n">HTTPError</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="kn">import</span> <span class="nn">nx_altair</span> <span class="k">as</span> <span class="nn">nxa</span>
+<span class="kn">from</span> <span class="nn">networkx.readwrite</span> <span class="kn">import</span> <span class="n">json_graph</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">holoviews</span> <span class="k">as</span> <span class="nn">hv</span>
+<span class="kn">from</span> <span class="nn">holoviews</span> <span class="kn">import</span> <span class="n">opts</span>
+<span class="n">hv</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">'bokeh'</span><span class="p">)</span>
+<span class="n">defaults</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">)</span>
+<span class="n">hv</span><span class="o">.</span><span class="n">opts</span><span class="o">.</span><span class="n">defaults</span><span class="p">(</span><span class="n">opts</span><span class="o">.</span><span class="n">EdgePaths</span><span class="p">(</span><span class="o">**</span><span class="n">defaults</span><span class="p">),</span> <span class="n">opts</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="o">**</span><span class="n">defaults</span><span class="p">),</span> <span class="n">opts</span><span class="o">.</span><span class="n">Nodes</span><span class="p">(</span><span class="o">**</span><span class="n">defaults</span><span class="p">))</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'once'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Define-global-variables">
+<a class="anchor" href="#Define-global-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Define global variables<a class="anchor-link" href="#Define-global-variables"> </a>
+</h3>
+<p>Similar to import we like to define notebook variable at the top and reuse them throughout the notebook</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_store</span> <span class="o">=</span> <span class="s2">"https://data.testing.rrap-is.com"</span>
+<span class="n">data_api</span> <span class="o">=</span> <span class="s2">"https://data-api.testing.rrap-is.com"</span>
+<span class="n">registry_api</span> <span class="o">=</span> <span class="s2">"https://registry-api.testing.rrap-is.com"</span>
+<span class="n">prov_api</span> <span class="o">=</span> <span class="s2">"https://prov-api.testing.rrap-is.com"</span>
+<span class="n">auth_server</span> <span class="o">=</span> <span class="s2">"https://auth.dev.rrap-is.com/auth/realms/rrap"</span>
+<span class="c1"># garbage = "https://frogs.are.green"</span>
+<span class="n">base_urls</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'data_api'</span><span class="p">:</span> <span class="n">data_api</span><span class="p">,</span> <span class="s1">'registry_api'</span><span class="p">:</span> <span class="n">registry_api</span><span class="p">,</span> <span class="s1">'prov_api'</span><span class="p">:</span> <span class="n">prov_api</span><span class="p">,</span> <span class="s1">'auth_server'</span><span class="p">:</span> <span class="n">auth_server</span><span class="p">,</span> <span class="s1">'data_store'</span><span class="p">:</span> <span class="n">data_store</span><span class="p">}</span><span class="c1">#, 'garbage': garbage}</span>
+<span class="n">display</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Checking base urls'</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">base_urls</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Testing - </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">""</span><span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Passed'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">HTTPError</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Fail'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">RequestException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="c1"># catastrophic error. bail.</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">' - Fail'</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">SystemExit</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>'Checking base urls'</pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Testing - https://data-api.testing.rrap-is.com - Passed
+Testing - https://registry-api.testing.rrap-is.com - Passed
+Testing - https://prov-api.testing.rrap-is.com - Passed
+Testing - https://auth.dev.rrap-is.com/auth/realms/rrap - Passed
+Testing - https://data.testing.rrap-is.com - Passed
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Authentication">
+<a class="anchor" href="#Authentication" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authentication<a class="anchor-link" href="#Authentication"> </a>
+</h2>
+<h3 id="Setup-tokens-using-device-authorisation-flow-against-keycloak-server">
+<a class="anchor" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup tokens using device authorisation flow against keycloak server<a class="anchor-link" href="#Setup-tokens-using-device-authorisation-flow-against-keycloak-server"> </a>
+</h3>
+<p>This could result in a browser window being opened if you don't have valid tokens cached in local storage.</p>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">local_token_storage</span> <span class="o">=</span> <span class="s2">".tokens.json"</span>
+
+<span class="n">token_manager</span> <span class="o">=</span> <span class="n">DeviceFlowManager</span><span class="p">(</span>
+    <span class="n">stage</span><span class="o">=</span><span class="s2">"TEST"</span><span class="p">,</span>
+    <span class="n">keycloak_endpoint</span><span class="o">=</span><span class="n">auth_server</span><span class="p">,</span>
+    <span class="n">local_storage_location</span><span class="o">=</span><span class="n">local_token_storage</span>
+<span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Attempting to generate authorisation tokens.
+
+Looking for existing tokens in local storage.
+
+Validating found tokens
+
+Trying to use found tokens to refresh the access token.
+
+Tokens found in storage but they are not valid.
+
+Initiating device auth flow to setup offline access token.
+
+Decoding response
+
+Please authorise using the following endpoint.
+
+Verification URL: https://auth.dev.rrap-is.com/auth/realms/rrap/device?user_code=JGON-UWLQ
+User Code: JGON-UWLQ
+
+Awaiting completion
+
+
+Token generation complete. Authorisation successful.
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/auth/TokenManager.py:308: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=('172.31.1.35', 37852), raddr=('52.65.92.31', 443)&gt;
+  oauth_tokens = self.await_device_auth_flow_completion(
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Endpoint-Documentation">
+<a class="anchor" href="#Endpoint-Documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Endpoint Documentation<a class="anchor-link" href="#Endpoint-Documentation"> </a>
+</h2>
+<p>Endpoint documentation can be found by appending either <code>/docs</code> or <code>/redoc</code> on the end a base URL.</p>
+<p>For example:</p>
+<ul>
+  <li><a href="https://prov-api.testing.rrap-is.com/redoc" target="_blank">Provenance API</a></li>
+  <li><a href="https://data-api.testing.rrap-is.com/redoc" target="_blank">Data API</a></li>
+  <li><a href="https://registry-api.testing.rrap-is.com/redoc" target="_blank">Registry API</a></li>
+</ul>
+<p>Then select from the menu an endpoint function call e.g. <code>/register/mint-dataset</code></p>
+<p>Then append the function call onto the base url e.g. <code>https://data-api.testing.rrap-is.com/register/mint-dataset</code></p>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Notebook-helper-functions">
+<a class="anchor" href="#Notebook-helper-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notebook helper functions<a class="anchor-link" href="#Notebook-helper-functions"> </a>
+</h2>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">enum_switch</span> <span class="kn">import</span> <span class="n">Switch</span>
+
+<span class="k">def</span> <span class="nf">wrap_html_table</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">ul_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s2">"table"</span><span class="p">)</span>
+    <span class="n">div_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">"div"</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="p">[</span><span class="s1">'style'</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"width: auto; height: 400px; overflow-y: auto; "</span>
+    <span class="n">ul_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">div_tag</span><span class="p">)</span>
+    <span class="n">new_tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">"details"</span><span class="p">)</span>
+    <span class="n">div_tag</span><span class="o">.</span><span class="n">wrap</span><span class="p">(</span><span class="n">new_tag</span><span class="p">)</span>
+    
+    <span class="n">tag</span> <span class="o">=</span> <span class="n">soup</span><span class="o">.</span><span class="n">new_tag</span><span class="p">(</span><span class="s2">"summary"</span><span class="p">)</span>
+    <span class="n">tag</span><span class="o">.</span><span class="n">string</span> <span class="o">=</span> <span class="s2">"Results"</span>
+    <span class="n">soup</span><span class="o">.</span><span class="n">div</span><span class="o">.</span><span class="n">insert_after</span><span class="p">(</span><span class="n">tag</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">soup</span><span class="o">.</span><span class="n">prettify</span><span class="p">()</span>
+    
+<span class="k">def</span> <span class="nf">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">):</span>
+        <span class="n">json_obj_in_html</span> <span class="o">=</span> <span class="n">json2html</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span> <span class="n">response_json</span>  <span class="p">)</span>
+        <span class="k">return</span> <span class="n">wrap_html_table</span><span class="p">(</span><span class="n">json_obj_in_html</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">handle_request_return_raw</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="c1"># If the response was successful, no Exception will be raised</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="n">http_err</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Other error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="n">err</span> <span class="p">}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+        
+<span class="k">def</span> <span class="nf">handle_request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">parse_json</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">payload</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">)</span>
+        <span class="c1"># If the response was successful, no Exception will be raised</span>
+        <span class="n">response</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+
+    <span class="k">except</span> <span class="n">HTTPError</span> <span class="k">as</span> <span class="n">http_err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'HTTP error occurred: </span><span class="si">{</span><span class="n">http_err</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="n">http_err</span><span class="p">}</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">err</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Other error occurred: </span><span class="si">{</span><span class="n">err</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>  <span class="c1"># Python 3.6</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s2">"error"</span><span class="p">:</span> <span class="n">err</span> <span class="p">}</span>
+    <span class="k">if</span> <span class="n">parse_json</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">response</span>
+        
+<span class="k">class</span> <span class="nc">ProvType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">AGENT</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">ACTIVITY</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ENTITY</span> <span class="o">=</span> <span class="mi">3</span>
+
+<span class="k">class</span> <span class="nc">ItemType</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">MODEL</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">PERSON</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">ORGANISATION</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">MODELRUN</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="n">MODEL_RUN_WORKFLOW</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">class</span> <span class="nc">ProvTypeFromItemType</span><span class="p">(</span><span class="n">Switch</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">MODEL</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
+    <span class="k">def</span> <span class="nf">PERSON</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">ORGANISATION</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">AGENT</span>    
+
+    <span class="k">def</span> <span class="nf">MODELRUN</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ACTIVITY</span>
+
+    <span class="k">def</span> <span class="nf">MODEL_RUN_WORKFLOW</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">ProvType</span><span class="o">.</span><span class="n">ENTITY</span>
+
+<span class="n">prov_of_item</span> <span class="o">=</span> <span class="n">ProvTypeFromItemType</span><span class="p">(</span><span class="n">ItemType</span><span class="p">)</span>
+<span class="n">provs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">print</span><span class="p">(</span><span class="n">prov_of_item</span><span class="p">(</span><span class="n">t</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">ItemType</span><span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">register_item</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/create'</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+    <span class="k">return</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">"POST"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">registry_list</span><span class="p">(</span><span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/list'</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+    <span class="k">return</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+
+<span class="k">def</span> <span class="nf">registry_fetch</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">item_type</span><span class="p">,</span> <span class="n">auth</span><span class="p">):</span>
+    <span class="n">prov_type</span> <span class="o">=</span> <span class="n">prov_of_item</span><span class="p">(</span><span class="n">item_type</span><span class="p">)</span>
+    <span class="n">postfix</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'/registry/</span><span class="si">{</span><span class="n">prov_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/</span><span class="si">{</span><span class="n">item_type</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s1">/fetch'</span>
+    <span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span>
+    <span class="k">return</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>ProvType.ENTITY
+ProvType.AGENT
+ProvType.AGENT
+ProvType.ACTIVITY
+ProvType.ENTITY
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Demonstration">
+<a class="anchor" href="#Demonstration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demonstration<a class="anchor-link" href="#Demonstration"> </a>
+</h2>
+<p>This demonstration illustrates how the RRAP-IS system can be used to upload and register model outputs and discover provenance information (what data was used for a particular model run and what are the associated outputs).</p>
+<p>For this demonstration it is assumed that the model has been executed, both input and output datasets have been registered, the model has been registered and all associated templates have been registered. The use of a model run parameter file is used to define these registered items (capturing the handle id values) and is loaded as input for the model run registration.</p>
+<p>For the demonstration a fictitious model is used, the data is actual RRAP data and the provenance information is only derived from this exercise</p>
+<p><a href="#toc">Return to Top</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-all-template-IDs">
+<a class="anchor" href="#Get-all-template-IDs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get all template IDs<a class="anchor-link" href="#Get-all-template-IDs"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/registry/entity/model_run_workflow/list"</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">registry_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">response_json</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">())</span>
+<span class="n">HTML</span><span class="p">(</span><span class="n">json_to_md</span><span class="p">(</span><span class="n">response_json</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+ 
+  <details>
+   <div style="width: auto; height: 400px; overflow-y: auto; ">
+    <table border="1">
+     <tr>
+      <th>
+       status
+      </th>
+      <td>
+       <table border="1">
+        <tr>
+         <th>
+          success
+         </th>
+         <td>
+          True
+         </td>
+        </tr>
+        <tr>
+         <th>
+          details
+         </th>
+         <td>
+          Successfully listed items.
+         </td>
+        </tr>
+       </table>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       items
+      </th>
+      <td>
+       <table border="1">
+        <thead>
+         <tr>
+          <th>
+           display_name
+          </th>
+          <th>
+           software_id
+          </th>
+          <th>
+           software_version
+          </th>
+          <th>
+           automation_schedule
+          </th>
+          <th>
+           input_templates
+          </th>
+          <th>
+           output_templates
+          </th>
+          <th>
+           annotations
+          </th>
+          <th>
+           id
+          </th>
+          <th>
+           created_timestamp
+          </th>
+          <th>
+           updated_timestamp
+          </th>
+          <th>
+           item_category
+          </th>
+          <th>
+           item_subtype
+          </th>
+          <th>
+           record_type
+          </th>
+         </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td>
+           (Simulator) Model run workflow template 10378.1/1693340
+          </td>
+          <td>
+           10378.1/1693318
+          </td>
+          <td>
+           vfake1.2
+          </td>
+          <td>
+           None
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693319
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693319
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           None
+          </td>
+          <td>
+           10378.1/1693340
+          </td>
+          <td>
+           1667174524
+          </td>
+          <td>
+           1667174524
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL_RUN_WORKFLOW_TEMPLATE
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
+           (Testing) IPMF example generated workflow template workflow template id (10378.1/1693488)
+          </td>
+          <td>
+           10378.1/1693485
+          </td>
+          <td>
+           1.2.3
+          </td>
+          <td>
+           None
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693477
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+             <tr>
+              <td>
+               10378.1/1693479
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+             <tr>
+              <td>
+               10378.1/1693481
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693483
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           <table border="1">
+            <tr>
+             <th>
+              required
+             </th>
+             <td>
+              <ul>
+               <li>
+                ipmf_model_run_identifier
+               </li>
+               <li>
+                RCP
+               </li>
+               <li>
+                Purpose
+               </li>
+               <li>
+                Intervention
+               </li>
+               <li>
+                Year_Start
+               </li>
+               <li>
+                Year_End
+               </li>
+               <li>
+                init_cover
+               </li>
+               <li>
+                settle_prob
+               </li>
+               <li>
+                fts
+               </li>
+               <li>
+                max.juvis_m2
+               </li>
+               <li>
+                counterfactual
+               </li>
+              </ul>
+             </td>
+            </tr>
+            <tr>
+             <th>
+              optional
+             </th>
+             <td>
+              <ul>
+               <li>
+                Fogging_reducer
+               </li>
+               <li>
+                Fogging_sites
+               </li>
+               <li>
+                Fogging_start
+               </li>
+              </ul>
+             </td>
+            </tr>
+           </table>
+          </td>
+          <td>
+           10378.1/1693488
+          </td>
+          <td>
+           1667259860
+          </td>
+          <td>
+           1667259860
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL_RUN_WORKFLOW_TEMPLATE
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+         <tr>
+          <td>
+           (Simulator) Model run workflow template 10378.1/1693313
+          </td>
+          <td>
+           10378.1/1693292
+          </td>
+          <td>
+           vfake1.2
+          </td>
+          <td>
+           None
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693301
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           <table border="1">
+            <thead>
+             <tr>
+              <th>
+               template_id
+              </th>
+              <th>
+               optional
+              </th>
+             </tr>
+            </thead>
+            <tbody>
+             <tr>
+              <td>
+               10378.1/1693297
+              </td>
+              <td>
+               None
+              </td>
+             </tr>
+            </tbody>
+           </table>
+          </td>
+          <td>
+           None
+          </td>
+          <td>
+           10378.1/1693313
+          </td>
+          <td>
+           1667174321
+          </td>
+          <td>
+           1667174321
+          </td>
+          <td>
+           ENTITY
+          </td>
+          <td>
+           MODEL_RUN_WORKFLOW_TEMPLATE
+          </td>
+          <td>
+           COMPLETE_ITEM
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       seed_items
+      </th>
+      <td>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       unparsable_items
+      </th>
+      <td>
+      </td>
+     </tr>
+     <tr>
+      <th>
+       total_item_count
+      </th>
+      <td>
+       3
+      </td>
+     </tr>
+     <tr>
+      <th>
+       complete_item_count
+      </th>
+      <td>
+       3
+      </td>
+     </tr>
+     <tr>
+      <th>
+       seed_item_count
+      </th>
+      <td>
+       0
+      </td>
+     </tr>
+     <tr>
+      <th>
+       unparsable_item_count
+      </th>
+      <td>
+       0
+      </td>
+     </tr>
+    </table>
+   </div>
+   <summary>
+    Results
+   </summary>
+  </details>
+ 
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-Template-CSV-for-selected-template-ID">
+<a class="anchor" href="#Get-Template-CSV-for-selected-template-ID" aria-hidden="true"><span class="octicon octicon-link"></span></a>Get Template CSV for selected template ID<a class="anchor-link" href="#Get-Template-CSV-for-selected-template-ID"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<span class="n">workflow_template_id</span> <span class="o">=</span> <span class="s2">"10378.1/1693488"</span>
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">"/bulk/generate_template/csv"</span>
+<span class="n">param</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'workflow_template_id=</span><span class="si">{</span><span class="n">workflow_template_id</span><span class="si">}</span><span class="s1">'</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">response</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">"GET"</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
+<span class="n">workflow_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">','</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)])</span>
+
+<span class="n">workflow_table</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Token validation failed due to error: Signature has expired.
+Refreshing using refresh token
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+      <th>8</th>
+      <th>9</th>
+      <th>...</th>
+      <th>22</th>
+      <th>23</th>
+      <th>24</th>
+      <th>25</th>
+      <th>26</th>
+      <th>27</th>
+      <th>28</th>
+      <th>29</th>
+      <th>30</th>
+      <th>31</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>workflow template id 10378.1/1693488</td>
+      <td>description</td>
+      <td>agent id</td>
+      <td>requesting organisation id</td>
+      <td>execution start time</td>
+      <td>execution end time</td>
+      <td>dataset id for template 10378.1/1693477</td>
+      <td>disturbance_file</td>
+      <td>spatial_file</td>
+      <td>geometry_file</td>
+      <td>...</td>
+      <td>Year_Start</td>
+      <td>Year_End</td>
+      <td>init_cover</td>
+      <td>settle_prob</td>
+      <td>fts</td>
+      <td>max.juvis_m2</td>
+      <td>counterfactual</td>
+      <td>Fogging_reducer</td>
+      <td>Fogging_sites</td>
+      <td>Fogging_start\r</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td></td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>...</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+      <td>None</td>
+    </tr>
+  </tbody>
+</table>
+<p>2 rows × 32 columns</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">
+<a class="anchor" href="#Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fill out workflow table with values and submit to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv</a><a class="anchor-link" href="#Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">
+<a class="anchor" href="#Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Submit converted model runs to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit</a><a class="anchor-link" href="#Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+</div>
+
+
+</body>
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="gbrrestoration/rrap-demo-blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/rrap-demo-blog/jupyter/2022/10/24/rrap-is-ipmf-workflow.html" hidden></a>
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+    <data class="u-url" href="/rrap-demo-blog/"></data>
+
+    <div class="wrapper">
+
+        <div class="footer-col-wrapper">
+            <div class="footer-col">
+                <p class="feed-subscribe">
+                    <a href="/rrap-demo-blog/feed.xml">
+                        <svg class="svg-icon orange">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#rss"></use>
+                        </svg><span>Subscribe</span>
+                    </a>
+                </p>
+            </div>
+            <div class="footer-col">
+                <p>© Reef Restoration and Adaptation Program. All rights reserved.</p>
+            </div>
+        </div>
+        <div>
+            <h3 style="text-align: center;">Acknowledgement of Country</h3>
+            <p style="text-align: center;">The Reef Restoration and Adaptation Program respects and recognises all Traditional Owners of the Great Barrier Reef as First Nations Peoples holding the hopes, dreams, traditions and cultures of the Reef.</p>
+        </div>
+        <div class="social-links">
+            <ul class="social-media-list">
+                <li><a rel="me" href="https://github.com/gbrrestoration" target="_blank" title="gbrrestoration"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#github"></use>
+                        </svg></a></li>
+                <li><a rel="me" href="https://twitter.com/GBRFoundation" target="_blank" title="GBRFoundation"><svg
+                            class="svg-icon grey">
+                            <use xlink:href="/rrap-demo-blog/assets/minima-social-icons.svg#twitter"></use>
+                        </svg></a></li>
+            </ul>
+        </div>
+
+    </div>
+
+</footer></body>
+
+</html>
