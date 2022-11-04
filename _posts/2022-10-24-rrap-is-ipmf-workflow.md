@@ -59,6 +59,7 @@ layout: notebook
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
 <span class="kn">import</span> <span class="nn">holoviews</span> <span class="k">as</span> <span class="nn">hv</span>
 <span class="kn">from</span> <span class="nn">holoviews</span> <span class="kn">import</span> <span class="n">opts</span>
 <span class="n">hv</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">&#39;bokeh&#39;</span><span class="p">)</span>
@@ -191,31 +192,8 @@ Validating found tokens
 
 Trying to use found tokens to refresh the access token.
 
-Tokens found in storage but they are not valid.
+Token refresh successful.
 
-Initiating device auth flow to setup offline access token.
-
-Decoding response
-
-Please authorise using the following endpoint.
-
-Verification URL: https://auth.dev.rrap-is.com/auth/realms/rrap/device?user_code=JGON-UWLQ
-User Code: JGON-UWLQ
-
-Awaiting completion
-
-
-Token generation complete. Authorisation successful.
-
-</pre>
-</div>
-</div>
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stderr output_text">
-<pre>/home/andrew/repo/rrap-demo-blog/.venv_mvp_demo/lib/python3.8/site-packages/mdsisclienttools/auth/TokenManager.py:308: ResourceWarning: unclosed &lt;ssl.SSLSocket fd=64, family=AddressFamily.AF_INET, type=SocketKind.SOCK_STREAM, proto=6, laddr=(&#39;172.31.1.35&#39;, 37852), raddr=(&#39;52.65.92.31&#39;, 443)&gt;
-  oauth_tokens = self.await_device_auth_flow_completion(
 </pre>
 </div>
 </div>
@@ -923,8 +901,7 @@ ProvType.ENTITY
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
 <span class="n">workflow_template_id</span> <span class="o">=</span> <span class="s2">&quot;10378.1/1693488&quot;</span>
 <span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/bulk/generate_template/csv&quot;</span>
 <span class="n">param</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;workflow_template_id=</span><span class="si">{</span><span class="n">workflow_template_id</span><span class="si">}</span><span class="s1">&#39;</span>
@@ -932,7 +909,41 @@ ProvType.ENTITY
 <span class="n">response</span> <span class="o">=</span> <span class="n">handle_request</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="n">endpoint</span><span class="p">,</span> <span class="n">param</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">auth</span><span class="p">(),</span> <span class="kc">False</span><span class="p">)</span>
 <span class="n">workflow_table</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)])</span>
 
-<span class="n">workflow_table</span>
+<span class="n">workflow_table</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;Model_Workflow.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Fill-out-workflow-table-with-values-and-submit">Fill out workflow table with values and submit<a class="anchor-link" href="#Fill-out-workflow-table-with-values-and-submit"> </a></h3><ul>
+<li>to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv</a></li>
+</ul>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">auth</span> <span class="o">=</span> <span class="n">token_manager</span><span class="o">.</span><span class="n">get_auth</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;csv_file&#39;</span><span class="p">:</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;Model_Workflow_v1.csv&#39;</span><span class="p">)}</span>
+
+<span class="n">postfix</span> <span class="o">=</span> <span class="s2">&quot;/bulk/convert_model_runs/csv&quot;</span>
+<span class="n">endpoint</span> <span class="o">=</span> <span class="n">prov_api</span> <span class="o">+</span> <span class="n">postfix</span> 
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="n">url</span><span class="o">=</span><span class="n">endpoint</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="n">files</span><span class="p">,</span> <span class="n">auth</span><span class="o">=</span><span class="n">auth</span><span class="p">())</span>
+<span class="n">response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+<span class="c1"># response = handle_request(&quot;POST&quot;, endpoint, None, None, auth(), False)</span>
 </pre></div>
 
     </div>
@@ -944,10 +955,9 @@ ProvType.ENTITY
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Token validation failed due to error: Signature has expired.
-Refreshing using refresh token
-
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>/tmp/ipykernel_3832/1726935669.py:4: ResourceWarning: unclosed file &lt;_io.TextIOWrapper name=&#39;Model_Workflow_v1.csv&#39; mode=&#39;r&#39; encoding=&#39;UTF-8&#39;&gt;
+  files = {&#39;csv_file&#39;: open(&#39;Model_Workflow.csv&#39;)}
 </pre>
 </div>
 </div>
@@ -955,101 +965,9 @@ Refreshing using refresh token
 <div class="output_area">
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-      <th>5</th>
-      <th>6</th>
-      <th>7</th>
-      <th>8</th>
-      <th>9</th>
-      <th>...</th>
-      <th>22</th>
-      <th>23</th>
-      <th>24</th>
-      <th>25</th>
-      <th>26</th>
-      <th>27</th>
-      <th>28</th>
-      <th>29</th>
-      <th>30</th>
-      <th>31</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>workflow template id 10378.1/1693488</td>
-      <td>description</td>
-      <td>agent id</td>
-      <td>requesting organisation id</td>
-      <td>execution start time</td>
-      <td>execution end time</td>
-      <td>dataset id for template 10378.1/1693477</td>
-      <td>disturbance_file</td>
-      <td>spatial_file</td>
-      <td>geometry_file</td>
-      <td>...</td>
-      <td>Year_Start</td>
-      <td>Year_End</td>
-      <td>init_cover</td>
-      <td>settle_prob</td>
-      <td>fts</td>
-      <td>max.juvis_m2</td>
-      <td>counterfactual</td>
-      <td>Fogging_reducer</td>
-      <td>Fogging_sites</td>
-      <td>Fogging_start\r</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td></td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>...</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-      <td>None</td>
-    </tr>
-  </tbody>
-</table>
-<p>2 rows × 32 columns</p>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>{&#39;detail&#39;: &#39;None of the provided headers matched the expected workflow template flag to identify the workflow template.&#39;}</pre>
 </div>
 
 </div>
@@ -1062,30 +980,10 @@ Refreshing using refresh token
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">Fill out workflow table with values and submit to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv</a><a class="anchor-link" href="#Fill-out-workflow-table-with-values-and-submit-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/convert_model_runs_csv"> </a></h3>
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<h3 id="Submit-converted-model-runs">Submit converted model runs<a class="anchor-link" href="#Submit-converted-model-runs"> </a></h3><ul>
+<li>to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit</a></li>
+</ul>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">Submit converted model runs to <a href="https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit">https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit</a><a class="anchor-link" href="#Submit-converted-model-runs-to-https://prov-api.testing.rrap-is.com/redoc#tag/Bulk-Ingestion/operation/bulk_submit"> </a></h3>
 </div>
 </div>
 </div>
