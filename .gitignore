@@ -16,6 +16,8 @@ __pycache__
 Gemfile.lock
 
 .venv
+.venv1
+.venv1/
 .tokens.json
 python_packages/rrap_packages.egg-info/
 
