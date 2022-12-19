@@ -1,0 +1,3 @@
+[submodule "rrapDemoModel"]
+	path = "_notebooks/rrapDemoModel"
+	url = "https://github.com/gbrrestoration/rrap-demo-model.git"
